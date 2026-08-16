@@ -224,6 +224,7 @@ tests/readiness-test.js  readiness projection tests, incl. a Monte Carlo check (
 tests/test.html          end-to-end tests driven through the real UI
 tests/run-browser.sh     headless-Chrome runner for test.html (local + CI)
 docs/question-authoring.md  the recipe the question bank is written with
+docs/math-drills.md      design for generated calibration and dosage drills (not built yet)
 docs/screenshots/        README images and the script that regenerates them
 ```
 
