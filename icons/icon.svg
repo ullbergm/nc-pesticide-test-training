@@ -2,8 +2,8 @@
   <!-- Keep the artwork inside the center 80% so the maskable variant crops safely.
        icon-maskable-512.png is this file rendered with rx="0": the mask shape comes
        from the launcher, so the background must bleed to the edges. -->
-  <rect width="512" height="512" rx="96" fill="#10684a"/>
+  <rect width="512" height="512" rx="96" fill="#9c4a12"/>
   <path d="M150 390 C 130 240 240 118 400 112 C 406 280 300 386 150 390 Z" fill="#ffffff"/>
-  <path d="M168 368 C 230 280 300 210 372 152" stroke="#10684a" stroke-width="18" fill="none" stroke-linecap="round"/>
-  <path d="M240 306 C 262 302 286 290 300 276 M212 340 C 230 337 248 330 260 322" stroke="#10684a" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M168 368 C 230 280 300 210 372 152" stroke="#9c4a12" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M240 306 C 262 302 286 290 300 276 M212 340 C 230 337 248 330 260 322" stroke="#9c4a12" stroke-width="12" fill="none" stroke-linecap="round"/>
 </svg>
