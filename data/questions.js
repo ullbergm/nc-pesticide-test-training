@@ -1,21 +1,30 @@
-/* Question bank written from the two national applicator manuals published by
-   the NASDA Research Foundation and hosted by EPA: the National Pesticide
-   Applicator Certification Core Manual (second edition, 2014), chapters 1-11
-   and appendices C-D, and the National Aerial Applicator's Manual (2014),
-   chapters 1-6 and appendices 2-5. Nothing here comes from a North Carolina
-   manual; those are sold in print, and questions from them are planned as a
-   third and further `manual` values.
+/* Question bank written from four sources. Two are the national applicator
+   manuals published by the NASDA Research Foundation and hosted by EPA: the
+   National Pesticide Applicator Certification Core Manual (second edition,
+   2014), chapters 1-11 and appendices C-D, and the National Aerial
+   Applicator's Manual (2014), chapters 1-6 and appendices 2-5. The other two
+   are North Carolina's own pesticide law, which the national manuals cannot
+   cover and every NC exam asks about: the Pesticide Law of 1971 (G.S. 143,
+   Article 52) and the Pesticide Board's rules under it (02 NCAC 09L). Nothing
+   here comes from a North Carolina study manual; those are sold in print, and
+   questions from them are planned as further `manual` values.
 
-   Each manual numbers its own sections from 1, so `section` is a section
-   number within the manual named by `manual` ("default" when absent), and the
-   two together identify a section. Appendices continue that numbering after
-   the last chapter and carry a `sectionLabel` ("app. C"), because an
-   appendix's designation is not its position in the book. Ids follow the same
-   split: s<section>-NNN for the core manual, a<section>-NNN for the aerial one.
+   Each source numbers its own sections from 1, so `section` is a section
+   number within the source named by `manual` ("default" when absent), and the
+   two together identify a section. In the manuals a section is a chapter;
+   appendices continue that numbering after the last chapter and carry a
+   `sectionLabel` ("app. C"), because an appendix's designation is not its
+   position in the book. In the law a section is a Part ("pt. 4") and in the
+   rules a rule Section ("sec. .0500"), numbered so they sort in printed order.
+   Ids follow the same split: s<section>-NNN for the core manual, a<section>
+   for the aerial one, l<section> for the law, r<section> for the rules.
 
-   Each question cites the page printed in its manual, turned into a PDF deep
-   link through that manual's page map (data/manual-pages.js,
-   data/aerial-pages.js). docs/question-authoring.md is the recipe the bank was
+   A manual question cites the page printed in its manual. A law or rule
+   question is cited the way lawyers and inspectors cite it, by section number
+   in `ref`, and keeps `page` because that is what opens the PDF in the right
+   place. Either way the citation resolves through that source's page map
+   (data/manual-pages.js, data/aerial-pages.js, data/law-pages.js,
+   data/rules-pages.js). docs/question-authoring.md is the recipe the bank was
    written with. */
 const QUESTION_BANK = [
  {
@@ -11460,5 +11469,6233 @@ const QUESTION_BANK = [
   "explanation": "The 300-foot tower antenna at each site pushes the signal out 250 miles with enough strength to give about 3 feet of positional accuracy or better. When finished, roughly 80 sites will give every area of the continental United States correction data from two land-based beacons, free of charge.",
   "page": "110",
   "manual": "aerial"
+ },
+ {
+  "id": "l1-001",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "By what name may Article 52 of Chapter 143 of the General Statutes be cited?",
+  "choices": [
+   "The North Carolina Pesticide Law of 1971",
+   "The North Carolina Pesticide Control Act of 1971",
+   "The North Carolina Structural Pest Control Act of 1971",
+   "The North Carolina Agricultural Chemicals Act of 1971"
+  ],
+  "answer": 0,
+  "explanation": "Article 52 gives itself a short title in its first section: it may be cited as the North Carolina Pesticide Law of 1971. The Structural Pest Control Act is separate law, covering structural and household pest work rather than pesticide use generally.",
+  "page": "1",
+  "ref": "§ 143-434"
+ },
+ {
+  "id": "l1-002",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "Which activities involving pesticides does the North Carolina Pesticide Law declare it is regulating in the public interest?",
+  "choices": [
+   "Their registration and labeling only, use being left to the label",
+   "Their use, application, sale, disposal, and registration",
+   "Their manufacture, formulation, packaging, and export",
+   "Their use and application only, sales being left to federal law"
+  ],
+  "answer": 1,
+  "explanation": "The stated purpose of the Article is to regulate the use, application, sale, disposal, and registration of insecticides, fungicides, herbicides, defoliants, desiccants, plant growth regulators, nematicides, rodenticides, and any other pesticides the Pesticide Board designates.",
+  "page": "2",
+  "ref": "§ 143-435(b)"
+ },
+ {
+  "id": "l1-003",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "Who is made responsible for carrying out the North Carolina Pesticide Law?",
+  "choices": [
+   "The Department of Environmental Quality, together with the State Health Director and the Board",
+   "The North Carolina Pesticide Board alone, with the Governor as its chair",
+   "The North Carolina Pesticide Board, together with the Commissioner of Agriculture",
+   "The Commissioner of Agriculture alone, advised by the Pesticide Board"
+  ],
+  "answer": 2,
+  "explanation": "The law establishes the North Carolina Pesticide Board and makes the Board and the Commissioner of Agriculture jointly responsible for carrying out the Article. The Board governs the program and adopts the rules; the Commissioner administers and enforces them.",
+  "page": "2",
+  "ref": "§ 143-436(a)"
+ },
+ {
+  "id": "l1-004",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "How many members does the North Carolina Pesticide Board have, and who appoints them?",
+  "choices": [
+   "Seven members, appointed by the Commissioner of Agriculture",
+   "Five members, all appointed by the Governor",
+   "Nine members, appointed by the General Assembly",
+   "Seven members, all appointed by the Governor"
+  ],
+  "answer": 3,
+  "explanation": "The Pesticide Board consists of seven members, and the Governor appoints all of them. The seats are specified by the statute rather than left open: State agency representatives, the agricultural chemical industry, agricultural production, and two at-large members.",
+  "page": "2",
+  "ref": "§ 143-436(b)"
+ },
+ {
+  "id": "l1-005",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "The Pesticide Board includes two at-large members. What does the law require of them?",
+  "choices": [
+   "They come from fields other than the industry and production seats, and one must be a nongovernmental conservationist",
+   "They come from fields other than the industry and production seats, and one must be a licensed commercial applicator in good standing",
+   "They must both hold pesticide applicator licenses in a category the Board regulates",
+   "They must both be employees of a State agency with pesticide responsibilities"
+  ],
+  "answer": 0,
+  "explanation": "The two at-large members must be drawn from fields of endeavor other than the agricultural chemical industry and agricultural production seats, and one of the two must be a nongovernmental conservationist.",
+  "page": "2",
+  "ref": "§ 143-436(b)(4)"
+ },
+ {
+  "id": "l1-006",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "How long is a term on the North Carolina Pesticide Board?",
+  "choices": [
+   "Four years, all beginning and ending together with the Governor's term",
+   "Four years, staggered, with members holding office until successors qualify",
+   "Two years, staggered, with members holding office only until their terms expire",
+   "Six years, staggered, with a limit of two consecutive terms"
+  ],
+  "answer": 1,
+  "explanation": "Board members serve staggered four-year terms and hold their offices until their successors are appointed and qualified. Only the original appointees differed: the State agency members then served two-year terms to start the stagger.",
+  "page": "2",
+  "ref": "§ 143-436(c)"
+ },
+ {
+  "id": "l1-007",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "A seat on the Pesticide Board falls vacant two years into a four-year term. How is it filled?",
+  "choices": [
+   "The Board elects a replacement from any qualified field, for the remainder of the term",
+   "The Commissioner of Agriculture appoints a replacement, subject to the Board's approval",
+   "The Governor appoints someone with the same credentials, for the remainder of the term",
+   "The Governor appoints someone with the same credentials, for a full new four-year term"
+  ],
+  "answer": 2,
+  "explanation": "The Governor fills a mid-term vacancy for the remainder of the unexpired term, and the appointee must have the same credentials as the predecessor, which keeps the statute's mix of seats intact.",
+  "page": "3",
+  "ref": "§ 143-436(c)"
+ },
+ {
+  "id": "l1-008",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "On what grounds may the Governor remove a member of the Pesticide Board?",
+  "choices": [
+   "Gross inefficiency, neglect of duty, or public disagreement with the Governor on pesticide policy",
+   "Any reason, since Board members serve entirely at the Governor's pleasure",
+   "Only a criminal conviction for a violation of the Pesticide Law itself",
+   "Gross inefficiency, neglect of duty, malfeasance, misfeasance, or nonfeasance in office"
+  ],
+  "answer": 3,
+  "explanation": "The Governor may remove a Board member at any time for gross inefficiency, neglect of duty, malfeasance, misfeasance, or nonfeasance in office. Those grounds are about how the member performs the office, not about how the member votes.",
+  "page": "3",
+  "ref": "§ 143-436(c)"
+ },
+ {
+  "id": "l1-009",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "How is the chair of the Pesticide Board chosen, and what voting rights does the chair have?",
+  "choices": [
+   "The Board selects the chair from its own membership, and the chair has a full vote",
+   "The Board selects the chair from its own membership, and the chair votes only to break ties",
+   "The Governor designates the chair from the Board, and the chair has a full vote",
+   "The Commissioner of Agriculture chairs the Board, without power to vote"
+  ],
+  "answer": 0,
+  "explanation": "The Board selects its own chair from among its members for a two-year term, and the chair keeps a full vote. A vacancy in the chair is filled by the Board for the remainder of that term.",
+  "page": "3",
+  "ref": "§ 143-436(d)"
+ },
+ {
+  "id": "l1-010",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "How many concurring votes does any action of the Pesticide Board require?",
+  "choices": [
+   "A simple majority of the members present",
+   "At least four",
+   "At least three",
+   "At least five"
+  ],
+  "answer": 1,
+  "explanation": "Any action of the Board requires at least four concurring votes. Because the Board has seven members, that is a majority of the whole Board rather than a majority of whoever happens to attend.",
+  "page": "3",
+  "ref": "§ 143-436(e)"
+ },
+ {
+  "id": "l1-011",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "What body adopts the rules and sets the policies for North Carolina's pesticide management and control programs?",
+  "choices": [
+   "The Structural Pest Control Committee, for all pesticide programs alike",
+   "The Department of Environmental Quality, in consultation with the Board",
+   "The Pesticide Board, which is the governing board for those programs",
+   "The Commissioner of Agriculture, subject to the Board's review"
+  ],
+  "answer": 2,
+  "explanation": "The Pesticide Board is the governing board for the pesticide management and control programs in the Article, and adopting rules and making policy for those programs is the first of its listed powers and duties.",
+  "page": "3",
+  "ref": "§ 143-437(1)"
+ },
+ {
+  "id": "l1-012",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "The Board agrees with a landowner to sample and monitor pesticides on private property. What limit does the law put on the information collected?",
+  "choices": [
+   "It may not be disclosed to any federal or State agency without the property owner's written permission",
+   "It must be published in full in the Board's annual report to the Governor",
+   "It may be used for enforcement against the owner only within one year of collection",
+   "It may not be disclosed in a way that identifies the property owner without that owner's permission"
+  ],
+  "answer": 3,
+  "explanation": "The Board may enter agreements with private property owners to sample, test, and monitor on their land, and information obtained that way may not be disclosed in a manner that would identify an individual property owner unless the owner has given permission. The confidentiality is what makes owners willing to cooperate.",
+  "page": "3",
+  "ref": "§ 143-437(2)"
+ },
+ {
+  "id": "l1-013",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "Emergency conditions arise that a State agency cannot address without breaking a requirement of the Pesticide Law. What does the law allow?",
+  "choices": [
+   "The Board may exempt a federal or State agency from any provision of the Article when it determines emergency conditions require it",
+   "The Commissioner may waive any provision of the Article for up to 30 days without Board action",
+   "The Governor may suspend the Article in the affected counties by executive order",
+   "Nothing: the Article's requirements apply to State agencies without exception"
+  ],
+  "answer": 0,
+  "explanation": "Among the Board's powers is exempting any federal or State agency from any provision of the Article when the Board determines that emergency conditions exist which require the exemption. The determination is the Board's to make, not the individual agency's.",
+  "page": "4",
+  "ref": "§ 143-437(8)"
+ },
+ {
+  "id": "l1-014",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "To whom does the Pesticide Board make annual reports?",
+  "choices": [
+   "The General Assembly only, when it is in regular session",
+   "The Governor, plus any other reports the Governor or General Assembly requests",
+   "The Commissioner of Agriculture, who forwards them to the Governor",
+   "The U.S. Environmental Protection Agency, as a condition of the State's federal plan approval"
+  ],
+  "answer": 1,
+  "explanation": "The Board makes annual reports to the Governor, and makes any other investigations and reports that the Governor or the General Assembly requests. It also informs and advises the Governor on pesticide matters and may recommend legislation.",
+  "page": "3",
+  "ref": "§ 143-437(7)"
+ },
+ {
+  "id": "l1-015",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "Who administers and enforces the provisions of the North Carolina Pesticide Law?",
+  "choices": [
+   "The Attorney General, on referral from the Board",
+   "The State Health Director",
+   "The Commissioner of Agriculture",
+   "The chair of the Pesticide Board"
+  ],
+  "answer": 2,
+  "explanation": "Administering and enforcing the Article is the first of the powers and duties the law gives the Commissioner of Agriculture. The Board governs and adopts rules; the Commissioner carries them out and directs the staff who do the field work.",
+  "page": "4",
+  "ref": "§ 143-438(1)"
+ },
+ {
+  "id": "l1-016",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "What is the Commissioner of Agriculture's role at meetings of the Pesticide Board?",
+  "choices": [
+   "The Commissioner attends all meetings and votes on every matter before the Board",
+   "The Commissioner attends only those meetings at which enforcement actions are decided, and votes on those matters alone",
+   "The Commissioner does not attend, but receives the minutes of every meeting",
+   "The Commissioner attends all meetings without a vote, unless designated as the Board's Department of Agriculture member"
+  ],
+  "answer": 3,
+  "explanation": "The Commissioner attends all Board meetings but has no power to vote, unless the Commissioner happens to be designated as the ex officio Board member from the Department of Agriculture and Consumer Services.",
+  "page": "4",
+  "ref": "§ 143-438(2)"
+ },
+ {
+  "id": "l1-017",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "Who keeps the record of Pesticide Board meetings and hearings and holds legal custody of the Board's records?",
+  "choices": [
+   "The Commissioner of Agriculture",
+   "The chair of the Board, or an officer the Board selects",
+   "The Office of Administrative Hearings, as the Board's rules custodian",
+   "The Secretary of State, as custodian of State agency records"
+  ],
+  "answer": 0,
+  "explanation": "The Commissioner of Agriculture keeps an accurate and complete record of all Board meetings and hearings and has legal custody of the Board's books, papers, documents, and other records.",
+  "page": "4",
+  "ref": "§ 143-438(3)"
+ },
+ {
+  "id": "l1-018",
+  "section": 1,
+  "sectionName": "Pesticide Control Program: Organization and Functions",
+  "sectionLabel": "pt. 1",
+  "manual": "law",
+  "question": "May the Commissioner of Agriculture hand the Article's enforcement duties to a division of the Department?",
+  "choices": [
+   "No, unless the Governor approves the delegation in writing",
+   "Yes, the Commissioner may assign and reassign them among divisions and units of the Department",
+   "Yes, but only with the Pesticide Board's approval for each assignment",
+   "No, the administrative and enforcement duties named in the Article must be performed by the Commissioner personally"
+  ],
+  "answer": 1,
+  "explanation": "The Commissioner may assign and reassign the administrative and enforcement duties the Article gives him to one or more divisions and other units within the Department of Agriculture and Consumer Services, and may delegate the Department's powers to a division head or other employee.",
+  "page": "4",
+  "ref": "§ 143-438(4)"
+ },
+ {
+  "id": "l2-001",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "On what basis may the North Carolina Pesticide Board designate a product a restricted use pesticide?",
+  "choices": [
+   "That it has caused at least one documented poisoning or crop loss incident inside North Carolina",
+   "That it is toxic enough to require the skull and crossbones and the word poison on its label",
+   "That its persistence, toxicity, or other hazard to people, pollinators, animals, crops, wildlife, land, or the environment calls for added restriction",
+   "That the U.S. Environmental Protection Agency has already classified it for restricted use somewhere in the country"
+  ],
+  "answer": 2,
+  "explanation": "The Board may list a pesticide or device as restricted use when in its judgment, whether from persistence, toxicity, or anything else, the product is so hazardous or injurious to persons, pollinating insects, animals, crops, wildlife, lands, or the environment beyond the target pest that added restriction on its sale, purpose, use, or possession is required. The list is adopted by rule after a public hearing and may cover the whole State or designated areas.",
+  "page": "4",
+  "ref": "§ 143-440(a)"
+ },
+ {
+  "id": "l2-002",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What may a restricted use regulation adopted by the Pesticide Board control?",
+  "choices": [
+   "The retail price of the product, so that a hazardous pesticide cannot be sold cheaply enough for casual use",
+   "The manufacturing process, so that a hazardous product cannot be formulated in the State",
+   "Only who may buy the product, the conditions of use being fixed by the federal label",
+   "The time and conditions of sale, distribution, or use, including a ban on designated purposes or times"
+  ],
+  "answer": 3,
+  "explanation": "A restricted use regulation may set the time and conditions of sale, distribution, or use of the pesticide, and may prohibit its use for designated purposes or at designated times. The Board may also require purchasers or users to certify that they will use the product only as labeled or as further restricted by the rule.",
+  "page": "4",
+  "ref": "§ 143-440(b)"
+ },
+ {
+  "id": "l2-003",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What certification fee does the Pesticide Law allow the Board to charge a private applicator?",
+  "choices": [
+   "Up to ten dollars, set to make the certification and recertification program self-supporting",
+   "Up to fifty dollars, set to make the certification and recertification program self-supporting",
+   "Up to seventy-five dollars, matching the commercial applicator license fee",
+   "No fee at all, since private applicator certification is funded by registration fees"
+  ],
+  "answer": 0,
+  "explanation": "The Board may require certification and recertification of private applicators and charge a fee of up to ten dollars, with the fee set at a level that makes the certification and recertification program self-supporting. The examination itself carries its own separate ten-dollar charge.",
+  "page": "4",
+  "ref": "§ 143-440(b)"
+ },
+ {
+  "id": "l2-004",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A private applicator's certification is challenged after a misuse complaint. What may the Board do to it?",
+  "choices": [
+   "Revoke it only if the applicator also holds a commercial applicator license",
+   "Suspend, revoke, or modify it after opportunity for a hearing, for violating the Article or a rule under it",
+   "Suspend it immediately and permanently, since a private applicator certification is a privilege rather than a right",
+   "Nothing until a court convicts the applicator of the underlying violation"
+  ],
+  "answer": 1,
+  "explanation": "After opportunity for a hearing, the Board may suspend, revoke, or modify a private applicator's certification for violating any provision of the Article or any rule adopted under it. The hearing right comes first; the sanction follows the finding.",
+  "page": "4",
+  "ref": "§ 143-440(b)"
+ },
+ {
+  "id": "l2-005",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "The Board requires a permit to purchase a particular restricted use pesticide. Who may still obtain it without one?",
+  "choices": [
+   "Any employee who applies it under the direct supervision of a licensed pesticide applicator",
+   "A government agency, whose purchases are outside the permit system entirely",
+   "A person licensed to sell that pesticide, who may purchase and possess it without a permit",
+   "A private applicator certified in the category the pesticide is labeled for"
+  ],
+  "answer": 2,
+  "explanation": "Where the Board requires that restricted use pesticides be purchased, possessed, or used only under permit and its direct supervision, a person licensed to sell those pesticides is excepted and may purchase and possess them without a permit. The Board may also authorize use by Structural Pest Control Act licensees without a permit.",
+  "page": "5",
+  "ref": "§ 143-440(b)"
+ },
+ {
+  "id": "l2-006",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What does it cost to sit an examination required under the restricted use pesticide section of the Pesticide Law?",
+  "choices": [
+   "Ten dollars, nonrefundable, which is credited against the certification fee once the exam is passed",
+   "Fifty dollars, nonrefundable, the same as the Worker Protection Designated Trainer examination",
+   "Twenty-five dollars, nonrefundable, and only for applicants who failed a previous attempt",
+   "Ten dollars, nonrefundable, charged in addition to the certification or recertification fee"
+  ],
+  "answer": 3,
+  "explanation": "A nonrefundable fee of ten dollars is charged for each examination required by that section, and it is in addition to the certification or recertification fee rather than part of it.",
+  "page": "5",
+  "ref": "§ 143-440(b)"
+ },
+ {
+  "id": "l2-007",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What fee does the Pesticide Law set for examining an individual who wants to be a Worker Protection Designated Trainer?",
+  "choices": [
+   "Fifty dollars",
+   "Ten dollars",
+   "Twenty-five dollars",
+   "Seventy-five dollars"
+  ],
+  "answer": 0,
+  "explanation": "A fifty-dollar fee is charged to examine individuals seeking designation as Worker Protection Designated Trainers under the federal Worker Protection Standard at 40 C.F.R. Part 170. It is a larger fee than the ten dollars charged for a restricted use pesticide examination.",
+  "page": "5",
+  "ref": "§ 143-440(c)"
+ },
+ {
+  "id": "l2-008",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Besides handling and disposal, what may the Board's rules on pesticide storage cover?",
+  "choices": [
+   "The number of employees who must hold a dealer license",
+   "Security precautions at the storage site",
+   "The maximum quantity any one business may own statewide",
+   "The purchase price at which stored stock must be insured"
+  ],
+  "answer": 1,
+  "explanation": "The Board may adopt rules on the handling, transport, storage, display, or distribution of pesticides and on the disposal of pesticides and their containers, and the statute says storage rules may include security precautions. Separate rules may restrict or prohibit container types by construction, strength, or size to reduce spillage, breakage, or misuse.",
+  "page": "5",
+  "ref": "§ 143-441(a)"
+ },
+ {
+  "id": "l2-009",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A pesticide is hauled on a truck alongside bagged feed, in a way that risks contaminating it. Which requirement of the Pesticide Law does that violate?",
+  "choices": [
+   "The ban on disposing of pesticides so as to pollute a water supply or waterway",
+   "The requirement that transported pesticides travel under a permit issued by the Board",
+   "The ban on handling, transporting, storing, displaying, or distributing pesticides so as to endanger food, feed, or other products carried with them",
+   "The ban on distributing a pesticide outside the registrant's unbroken immediate container"
+  ],
+  "answer": 2,
+  "explanation": "No person may handle, transport, store, display, or distribute pesticides in a manner that endangers people and the environment, or that endangers food, feed, or other products transported, stored, displayed, or distributed with them, or in any manner contrary to the Board's rules.",
+  "page": "5",
+  "ref": "§ 143-441(b)"
+ },
+ {
+  "id": "l2-010",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What does the Pesticide Law forbid in the disposal, discarding, or storage of pesticides and their containers?",
+  "choices": [
+   "Any manner other than returning the container to the dealer who sold the product",
+   "Any disposal on the property where the pesticide was applied, whatever the method",
+   "Any storage of an opened container for longer than one growing season",
+   "Any manner that may injure humans, vegetation, crops, livestock, or wildlife, or pollute a water supply or waterway"
+  ],
+  "answer": 3,
+  "explanation": "No person may dispose of, discard, or store pesticides or pesticide containers in a manner that may injure humans, vegetation, crops, livestock, or wildlife, or that may pollute any water supply or waterway, or in any manner contrary to the Board's rules. The test is the risk created, not the location.",
+  "page": "5",
+  "ref": "§ 143-441(c)"
+ },
+ {
+  "id": "l2-011",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "When must a pesticide's North Carolina registration be renewed?",
+  "choices": [
+   "Annually before January 1, for the ensuing calendar year",
+   "Annually before July 1, for the ensuing fiscal year",
+   "Every three years, on the anniversary of the original registration",
+   "Whenever the product's federal registration is renewed by the EPA"
+  ],
+  "answer": 0,
+  "explanation": "Every pesticide must be registered with the Board before it is distributed, sold, offered for sale, or transported in the State, and the registration is renewed annually before January 1 for the coming calendar year. The Board is separately authorized to adopt a system of staggered three-year registrations by rule.",
+  "page": "5",
+  "ref": "§ 143-442(a)"
+ },
+ {
+  "id": "l2-012",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What must a registration application include about the product's labeling?",
+  "choices": [
+   "The label text as approved by the EPA, with the directions for use omitted",
+   "A complete copy of the labeling accompanying the pesticide and a statement of all claims made for it, including directions for use",
+   "A photograph of the container as it will appear on a retail shelf",
+   "A summary of the label's precautionary statements and its signal word"
+  ],
+  "answer": 1,
+  "explanation": "The application filed with the Board must include a complete copy of the labeling that accompanies the pesticide together with a statement of all claims to be made for it, including the directions for use. The Board may also require a full description of the tests behind those claims.",
+  "page": "6",
+  "ref": "§ 143-442(a)(3)"
+ },
+ {
+  "id": "l2-013",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What annual registration fee does an applicant pay, apart from the per-product assessment?",
+  "choices": [
+   "Two hundred dollars",
+   "Seventy-five dollars",
+   "One hundred fifty dollars",
+   "One hundred twenty-five dollars"
+  ],
+  "answer": 2,
+  "explanation": "The applicant pays an annual registration fee of one hundred fifty dollars, plus an additional annual assessment for each brand or grade of pesticide registered. The Board sets that assessment, which may not exceed one hundred twenty-five dollars.",
+  "page": "6",
+  "ref": "§ 143-442(b)"
+ },
+ {
+  "id": "l2-014",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A brand of pesticide is marketed in North Carolina before it is registered. What does the registrant owe?",
+  "choices": [
+   "A delinquent registration penalty of one hundred fifty dollars, assessed once per registrant each year",
+   "Double the annual assessment for that brand, for the year the sales occurred",
+   "Nothing beyond the ordinary fee, provided registration is completed within 30 days",
+   "A delinquent registration penalty of two hundred dollars, assessed for each brand or grade involved"
+  ],
+  "answer": 3,
+  "explanation": "An additional two-hundred-dollar delinquent registration penalty is assessed against the registrant for each brand or grade of pesticide marketed in North Carolina before it is registered as the Article requires.",
+  "page": "6",
+  "ref": "§ 143-442(b)"
+ },
+ {
+  "id": "l2-015",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A registrant ships a pesticide from one of its own North Carolina plants to another plant it operates in the State. What does the law require?",
+  "choices": [
+   "No registration is required for that shipment",
+   "Registration is required, but the annual assessment is waived",
+   "Registration is required, and the shipment must also travel under a Board permit",
+   "No registration is required, provided the shipment stays within one county"
+  ],
+  "answer": 0,
+  "explanation": "Registration is not required for a pesticide shipped from one plant within the State to another plant within the State operated by the same person. The requirement attaches to putting a product into the channels of trade, not to moving it between a company's own facilities.",
+  "page": "6",
+  "ref": "§ 143-442(f)"
+ },
+ {
+  "id": "l2-016",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A registrant declares a pesticide discontinued. How long must it stay registered?",
+  "choices": [
+   "Until the end of the calendar year in which distribution stopped",
+   "One full year after distribution is discontinued",
+   "Until the last container in the channels of distribution has been sold",
+   "Three full years after distribution is discontinued"
+  ],
+  "answer": 1,
+  "explanation": "A pesticide declared discontinued by its registrant must be registered for one full year after distribution is discontinued. Product still in the channels of distribution after that period may be confiscated and disposed of by the Board unless it is acceptable for registration and someone continues to register it.",
+  "page": "6",
+  "ref": "§ 143-442(g)"
+ },
+ {
+  "id": "l2-017",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Whose job is it to keep a pesticide's sales staff from making misleading claims about the product?",
+  "choices": [
+   "The Board, through its inspection of advertising and labeling",
+   "The licensed applicator who buys the product, before repeating any claim to a customer",
+   "The manufacturer, distributor, or registrant, who must supervise employees and agents to prevent deceptive statements",
+   "The pesticide dealer at the location where the sale is made, whoever happens to employ the salesperson who made it"
+  ],
+  "answer": 2,
+  "explanation": "Each manufacturer, distributor, or registrant of a pesticide must supervise the activities of any employee or agent to prevent deceptive or misleading statements about the product. Dealers carry a separate responsibility for their own employees' claims and recommendations.",
+  "page": "7",
+  "ref": "§ 143-442(j)"
+ },
+ {
+  "id": "l2-018",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Under North Carolina law, what must appear on the label affixed to a pesticide's immediate container?",
+  "choices": [
+   "The manufacturer's name and address, the EPA registration number, and the date of manufacture",
+   "The brand name, the signal word, and the name of the county where the product was formulated",
+   "The registrant's name and address, the net weight, and the price per unit of measure",
+   "The manufacturer or registrant's name and address, the brand or trademark it is sold under, and the net weight or measure"
+  ],
+  "answer": 3,
+  "explanation": "A pesticide must be in the registrant's or manufacturer's unbroken immediate container bearing a label with the name and address of the manufacturer, registrant, or person for whom it was manufactured; the name, brand, or trademark it is sold under; and the net weight or measure of the contents. The same information must appear on the outer wrapper when the inner label cannot be read through it.",
+  "page": "7",
+  "ref": "§ 143-443(a)(2)"
+ },
+ {
+  "id": "l2-019",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A pesticide contains a substance in a quantity highly toxic to man. What three things must its label bear beyond the ordinary requirements?",
+  "choices": [
+   "The skull and crossbones, the word poison in red on a contrasting background, and a statement of an antidote",
+   "The skull and crossbones, the signal word DANGER in red, and an emergency telephone number",
+   "The word poison in red, a statement of an antidote, and the name of the attending physician's resource center",
+   "The skull and crossbones, the word poison in black on a white background, and the net weight"
+  ],
+  "answer": 0,
+  "explanation": "For a pesticide containing substances in quantities highly toxic to man, the label must additionally bear the skull and crossbones, the word poison prominently in red on a background of distinctly contrasting color, and a statement of an antidote for the pesticide. Whether a pesticide is highly toxic to man is a determination the Board is authorized to make.",
+  "page": "7",
+  "ref": "§ 143-443(a)(3)"
+ },
+ {
+  "id": "l2-020",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What does North Carolina law say about tampering with a pesticide label?",
+  "choices": [
+   "Replacing it with the dealer's own label is permitted for repackaged product",
+   "Detaching, altering, defacing, or destroying any part of it is unlawful",
+   "Altering it is unlawful only if the change misstates the active ingredient",
+   "Removing it is permitted once the container has been emptied and triple rinsed"
+  ],
+  "answer": 1,
+  "explanation": "It is unlawful for any person to detach, alter, deface, or destroy, in whole or in part, any label or labeling required by the Article or its rules, or to add a substance to or take a substance from a pesticide in a way that may defeat the purpose of the law.",
+  "page": "8",
+  "ref": "§ 143-443(b)(1)"
+ },
+ {
+  "id": "l2-021",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Under the North Carolina Pesticide Law, who may lawfully use a pesticide in a manner inconsistent with its labeling?",
+  "choices": [
+   "Only a certified private applicator on land the applicator owns or rents",
+   "Anyone, provided the rate used is lower than the label rate",
+   "No one; the law makes it unlawful for any person",
+   "Only a licensed pesticide applicator, whose training covers the added risk"
+  ],
+  "answer": 2,
+  "explanation": "The statute states flatly that it is unlawful for any person to use any pesticide in a manner inconsistent with its labeling. No license or certification creates an exception, and using less than the labeled rate is no defense where the use itself is off-label.",
+  "page": "8",
+  "ref": "§ 143-443(b)(3)"
+ },
+ {
+  "id": "l2-022",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A grower contracts for an aerial application of a product labeled toxic to bees. What must happen before the application?",
+  "choices": [
+   "The application must be rescheduled to a date when no crop within a mile is in bloom",
+   "The Board must issue a written permit for the application to proceed",
+   "Every beekeeper in the county must be notified in advance, whether or not the apiary has been registered with the Department",
+   "Registered apiaries within the distance the Board designates must be notified, based on available listings"
+  ],
+  "answer": 3,
+  "explanation": "A person who contracts for the aerial application of a pesticide designated on its labeling as toxic to bees may not permit the application without first notifying, based on available listings, the owner or operator of any apiary registered under the North Carolina Bee and Honey Act of 1977 that lies within the distance the Pesticide Board designates as necessary to prevent damage or injury.",
+  "page": "8",
+  "ref": "§ 143-443(b)(4)"
+ },
+ {
+  "id": "l2-023",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A distributor wants to sell restricted use pesticides to a retail outlet. What must the outlet hold?",
+  "choices": [
+   "A valid North Carolina Pesticide Dealer License",
+   "A valid North Carolina Pesticide Applicator License",
+   "A restricted use pesticide purchase permit issued by the Board",
+   "A certificate showing an employee has passed the dealer examination"
+  ],
+  "answer": 0,
+  "explanation": "It is unlawful for any person to distribute, sell, or offer for sale any restricted use pesticide to a dealer who does not hold a valid North Carolina Pesticide Dealer License. The license is per location, so each outlet needs its own.",
+  "page": "8",
+  "ref": "§ 143-443(b)(5)"
+ },
+ {
+  "id": "l2-024",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "An applicator blocks an inspector who has arrived to examine records during an investigation. How does the Pesticide Law treat that?",
+  "choices": [
+   "It is unlawful only where the inspector is an employee of the Pesticide Board itself",
+   "It is unlawful to assault, resist, impede, intimidate, or interfere with a State employee performing duties under the Article",
+   "It is grounds to suspend the applicator's license but is not itself unlawful",
+   "It is lawful unless the inspector produces a warrant and is refused a second time"
+  ],
+  "answer": 1,
+  "explanation": "The Article makes it unlawful for any person to assault, resist, impede, intimidate, or interfere with any State employee engaged in performing duties under it. The protection covers the whole range of enforcement work, not only formal inspections.",
+  "page": "8",
+  "ref": "§ 143-443(b)(6)"
+ },
+ {
+  "id": "l2-025",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What does the law say about applying an unregistered pesticide for hire?",
+  "choices": [
+   "It is permitted if the product is registered with the EPA but not yet with the Board",
+   "It is unlawful only where the pesticide is also a restricted use pesticide",
+   "Applying for compensation a pesticide not registered under the Article is unlawful",
+   "It is permitted if the customer supplies the product and accepts the risk in writing"
+  ],
+  "answer": 2,
+  "explanation": "It is unlawful for any person to apply, for compensation, a pesticide that has not been registered under the Article's registration section. Federal registration does not substitute: the product must be registered with the Board before it may be sold or applied for hire in the State.",
+  "page": "8",
+  "ref": "§ 143-443(b)(7)"
+ },
+ {
+  "id": "l2-026",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Who has the authority to declare an organism a pest in North Carolina?",
+  "choices": [
+   "The Commissioner of Agriculture, for any organism causing measurable economic loss to a crop",
+   "The Wildlife Resources Commission, for any vertebrate species, and the Board for the rest",
+   "The registrant of a pesticide, by naming the organism on the product's approved labeling",
+   "The Pesticide Board, for any plant or animal life or virus injurious to plants, people, domestic animals, articles, or substances"
+  ],
+  "answer": 3,
+  "explanation": "The Board is authorized to declare as a pest any form of plant or animal life or virus that is injurious to plants, man, domestic animals, articles, or substances. It is also authorized to determine whether pesticides are highly toxic to man and to set standards of coloring or discoloring.",
+  "page": "9",
+  "ref": "§ 143-444(1)"
+ },
+ {
+  "id": "l2-027",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A trucking company hauls registered pesticides through the State. What keeps it clear of the penalties for unlawful distribution?",
+  "choices": [
+   "Being a carrier lawfully engaged in transport that lets the Board copy its records of the shipments on request",
+   "Holding a pesticide dealer license for the terminal where the load is staged overnight in transit through the State",
+   "Carrying a copy of each product's registration certificate in the cab",
+   "Notifying the Board before each load crosses into North Carolina"
+  ],
+  "answer": 0,
+  "explanation": "The penalties for the Article's prohibited distribution acts do not apply to a carrier lawfully engaged in transporting pesticides within the State, so long as the carrier permits the Board or its agent, on request, to copy all records showing the transactions in and movement of the articles.",
+  "page": "9",
+  "ref": "§ 143-445(a)(1)"
+ },
+ {
+  "id": "l2-028",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A manufacturer ships an unregistered pesticide to a cooperator for experimental use, outside any government research program. How must the container be marked?",
+  "choices": [
+   "Not registered in North Carolina, together with the intended date of destruction",
+   "For experimental use only - Not to be sold, together with the manufacturer's name and address",
+   "Experimental pesticide - Restricted use, together with the Board's written permit number and date",
+   "For research purposes only, together with the name of the supervising State agency"
+  ],
+  "answer": 1,
+  "explanation": "Experimental shipments by others than a government research agency are exempt only if the pesticide is not sold and the container is plainly and conspicuously marked \"For experimental use only - Not to be sold\" with the manufacturer's name and address. Selling for experimental purposes requires a written permit from the Board, on the conditions the permit sets.",
+  "page": "9",
+  "ref": "§ 143-445(a)(3)"
+ },
+ {
+  "id": "l2-029",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A lot of pesticide is packed to a foreign buyer's specifications for export. When do the Article's requirements apply to it?",
+  "choices": [
+   "Only if it is stored in the State for more than one calendar year",
+   "Only if the foreign buyer's specifications conflict with the federal label",
+   "If it is not in fact exported, in which case every provision applies",
+   "Never, once the export paperwork has been filed with the Board"
+  ],
+  "answer": 2,
+  "explanation": "An article intended solely for export to a foreign country and prepared or packed according to the purchaser's specifications is not deemed in violation of the Part. If it is not exported, all the provisions of the Part apply to it.",
+  "page": "9",
+  "ref": "§ 143-445(b)"
+ },
+ {
+  "id": "l2-030",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "An official sample fails to conform to the law on analysis. How long is the sealed official check sample kept?",
+  "choices": [
+   "90 days from the date the official sample was collected",
+   "One year from the date of the certificate of analysis of the official sample",
+   "Until the registrant either accepts the result or requests a hearing",
+   "90 days from the date of the certificate of analysis of the official sample"
+  ],
+  "answer": 3,
+  "explanation": "A sealed and identified official check sample is held until analysis of the official sample is complete. If the analysis conforms with the law the check sample may be destroyed; if it does not conform, the check sample is retained for 90 days from the date of the certificate of analysis.",
+  "page": "9",
+  "ref": "§ 143-446(b)"
+ },
+ {
+  "id": "l2-031",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Where must an official pesticide sample be collected from?",
+  "choices": [
+   "Material that has been packaged, labeled, and released for shipment",
+   "The formulation line, before the product is packaged and labeled",
+   "The applicator's spray tank at the site where the product is being used",
+   "Retail shelf stock only, and only in the original unbroken container"
+  ],
+  "answer": 0,
+  "explanation": "The official analysis is made from the official sample, and official samples are collected from material that has been packaged, labeled, and released for shipment. That is the point at which the product is what the registrant offers to a buyer.",
+  "page": "9",
+  "ref": "§ 143-446(b)"
+ },
+ {
+  "id": "l2-032",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "When may the Board summarily suspend a pesticide's registration?",
+  "choices": [
+   "When a complaint about the product has been referred to the Board for hearing",
+   "When it finds suspension necessary to prevent an imminent hazard to the public, a nontarget organism, or a segment of the environment",
+   "When the registrant fails to pay the annual assessment by the January 1 deadline",
+   "When the EPA has begun a cancellation proceeding against the same product"
+  ],
+  "answer": 1,
+  "explanation": "The Board may order summary suspension of a pesticide's registration if it finds the suspension necessary to prevent an imminent hazard to the public, a nontarget organism, or a segment of the environment. The statute adds that registration is never a defense to a charge of an offense under the Article.",
+  "page": "10",
+  "ref": "§ 143-447(a)"
+ },
+ {
+  "id": "l2-033",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Is a pesticide's valid registration a defense to a charge under the Pesticide Law?",
+  "choices": [
+   "Yes, so long as the product's registration was current at the time the alleged offense occurred in this State",
+   "Only where the charge is brought against the registrant rather than the user",
+   "No; registration is never to be construed as a defense to a charge of an offense under the Article",
+   "Yes, for any charge concerning the product's composition or its labeling"
+  ],
+  "answer": 2,
+  "explanation": "The statute is explicit that in no event shall registration of a pesticide be construed as a defense to any charge of an offense prohibited under the Article. Registering a product does not license conduct the law forbids.",
+  "page": "10",
+  "ref": "§ 143-447(a)"
+ },
+ {
+  "id": "l2-034",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "What is a \"stop sale, stop use, or removal\" order, and who must obey it?",
+  "choices": [
+   "A written order to the registrant to recall a product from every dealer in the State within 30 days",
+   "An oral order from an inspector at the scene that must be confirmed in writing within 10 days to remain in effect",
+   "A court order obtained by the Board that authorizes seizure of the lot for condemnation",
+   "A written order to the owner or custodian of a lot of pesticide to hold it at a designated place until the law is complied with"
+  ],
+  "answer": 3,
+  "explanation": "The Board issues and enforces a written or printed stop sale, stop use, or removal order to the owner or custodian of a lot of pesticide, who must hold that lot at a designated place until the law has been complied with and the Board releases it in writing. The pesticide is released once the Article's requirements are met and the costs of the withdrawal are paid.",
+  "page": "10",
+  "ref": "§ 143-447(b)"
+ },
+ {
+  "id": "l2-035",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "Besides stopping an unlawful sale, what else may a stop sale, use, or removal order be issued to do?",
+  "choices": [
+   "Stop a use inconsistent with the labeling, or stop unlawful disposal of a pesticide or its container",
+   "Stop the transport of a pesticide across a county line pending an investigation",
+   "Stop a dealer from employing a salesperson who has not yet passed the pesticide dealer examination required by law",
+   "Stop an applicator from working until an unpaid civil penalty has been collected"
+  ],
+  "answer": 0,
+  "explanation": "The Board may issue a stop sale, use, or removal order to prevent or stop the use of a pesticide in a manner inconsistent with its labeling, and to prevent or stop the disposal of a pesticide or a pesticide container in violation of the Article or the Board's rules.",
+  "page": "10",
+  "ref": "§ 143-447(b)"
+ },
+ {
+  "id": "l2-036",
+  "section": 2,
+  "sectionName": "Regulation of the Use of Pesticides",
+  "sectionLabel": "pt. 2",
+  "manual": "law",
+  "question": "A pesticide is seized and condemned by a superior court. What happens to it?",
+  "choices": [
+   "It is destroyed in every case, since a condemned article may not lawfully be sold",
+   "It is destroyed or sold as the court directs, with any proceeds less legal costs paid to the State Treasurer",
+   "It is returned to the registrant, which must reimburse the Board for the costs of storage, handling, and disposal",
+   "It is turned over to the Board for use in its own research and monitoring program"
+  ],
+  "answer": 1,
+  "explanation": "After a decree of condemnation the article is disposed of by destruction or by sale as the court directs, and the proceeds of any sale, less legal costs, go to the State Treasurer. The court may instead release it to the owner for relabeling, reprocessing, or disposal on payment of costs and a bond that it will not be disposed of unlawfully.",
+  "page": "10",
+  "ref": "§ 143-447(d)"
+ },
+ {
+  "id": "l3-001",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "A company sells restricted use pesticides from three separate stores. How many pesticide dealer licenses does it need?",
+  "choices": [
+   "One, plus a branch registration filed with the Board for each additional store",
+   "Three, unless all three stores share a single manager who has passed the examination",
+   "Three, because a separate license and fee is required for each location or outlet",
+   "One, because the license is issued to the company rather than to a site"
+  ],
+  "answer": 2,
+  "explanation": "No person may act as a pesticide dealer without an annual license, and a separate license and fee must be obtained for each location or outlet from which restricted use pesticides are distributed, sold, held for sale, or offered for sale.",
+  "page": "11",
+  "ref": "§ 143-448(a)"
+ },
+ {
+  "id": "l3-002",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "What does a pesticide dealer license application cost, and is the fee returned if the license is denied?",
+  "choices": [
+   "Seventy-five dollars, and the fee is refunded if the applicant is found unqualified",
+   "Fifty dollars, and the fee is nonrefundable",
+   "One hundred fifty dollars, and the fee is credited toward the next year on denial",
+   "Seventy-five dollars, and the fee is nonrefundable"
+  ],
+  "answer": 3,
+  "explanation": "Each application for a pesticide dealer license must be accompanied by a nonrefundable fee of seventy-five dollars. A separate nonrefundable fee of fifty dollars is charged for the dealer examination itself.",
+  "page": "11",
+  "ref": "§ 143-448(b)"
+ },
+ {
+  "id": "l3-003",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "When does a pesticide dealer license expire?",
+  "choices": [
+   "December 31 of the year for which it was issued",
+   "One year from the date the Board issued it",
+   "December 31 of the year after it was issued",
+   "June 30 of the year after it was issued, on the State fiscal year"
+  ],
+  "answer": 0,
+  "explanation": "All licenses issued under the dealer Part expire on December 31 of the year for which they are issued, whatever month the license was granted. Renewal is annual, on application with the seventy-five-dollar fee on or before January 1 of the year the license covers.",
+  "page": "11",
+  "ref": "§ 143-448(b)"
+ },
+ {
+  "id": "l3-004",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "A licensed pesticide dealer moves the business to a new address. What does the law require?",
+  "choices": [
+   "The dealer must have the new location inspected before selling again",
+   "The dealer must immediately notify the Board",
+   "The dealer must apply for a new license within 30 days of the move",
+   "The dealer must notify the Board at the next annual renewal"
+  ],
+  "answer": 1,
+  "explanation": "Every licensed pesticide dealer who changes address or place of business must immediately notify the Board. Licensed applicators are under the same immediate-notice duty when they change address.",
+  "page": "11",
+  "ref": "§ 143-448(e)"
+ },
+ {
+  "id": "l3-005",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "What does a pesticide dealer license entitle the holder to do?",
+  "choices": [
+   "Sell restricted use pesticides and apply them for compensation at the customer's request",
+   "Conduct the business described in the application until the licensee surrenders the license or the Board revokes it",
+   "Conduct the business described in the application for the calendar year of issue, unless sooner suspended or revoked",
+   "Conduct any pesticide business at any location the licensee later opens in the State"
+  ],
+  "answer": 2,
+  "explanation": "The Board issues a license to each applicant meeting the requirements, and it entitles the holder to conduct the business described in the application for the calendar year of issue, unless the license is revoked or suspended sooner. Selling is not applying: applying pesticides for compensation requires an applicator license.",
+  "page": "11",
+  "ref": "§ 143-448(f)"
+ },
+ {
+  "id": "l3-006",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "What must an applicant for an original pesticide dealer license demonstrate on examination?",
+  "choices": [
+   "Knowledge of pesticides and their hazards, calibration of application equipment, and financial responsibility for damage claims",
+   "Competence as a dealer and the ability to read and interpret a Safety Data Sheet",
+   "Knowledge of the laws governing pesticide sale and a working knowledge of integrated pest management",
+   "Knowledge of pesticides and their hazards, competence as a dealer, and knowledge of the laws governing pesticide use and sale"
+  ],
+  "answer": 3,
+  "explanation": "On a written, or written and oral, examination prescribed by the Board, an applicant for an original dealer license must demonstrate knowledge of pesticides, their usefulness and their hazards, competence as a pesticide dealer, and knowledge of the laws and regulations governing the use and sale of pesticides.",
+  "page": "11",
+  "ref": "§ 143-449(b)"
+ },
+ {
+  "id": "l3-007",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "What is the fee for each examination required for a pesticide dealer license?",
+  "choices": [
+   "Fifty dollars, nonrefundable and in addition to the license fee",
+   "Ten dollars, nonrefundable and in addition to the license fee",
+   "Seventy-five dollars, which also covers the first year's license",
+   "Twenty-five dollars, refundable if the applicant passes on the first attempt"
+  ],
+  "answer": 0,
+  "explanation": "A nonrefundable fee of fifty dollars is charged for each examination required for a dealer license, on top of the seventy-five-dollar license fee. That is the same amount charged for a Worker Protection Designated Trainer examination and five times the restricted use pesticide examination fee.",
+  "page": "11",
+  "ref": "§ 143-449(b)"
+ },
+ {
+  "id": "l3-008",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "How may the Board provide for renewing a pesticide dealer license?",
+  "choices": [
+   "By reexamination at intervals no more frequent than two years",
+   "By continuing certification credits, or by reexamination at intervals no more frequent than four years",
+   "By completion of continuing certification credits only, reexamination having been dropped from the statute",
+   "By reexamination every year, unless the dealer attends an approved annual conference"
+  ],
+  "answer": 1,
+  "explanation": "The Board provides by rule for license renewal through completion of continuing certification credit requirements it prescribes, or through reexaminations at intervals not more frequent than four years. It also designates by rule who must pass the examination when a dealer operates more than one location or the applicant is a corporation, government unit, or other organized group.",
+  "page": "11",
+  "ref": "§ 143-449(c)(2)"
+ },
+ {
+  "id": "l3-009",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "Which of a dealer's employees must be named to the Board?",
+  "choices": [
+   "Only the employees who have passed the pesticide dealer examination",
+   "Only the employees authorized to sign for deliveries of restricted use pesticides at the licensed location",
+   "All persons employed by the dealer who sell or recommend restricted use pesticides",
+   "All persons employed by the dealer at a location licensed to sell pesticides"
+  ],
+  "answer": 2,
+  "explanation": "Every licensed pesticide dealer must submit to the Board, at the times the Board or the Commissioner prescribes, the names of all employees who sell or recommend restricted use pesticides. Recommending counts as much as selling, because bad advice is what the requirement exists to trace.",
+  "page": "12",
+  "ref": "§ 143-450(a)"
+ },
+ {
+  "id": "l3-010",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "An employee at a licensed dealership recommends a pesticide for a use the label does not support. Who does the law hold responsible?",
+  "choices": [
+   "The employee alone, unless the dealer knew of the recommendation and allowed it",
+   "The registrant of the product, whose labeling the recommendation departed from",
+   "No one, until the customer actually applies the product as recommended",
+   "The dealer, who is responsible for employees' and agents' claims and recommendations as well as their sales"
+  ],
+  "answer": 3,
+  "explanation": "Each pesticide dealer is responsible for the actions of every person acting as an employee or agent in the solicitation or sale of pesticides, and in all claims and recommendations for their use or application. Making a recommendation that departs from the registered label is itself a ground for action against the dealer's license.",
+  "page": "12",
+  "ref": "§ 143-450(b)"
+ },
+ {
+  "id": "l3-011",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "Which of these is a ground for the Board to deny, suspend, modify, or revoke a pesticide dealer license?",
+  "choices": [
+   "Refusing to keep the records the Article requires, or refusing to make them available for audit or inspection",
+   "Selling a general use pesticide to a customer who has no applicator license",
+   "Employing a salesperson who has held the job for less than one full season",
+   "Stocking a pesticide whose registration has been suspended in another state"
+  ],
+  "answer": 0,
+  "explanation": "The grounds include refusing or neglecting to keep and maintain required records, to make reports when required, or to make records available for audit or inspection. Others include false or fraudulent claims, recommendations that depart from the registered label, gross negligence or misconduct, and impersonating an inspector.",
+  "page": "12",
+  "ref": "§ 143-451(a)(6)"
+ },
+ {
+  "id": "l3-012",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "To whom may a licensed dealer provide a restricted use pesticide?",
+  "choices": [
+   "Any farm owner buying for use on land the owner farms, licensed or not",
+   "A certified private applicator, a licensed or certified applicator, or an employee under one's direct supervision",
+   "Any adult who signs the dealer's record of sale and states the intended use site",
+   "Any person who holds a permit from the Board, certification being required only of applicators who apply for hire"
+  ],
+  "answer": 1,
+  "explanation": "Providing or making a restricted use pesticide available to anyone other than a certified private applicator, a licensed pesticide applicator, a certified structural pest control applicator, a structural pest control licensee, or an employee under the direct supervision of one of them is a ground for action against the dealer's license.",
+  "page": "12",
+  "ref": "§ 143-451(a)(13)"
+ },
+ {
+  "id": "l3-013",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "A dealer lets an unlicensed person operate under the dealer's license. How does the Pesticide Law treat that?",
+  "choices": [
+   "It is permitted where the dealer supervises every sale the person makes",
+   "It is a violation only if the unlicensed person sells restricted use pesticides",
+   "It is a violation: aiding a person to evade the Article or allowing one's license to be used by an unlicensed person is a ground for revocation",
+   "It is permitted where the unlicensed person works only at the licensed location"
+  ],
+  "answer": 2,
+  "explanation": "Aiding or abetting a licensed or unlicensed person to evade the Article, conspiring with one to evade it, or allowing one's license to be used by an unlicensed person are all listed grounds for denying, suspending, modifying, or revoking a dealer license.",
+  "page": "12",
+  "ref": "§ 143-451(a)(10)"
+ },
+ {
+  "id": "l3-014",
+  "section": 3,
+  "sectionName": "Pesticide Dealers",
+  "sectionLabel": "pt. 3",
+  "manual": "law",
+  "question": "A dealer's license is revoked. How soon may that person apply for a new one?",
+  "choices": [
+   "After a fixed statutory period of one year running from the date of the Board's revocation order",
+   "At any time, provided the applicant retakes and passes the dealer examination",
+   "Never; a revoked dealer license permanently bars a new application",
+   "After the period the Board establishes in the revocation order, which may not exceed two years"
+  ],
+  "answer": 3,
+  "explanation": "A licensee whose license is revoked may not apply for a new one until the time the Board established in its order has elapsed, and that period may not exceed two years. If the revocation is appealed, the ceiling runs to two years from the order or final judgment sustaining it.",
+  "page": "13",
+  "ref": "§ 143-451(b)"
+ },
+ {
+  "id": "l4-001",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What does the Pesticide Law require of anyone engaging in the business of pesticide applicator in North Carolina?",
+  "choices": [
+   "An annual pesticide applicator license issued by the Pesticide Board",
+   "A one-time pesticide applicator license, renewable only after a change of business",
+   "Certification by the Commissioner of Agriculture in at least one category",
+   "Registration with the Board, a license being needed only for restricted use pesticides"
+  ],
+  "answer": 0,
+  "explanation": "No person may engage in the business of pesticide applicator in the State at any time unless licensed annually as a pesticide applicator by the Board. The license runs by calendar year, so it lapses at year end unless renewed.",
+  "page": "13",
+  "ref": "§ 143-452(a)"
+ },
+ {
+  "id": "l4-002",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What fee accompanies an application for a pesticide applicator license?",
+  "choices": [
+   "One hundred dollars, nonrefundable, covering the license and the core examination",
+   "Seventy-five dollars, nonrefundable, for each applicator's license",
+   "Fifty dollars, nonrefundable, for each applicator's license",
+   "Seventy-five dollars, refunded if the Board finds the applicant unqualified"
+  ],
+  "answer": 1,
+  "explanation": "Each application must be accompanied by a nonrefundable fee of seventy-five dollars for each pesticide applicator's license. Examination fees are separate: fifty dollars for the core examination and twenty dollars for each additional classification.",
+  "page": "13",
+  "ref": "§ 143-452(b)"
+ },
+ {
+  "id": "l4-003",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What annual inspection fee does the Pesticide Law set for each aircraft to be licensed?",
+  "choices": [
+   "Seventy-five dollars, the same as the applicator license fee",
+   "Fifty dollars, with another fifty dollars charged if a second inspection proves necessary",
+   "Twenty-five dollars, with another twenty-five if a second inspection proves necessary",
+   "Twenty-five dollars, with reinspection included in the original fee"
+  ],
+  "answer": 2,
+  "explanation": "An annual inspection fee of twenty-five dollars is submitted for each aircraft to be licensed. If an aircraft fails inspection and must be inspected a second time, the Board requires an additional twenty-five-dollar fee.",
+  "page": "13",
+  "ref": "§ 143-452(b)"
+ },
+ {
+  "id": "l4-004",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Besides the paid annual inspection, what other inspections of application equipment does the law provide for?",
+  "choices": [
+   "Announced follow-up inspections, at the licensee's expense, once each quarter",
+   "Inspections by the licensee's own insurer, filed with the Board each year as proof of financial responsibility",
+   "Annual self-inspections, certified by the licensee on the renewal application",
+   "Unannounced inspections, at no charge, to check calibration and maintenance against the law and rules"
+  ],
+  "answer": 3,
+  "explanation": "In addition to the required inspection, unannounced inspections may be made without charge to determine whether equipment is properly calibrated and maintained in conformance with the laws and regulations.",
+  "page": "13",
+  "ref": "§ 143-452(b)"
+ },
+ {
+  "id": "l4-005",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "How is an aircraft licensed to apply pesticides identified, and what does that cost the licensee?",
+  "choices": [
+   "By a license plate or decal the Board furnishes at no cost, affixed as the Board prescribes",
+   "By a license plate the licensee buys from the Board for twenty-five dollars",
+   "By the license number painted on both sides of the fuselage by the licensee, at the licensee's expense",
+   "By the FAA registration number alone, which the Board records on the license"
+  ],
+  "answer": 0,
+  "explanation": "All aircraft licensed to apply pesticides are identified by a license plate or decal furnished by the Board at no cost to the licensee, affixed to the aircraft in the location and manner the Board prescribes.",
+  "page": "13",
+  "ref": "§ 143-452(b)"
+ },
+ {
+  "id": "l4-006",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Which applicators pay no inspection or license fee, original or renewal?",
+  "choices": [
+   "Nonprofit organizations applying pesticides without compensation",
+   "State agencies, local governments, and their employees",
+   "Private applicators using restricted use pesticides on their own land",
+   "Apprentice aerial applicators, until they qualify for a pilot license"
+  ],
+  "answer": 1,
+  "explanation": "No applicator inspection or license fee, original or renewal, is charged to State agencies or local governments or their employees. Public operators still hold licenses and take the same examinations; only the fee is waived.",
+  "page": "13",
+  "ref": "§ 143-452(b)"
+ },
+ {
+  "id": "l4-007",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "An inspection finds a licensee's ground application equipment faulty and unsafe. What does the law require?",
+  "choices": [
+   "The equipment may be used only for applying general use pesticides until the repairs have been made",
+   "The licensee has 30 days to repair it, during which normal use may continue",
+   "The equipment may not be used to apply pesticides until proper repairs or alterations are made",
+   "The equipment may be used at reduced pressure until the next annual inspection"
+  ],
+  "answer": 2,
+  "explanation": "Inspections of ground pesticide application equipment may be made, and equipment determined to be faulty or unsafe may not be used to apply pesticides until proper repairs or alterations are made. Operating faulty or unsafe equipment is separately a ground for action against the license.",
+  "page": "13",
+  "ref": "§ 143-452(b)"
+ },
+ {
+  "id": "l4-008",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Which two distinctions must the Board's classification of applicator licenses always separate?",
+  "choices": [
+   "Restricted use from general use pesticides, and agricultural application sites from nonagricultural ones entirely",
+   "Contractors from pilots, and private applicators from commercial applicators",
+   "Indoor from outdoor application, and seasonal from year-round operations",
+   "Ground from aerial methods, and government units controlling rodents and insects of public health significance"
+  ],
+  "answer": 3,
+  "explanation": "The statute requires separate classifications or subclassifications for ground and aerial methods of application, and for State and local government units engaged in controlling rodents and insects of public health significance. The Board may add further classifications, including for apprentice applicators, and each may have its own testing.",
+  "page": "13",
+  "ref": "§ 143-452(d)"
+ },
+ {
+  "id": "l4-009",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "For an aerial pesticide application business, who must hold a license?",
+  "choices": [
+   "Both the contractor and the pilot",
+   "The contractor only, the pilot working under the contractor's license",
+   "The pilot only, the contractor needing just an FAA operating certificate",
+   "The contractor, the pilot, and every loader or mixer they employ"
+  ],
+  "answer": 0,
+  "explanation": "For aerial applicators a license is required for both the contractor and the pilot, and the qualifications section repeats that the contractor and each pilot involved in aerial application must be licensed.",
+  "page": "13",
+  "ref": "§ 143-452(d)"
+ },
+ {
+  "id": "l4-010",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Beyond finding the applicant qualified, what must the Board have before issuing an applicator license?",
+  "choices": [
+   "A list of the pesticides the applicant intends to buy during the license year",
+   "The bond or insurance required by the financial responsibility section of the Article",
+   "A signed statement that the applicant carries workers' compensation coverage",
+   "Proof that the applicant has worked one full season under a licensed applicator's supervision"
+  ],
+  "answer": 1,
+  "explanation": "The Board issues the license once it finds the applicant qualified in the classifications applied for and the applicant has filed the bond or insurance required under the Article's financial responsibility section. An aerial applicant must additionally have met the Federal Aviation Agency requirements to operate the equipment described in the application.",
+  "page": "13",
+  "ref": "§ 143-452(f)"
+ },
+ {
+  "id": "l4-011",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "An applicator's insurance is written to expire in September. What does that do to the license?",
+  "choices": [
+   "The license is denied, because financial security must cover the full calendar year",
+   "The license runs to December 31, and a lapse in the coverage is treated as a violation of the Article",
+   "The license is dated to expire when the financial security expires, rather than at year end",
+   "The license still runs to December 31, but is suspended if coverage is not replaced"
+  ],
+  "answer": 2,
+  "explanation": "A license normally expires at the end of the calendar year of issue, but where the financial security required by the Article is dated to expire earlier, the license is dated to expire on that earlier date. A license may also end sooner if the Board revokes or suspends it for cause.",
+  "page": "13",
+  "ref": "§ 143-452(f)"
+ },
+ {
+  "id": "l4-012",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "The Board finds an applicant competent with only certain equipment. What may it do with the license?",
+  "choices": [
+   "Issue it in full, since restrictions may be placed only on apprentice licenses",
+   "Deny it, because a license may not be issued for part of a classification",
+   "Issue it provisionally for 90 days, after which the applicant must be retested",
+   "Restrict it to certain types of equipment or pesticides, or to certain areas"
+  ],
+  "answer": 3,
+  "explanation": "The license may restrict the applicant to the use of certain types of equipment or pesticides, or to certain areas, where the Board finds the applicant qualified to use only those. If a license is not issued as applied for, the Board must inform the applicant in writing of the reasons.",
+  "page": "14",
+  "ref": "§ 143-452(f)"
+ },
+ {
+  "id": "l4-013",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "A licensed applicator sells the application business to a new owner. What must the new owner do before the business continues?",
+  "choices": [
+   "Have a licensed pesticide applicator available to supervise the business, since a license is not transferable",
+   "Apply to the Board to have the seller's applicator license transferred into the new owner's name before operating",
+   "Operate under the seller's license for the remainder of the calendar year, then apply",
+   "Register the change of ownership with the Board and pay a transfer fee"
+  ],
+  "answer": 0,
+  "explanation": "A pesticide applicator's license is not transferable. On a transfer of ownership, management, or operation of a licensee's business, the new owner, manager, or operator, whatever the form of the entity, must have a licensed pesticide applicator available to supervise the pesticide application business before the business continues.",
+  "page": "14",
+  "ref": "§ 143-452(g)"
+ },
+ {
+  "id": "l4-014",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What flying experience must a pilot have to hold a full aerial pesticide applicator license?",
+  "choices": [
+   "At least 125 hours in the last 12 months, whatever the kind of flying",
+   "At least 125 hours and one year's experience as a pilot in the field of aerial pesticide application",
+   "At least 125 hours and one year's experience as a pilot in any commercial flying work",
+   "At least 250 hours and two years' experience as a pilot in the field of aerial pesticide application"
+  ],
+  "answer": 1,
+  "explanation": "A pilot's qualifications must include at least 125 hours and one year's flying experience as a pilot in the field of aerial pesticide application. The hours have to be in aerial application work, not in flying generally.",
+  "page": "14",
+  "ref": "§ 143-453(a)"
+ },
+ {
+  "id": "l4-015",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "How is a pilot who lacks the 125 hours and one year of aerial application experience licensed?",
+  "choices": [
+   "As a ground pesticide applicator until the flying requirement is met",
+   "Not at all, until the hours and the year of experience have been logged",
+   "As an apprentice aerial pesticide applicator pilot, applying only under direct supervision",
+   "As a full aerial pesticide applicator pilot, but restricted to applying general use pesticides"
+  ],
+  "answer": 2,
+  "explanation": "A pilot lacking the 125 hours and one year of experience in aerial pesticide application is licensed as an apprentice aerial pesticide applicator pilot, and all aerial applications by an apprentice must be conducted under the direct supervision of a licensed pesticide applicator pilot.",
+  "page": "14",
+  "ref": "§ 143-453(a)"
+ },
+ {
+  "id": "l4-016",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What does direct supervision of an apprentice aerial applicator pilot require of the supervising pilot?",
+  "choices": [
+   "Flying in formation with the apprentice on every treated field",
+   "Being reachable by radio at any time of the day, from whatever airstrip the supervisor happens to be working",
+   "Reviewing and signing the apprentice's application records at the end of each week",
+   "Operating out of the same airstrip and being available periodically through each day to advise and assist"
+  ],
+  "answer": 3,
+  "explanation": "While directly supervising an apprentice, the supervising pilot must operate out of the same airstrip as the apprentice and be available periodically throughout each day to provide advice and assistance. Supervision is a matter of presence and availability, not of flying alongside.",
+  "page": "14",
+  "ref": "§ 143-453(a)"
+ },
+ {
+  "id": "l4-017",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What must an applicant for an original applicator license demonstrate on the examination?",
+  "choices": [
+   "Knowledge of pesticides and their hazards, competence as an applicator, and knowledge of the laws for the classification applied for",
+   "Knowledge of pesticides and their hazards, the ability to calibrate each type of equipment applied for, and proof of liability insurance",
+   "Competence as an applicator and a working knowledge of integrated pest management",
+   "Knowledge of the laws for the classification applied for and the ability to read a Safety Data Sheet"
+  ],
+  "answer": 0,
+  "explanation": "On a written, or written and oral, examination prescribed by the Board, the applicant must demonstrate knowledge of pesticides, their usefulness and their hazards; competence as a pesticide applicator; and knowledge of the laws and regulations governing the use and application of pesticides in the classification applied for.",
+  "page": "14",
+  "ref": "§ 143-453(b)"
+ },
+ {
+  "id": "l4-018",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What does an applicator pay for the core examination, and for each additional classification?",
+  "choices": [
+   "Seventy-five dollars for the core examination, with additional classifications included",
+   "Fifty dollars for the core examination and twenty dollars for each additional classification",
+   "Fifty dollars for the core examination and fifty dollars for each additional classification",
+   "Twenty dollars for the core examination and twenty dollars for each additional classification"
+  ],
+  "answer": 1,
+  "explanation": "A nonrefundable fee of fifty dollars is charged for the core examination, plus twenty dollars for each additional specific classification licensure. These examination fees are on top of the seventy-five-dollar license fee.",
+  "page": "14",
+  "ref": "§ 143-453(b)"
+ },
+ {
+  "id": "l4-019",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "How often may the Board require an applicator to sit a reexamination for license renewal?",
+  "choices": [
+   "No more often than every two years, unless the licensee has been penalized",
+   "Every year, unless the licensee earns continuing certification credits instead",
+   "No more often than every four years, unless more frequent testing is needed for federal approval of the State plan",
+   "No more often than every four years, with no exception in the statute"
+  ],
+  "answer": 2,
+  "explanation": "The Board provides by rule for renewal through continuing certification credits it prescribes, or through reexaminations at intervals not more frequent than four years. The one exception is where the Board finds more frequent testing necessary to qualify North Carolina's State pesticide control plan for federal approval.",
+  "page": "14",
+  "ref": "§ 143-453(c)(2)"
+ },
+ {
+  "id": "l4-020",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What must a licensed applicator report to the Board about the people who work for the business?",
+  "choices": [
+   "The names of all employees who hold their own applicator licenses",
+   "The names and license numbers of all employees who mix or load pesticides",
+   "The number of employees on the payroll at the time of each annual renewal",
+   "The names of all solicitors, salesmen, and operators employed, at the times the Board or Commissioner prescribes"
+  ],
+  "answer": 3,
+  "explanation": "Every licensed pesticide applicator must submit to the Board the names of all solicitors, salesmen, and operators employed, at the times the Board or the Commissioner prescribes. The applicator is also responsible for those employees, to assure pesticides are used consistently with the intent of the Article.",
+  "page": "15",
+  "ref": "§ 143-454(a)"
+ },
+ {
+  "id": "l4-021",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What does the Pesticide Law require of someone who performs services as a pest control consultant?",
+  "choices": [
+   "A license from the Board, with a nonrefundable annual fee of seventy-five dollars",
+   "A license from the Board, with a nonrefundable annual fee of fifty dollars",
+   "A pesticide applicator license, consulting being one of its classifications",
+   "Registration with the Board, a license being required only to apply pesticides for hire"
+  ],
+  "answer": 0,
+  "explanation": "No person may perform services as a pest control consultant without first getting a license from the Board, and the application must be accompanied by a nonrefundable annual fee of seventy-five dollars. The consultant examination costs a further fifty dollars, plus twenty dollars for each additional classification.",
+  "page": "15",
+  "ref": "§ 143-455(a)"
+ },
+ {
+  "id": "l4-022",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "On what basis may the Board classify pest control consultant licenses?",
+  "choices": [
+   "The consultant's years of experience and whether the work is full or part time",
+   "The crops involved, the consultant's training, the discretion the work involves, and the site of the service",
+   "The number of clients served and the acreage advised on in a calendar year",
+   "The pesticides the consultant recommends and whether any are restricted use"
+  ],
+  "answer": 1,
+  "explanation": "Consultant classifications and subclassifications may reflect the crops involved in the consulting service, the discipline or training of the consultant, the discretion or lack of discretion involved, and the site or location of the service. Each may carry its own testing and its own minimum standards of specialized training or experience.",
+  "page": "15",
+  "ref": "§ 143-455(b)"
+ },
+ {
+  "id": "l4-023",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "When may a consultant be licensed on less stringent qualifications?",
+  "choices": [
+   "When the licensee holds a pesticide applicator license in the same classification",
+   "When the licensee works under the supervision of a fully qualified consultant",
+   "When the licensee is restricted to recommendations contained in publications the Board recognizes for that classification",
+   "When the licensee consults only on crops grown on fewer than fifty acres"
+  ],
+  "answer": 2,
+  "explanation": "Qualifications for licensing may be less stringent where the licensee is restricted to making recommendations contained in publications the Board recognizes as appropriate for a specific consulting classification or subclassification. The narrower the discretion, the lighter the qualification.",
+  "page": "15",
+  "ref": "§ 143-455(b)"
+ },
+ {
+  "id": "l4-024",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Which rules governing applicators apply to pest control consultants as well?",
+  "choices": [
+   "Equipment inspection fees, aircraft licensing, and financial responsibility bonds",
+   "Only the examination requirements; the rest of the applicator Part does not reach consultants",
+   "Only the grounds for denial, suspension, and revocation of a license",
+   "Late application penalties, address changes, transferability, continuing certification credits, and periodic reexamination"
+  ],
+  "answer": 3,
+  "explanation": "Pest control consultants are subject to the same provisions as pesticide applicators on penalties for late license applications, changes of address, transferability of licenses, continuing certification credit requirements, periodic reexamination, and examinations for corporate applicants.",
+  "page": "15",
+  "ref": "§ 143-455(d)"
+ },
+ {
+  "id": "l4-025",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Which of these is a listed ground for the Board to act against a pesticide applicator's license?",
+  "choices": [
+   "Operating in a faulty, careless, or negligent manner",
+   "Applying a pesticide on a day when rain later fell on the treated field",
+   "Charging a customer more than the prevailing rate for an application",
+   "Employing an operator who has not yet been named to the Board"
+  ],
+  "answer": 0,
+  "explanation": "Operating in a faulty, careless, or negligent manner is one of the listed grounds for denying, suspending, modifying, or revoking an applicator license, alongside operating faulty or unsafe equipment, operating unlicensed equipment, and making a recommendation or application not in accordance with the registered label.",
+  "page": "16",
+  "ref": "§ 143-456(a)(4)"
+ },
+ {
+  "id": "l4-026",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "An applicator misstates what pests an inspection found on a customer's land. How does the law treat that?",
+  "choices": [
+   "It is treated as a records violation, since the inspection findings must be recorded",
+   "False or misleading statements during or after an inspection about an infestation are a ground for license action",
+   "It is a private matter between the applicator and the customer, unless money changed hands over the statement itself",
+   "It is a ground for license action only if the customer bought a treatment as a result"
+  ],
+  "answer": 1,
+  "explanation": "Making false or misleading statements during or after an inspection concerning any infestation or infection of pests found on land is one of the listed grounds for denial, suspension, modification, or revocation of a license. Whether a sale followed is not part of the test.",
+  "page": "16",
+  "ref": "§ 143-456(a)(12)"
+ },
+ {
+  "id": "l4-027",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "A civil penalty is assessed against a licensed applicator. What happens if it goes unpaid?",
+  "choices": [
+   "The license is automatically revoked on the thirty-first day after assessment, without a hearing",
+   "The unpaid amount is added to the next year's license fee",
+   "Failing to pay within 30 days of assessment is itself a ground for action against the license",
+   "The Board refers it for collection but the license is unaffected"
+  ],
+  "answer": 2,
+  "explanation": "Failure to pay a civil penalty assessed under the Article within 30 days after the date it is assessed is a listed ground for denying, suspending, modifying, or revoking the license. Failing to pay the license fee itself while continuing to apply pesticides is another.",
+  "page": "16",
+  "ref": "§ 143-456(a)(16)"
+ },
+ {
+  "id": "l4-028",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "When the Board writes rules on how and when pesticides may be applied, what harms must it consider preventing?",
+  "choices": [
+   "Drift or misapplication harming nearby plants and livestock, other harms being covered by federal law",
+   "Economic loss to neighboring growers whose crops compete with the treated crop",
+   "Harm to the applicator and to employees handling the pesticide during mixing and loading",
+   "Drift or misapplication harming nearby plants, wildlife, fish and aquatic life, and other animals, persons, or beneficial insects"
+  ],
+  "answer": 3,
+  "explanation": "In adopting rules on the method, times, and places of pesticide application, the Board must consider what is needed to prevent damage or injury from drift or misapplication to plants including forage plants on adjacent or nearby land, wildlife in adjoining or nearby areas, fish and other aquatic life in waters in reasonable proximity, and other animals, persons, or beneficial insects.",
+  "page": "17",
+  "ref": "§ 143-458(a)"
+ },
+ {
+  "id": "l4-029",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What may the Board require by rule of someone planning to apply a pesticide, with respect to the neighbors?",
+  "choices": [
+   "Notice of the proposed application to adjoining landowners or those in the immediate vicinity",
+   "Written consent from adjoining landowners before the application proceeds",
+   "A survey of the adjoining land for sensitive crops, carried out within the previous 30 days of the application",
+   "Payment into a fund covering drift damage to adjoining property"
+  ],
+  "answer": 0,
+  "explanation": "The Board may require by rule that notice of a proposed pesticide application be given to landowners adjoining the property to be treated, or in its immediate vicinity, where it finds the notice necessary to carry out the purposes of the Article. The statute provides for notice, not for a veto by the neighbor.",
+  "page": "17",
+  "ref": "§ 143-458(b)"
+ },
+ {
+  "id": "l4-030",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "A supplier offers an applicator an unregistered product containing the same active ingredients as a registered pesticide. What does the law say about applying it?",
+  "choices": [
+   "It may be applied once the Board is notified in writing of the intended use",
+   "An applicator, employee, or agent may not apply it, nor combine it with anything else and apply that",
+   "It may be applied so long as the registered product's label directions are followed exactly as written",
+   "It may be applied only on land the applicator owns, and not for compensation"
+  ],
+  "answer": 1,
+  "explanation": "A pesticide applicator, an employee, or an agent may not apply a substance that has the active ingredients of a registered pesticide but is not itself registered, and may not combine such a substance with any other substance to apply, whether the combination happens before, during, or after the application.",
+  "page": "17",
+  "ref": "§ 143-458(c)"
+ },
+ {
+  "id": "l4-031",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "What is the penalty for applying an unregistered substance carrying a registered pesticide's active ingredients?",
+  "choices": [
+   "A civil penalty of up to two thousand dollars per violation, with no criminal charge",
+   "A Class 2 misdemeanor, with the fine set by the court without a statutory ceiling",
+   "A Class 2 misdemeanor, including a fine of up to one thousand dollars per violation",
+   "A Class 1 misdemeanor, including a fine of up to five thousand dollars per violation"
+  ],
+  "answer": 2,
+  "explanation": "Violating either the ban on applying such a substance or the ban on combining it with another substance is a Class 2 misdemeanor, which includes a fine of up to one thousand dollars per violation.",
+  "page": "17",
+  "ref": "§ 143-458(e)"
+ },
+ {
+  "id": "l4-032",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "Who must file reports of purchases, sales, and shipments of restricted use pesticides with the Board?",
+  "choices": [
+   "Every licensed pesticide applicator who buys them for customer accounts",
+   "Every registrant whose products are sold in the State",
+   "Every carrier that transports them within the State",
+   "Every person selling pesticides directly to the consumer"
+  ],
+  "answer": 3,
+  "explanation": "Every person selling pesticides directly to the consumer must file reports of purchases, sales, and shipments of restricted use pesticides, and of other pesticides the Board designates, in the manner and with the frequency the Board prescribes. The reports are provided solely for the Board's purposes.",
+  "page": "17",
+  "ref": "§ 143-459"
+ },
+ {
+  "id": "l4-033",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "A seller cannot file a required pesticide sales report on time. What does the law allow?",
+  "choices": [
+   "An extension of 15 additional days for cause, on written request to the Board",
+   "An extension of 30 additional days for cause, on written request to the Board",
+   "An extension to the end of the calendar year, on payment of a late fee",
+   "No extension; the report is either filed on time or the failure is a violation"
+  ],
+  "answer": 0,
+  "explanation": "The time for reporting may be extended for an additional 15 days for cause, on written request to the Board. Failing to file when due is cause to suspend, revoke, or deny a license or registration, and is a misdemeanor as well.",
+  "page": "17",
+  "ref": "§ 143-459"
+ },
+ {
+  "id": "l5-001",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "When is a pesticide \"adulterated\" under the North Carolina Pesticide Law?",
+  "choices": [
+   "When its labeling makes a claim about its effect that the registration does not support",
+   "When its strength or purity falls below the professed standard, or a substance is substituted or a valuable constituent removed",
+   "When it has been diluted below the concentration the label directs for the intended use site",
+   "When it has been stored past the expiration date the registrant printed on the container"
+  ],
+  "answer": 1,
+  "explanation": "A pesticide is adulterated if its strength or purity falls below the professed standard or quality expressed on the labeling or under which it is sold, if any substance has been substituted wholly or in part for it, or if any valuable constituent has been wholly or partly removed. Misleading labeling is a separate defect: that makes the product misbranded.",
+  "page": "18",
+  "ref": "§ 143-460(2)"
+ },
+ {
+  "id": "l5-002",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "The statutory term \"device\" covers instruments for trapping or destroying pests. What does it leave out?",
+  "choices": [
+   "Instruments intended for trapping or mitigating weeds and nematodes rather than insects",
+   "Instruments sold for household use in consumer-sized packages",
+   "Equipment used for the application of pesticides, when sold separately from the device",
+   "Traps that kill rodents mechanically rather than by a chemical action"
+  ],
+  "answer": 2,
+  "explanation": "A device is any instrument or contrivance intended for trapping, destroying, repelling, or mitigating insects, rodents, fungi, weeds, nematodes, or other pests the Board designates, but the definition excludes equipment used for applying pesticides when that equipment is sold separately from the device.",
+  "page": "18",
+  "ref": "§ 143-460(9)"
+ },
+ {
+  "id": "l5-003",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which of these is \"equipment\" as the Pesticide Law defines it?",
+  "choices": [
+   "A hand-pumped household spray bottle used indoors",
+   "A backpack sprayer whose only power is the operator working the handle",
+   "A hand-cranked spreader pushed by the person applying the granules",
+   "A tractor-mounted sprayer using mechanical power to treat a field"
+  ],
+  "answer": 3,
+  "explanation": "Equipment means ground, water, or aerial equipment, devices, or contrivances using motorized, mechanical, or pressurized power to apply a pesticide to land and what grows, lives, or is stored on it. Excluded are pressurized hand-sized household devices and anything where the person applying the pesticide is the source of the power.",
+  "page": "18",
+  "ref": "§ 143-460(11)"
+ },
+ {
+  "id": "l5-004",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "What does the Pesticide Law's definition of \"labeling\" include beyond the container label?",
+  "choices": [
+   "Written matter accompanying the pesticide and material referred to on the label, with an exception for official research publications",
+   "Written matter accompanying the pesticide, but nothing that is merely referred to on the label",
+   "Any advertising for the product, including radio and print advertising by the dealer",
+   "Only the label and the outer wrapper of the retail package the product is sold in"
+  ],
+  "answer": 0,
+  "explanation": "Labeling means all labels and other written, printed, or graphic matter on the pesticide or its containers and wrappers, accompanying it at any time, or referred to on the label or in accompanying literature. Accurate, nonmisleading references to current official publications of federal agencies, state experiment stations, agricultural colleges, and similar official research bodies are excepted.",
+  "page": "19",
+  "ref": "§ 143-460(20)"
+ },
+ {
+  "id": "l5-005",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "How far does the statutory term \"land\" reach?",
+  "choices": [
+   "To land in agricultural use, together with the airspace directly above it",
+   "To land and water areas including airspace, and to the plants, animals, and structures on or appurtenant to them",
+   "To land and water areas including the airspace above them, but not to anything built or growing on that land",
+   "To land surfaces and permanent structures, water areas being covered by separate law"
+  ],
+  "answer": 1,
+  "explanation": "Land means all land and water areas, including airspace, and all plants, animals, structures, buildings, devices, and contrivances appurtenant to or situated on them, whether fixed or mobile, including any used for transportation. The breadth matters because rules on applying pesticides to land reach that far.",
+  "page": "19",
+  "ref": "§ 143-460(21)"
+ },
+ {
+  "id": "l5-006",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which of these makes a pesticide misbranded under North Carolina law?",
+  "choices": [
+   "Its labeling names the pests it controls without listing every crop",
+   "Its labeling repeats the manufacturer's address on the outer wrapper",
+   "Its labeling refers to the product's registration under the Article",
+   "Its labeling states the EPA registration number issued to the product"
+  ],
+  "answer": 2,
+  "explanation": "A pesticide is misbranded if its labeling bears any reference to registration under the Article. Registering a product is not an endorsement, and the law forbids labeling that implies otherwise. Misbranding also covers false or misleading labeling, imitation products, missing use instructions or warnings, a missing ingredient statement, and required information that is not prominently placed.",
+  "page": "20",
+  "ref": "§ 143-460(23)b.2"
+ },
+ {
+  "id": "l5-007",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A herbicide injures the crop it is applied to when used exactly as directed. How does the law classify the product?",
+  "choices": [
+   "Adulterated, since its composition cannot match what was registered",
+   "Neither, since crop injury is a risk the user accepts by choosing the product",
+   "Misbranded only if the injury also extends to people or other vertebrate animals",
+   "Misbranded, since a pesticide injurious to the vegetation it is applied to when used as directed is misbranded"
+  ],
+  "answer": 3,
+  "explanation": "An insecticide, nematicide, fungicide, or herbicide is misbranded if, used as directed or in accordance with commonly recognized practice, it is injurious to living man or other vertebrate animals, or to the vegetation it is applied to other than weeds, or to the person applying it. For plant regulators, defoliants, and desiccants, the intended physical or physiological effects on plants are not counted as injury.",
+  "page": "20",
+  "ref": "§ 143-460(23)b.7"
+ },
+ {
+  "id": "l5-008",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which organisms does the Pesticide Law's definition of \"pest\" specifically exclude?",
+  "choices": [
+   "Viruses, bacteria, and other microorganisms on or in living people or other living animals",
+   "Vertebrate animals, which the Board must declare pests one species at a time",
+   "Weeds, which the Article treats under a separate definition of their own",
+   "Organisms that damage stored products and processed foods rather than growing crops in the field"
+  ],
+  "answer": 0,
+  "explanation": "Pest means any insect, rodent, nematode, fungus, weed, or other noxious or undesirable microorganism or macroorganism, except viruses, bacteria, or other microorganisms on or in living persons or other living animals. Those are matters for medicine and veterinary medicine, not pesticide law.",
+  "page": "21",
+  "ref": "§ 143-460(26a)"
+ },
+ {
+  "id": "l5-009",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Does the word \"person\" in the Pesticide Law include a city or a State agency?",
+  "choices": [
+   "No; the definition reaches only individuals, firms, partnerships, and corporations",
+   "Yes; the definition covers municipalities, county and local government units, and state and federal agencies",
+   "No; government bodies are covered only by the separate public operator provisions of the Article and its rules",
+   "Yes for cities and counties, but not for State or federal agencies"
+  ],
+  "answer": 1,
+  "explanation": "A person is any person including an individual, firm, partnership, association, company, joint-stock association, public or private institution, municipality or county or local government unit, state or federal governmental agency, or a private or public corporation. Prohibitions written against any person therefore bind government bodies too.",
+  "page": "21",
+  "ref": "§ 143-460(26)"
+ },
+ {
+  "id": "l5-010",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Who is a \"pest control consultant\" under North Carolina law?",
+  "choices": [
+   "Any employee of a licensed dealer who advises customers on which pesticide to buy",
+   "Any person regulated under the North Carolina Structural Pest Control Act",
+   "A person who for a fee gives technical advice, supervision, or aid, or recommends specific pesticides for pest control",
+   "A person who for a fee inspects property for pests but never recommends a product"
+  ],
+  "answer": 2,
+  "explanation": "A pest control consultant is a person who, for a fee, offers or supplies technical advice, supervision, or aid, or recommends the use of specific pesticides for controlling insects, plant diseases, weeds, and other pests. Persons regulated by the North Carolina Structural Pest Control Act are expressly outside the definition.",
+  "page": "21",
+  "ref": "§ 143-460(27)"
+ },
+ {
+  "id": "l5-011",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which of these people is a \"pesticide applicator\" who must be licensed?",
+  "choices": [
+   "A grower applying pesticides to produce a commodity on rented land",
+   "An employee of a licensed pesticide applicator, applying on the employer's jobs",
+   "A neighbor applying a general use pesticide as an unpaid volunteer",
+   "A golf course operator applying pesticides on the course"
+  ],
+  "answer": 3,
+  "explanation": "The definition of pesticide applicator expressly names any public operator, any golf course operator, any seed treater, any person engaged in demonstration or research pest control, and anyone else applying pesticides for compensation. Producing a commodity on your own or rented land, working as an employee of a licensed applicator, and volunteering a general use application without compensation are all excluded.",
+  "page": "21",
+  "ref": "§ 143-460(29)"
+ },
+ {
+  "id": "l5-012",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Two growers trade labor: one sprays the other's field in exchange for help with harvest. How does the law treat the sprayer?",
+  "choices": [
+   "Not a pesticide applicator, because trading personal services between producers is not compensation for this purpose",
+   "A pesticide applicator, because the work was done on another person's property",
+   "A pesticide applicator, because the traded labor is compensation in kind",
+   "Not a pesticide applicator, but only if the pesticide used is a general use product"
+  ],
+  "answer": 0,
+  "explanation": "A person who uses or supervises the use of a pesticide only to produce an agricultural commodity on property owned or rented by that person or an employer, or only on another person's property when applied without compensation other than the trading of personal services between producers of agricultural commodities, is excluded from the definition of pesticide applicator.",
+  "page": "21",
+  "ref": "§ 143-460(29)a"
+ },
+ {
+  "id": "l5-013",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which of these applications falls outside the definition of a pesticide applicator?",
+  "choices": [
+   "A public utility employee in charge of equipment applying herbicides on a right-of-way",
+   "A certified water treatment plant operator applying a pesticide labeled for treating water",
+   "A commercial firm applying an antimicrobial pesticide classified for restricted use in a greenhouse",
+   "A seed treater treating seed for compensation at a processing facility"
+  ],
+  "answer": 1,
+  "explanation": "Persons certified by the Water Treatment Facility Operators Board of Certification or the Wastewater Treatment Plant Operators Certification Commission are excluded when they apply pesticides labeled for treating water or wastewater. The antimicrobial exclusion is narrower: it does not reach restricted use products or agricultural, horticultural, or forestry uses.",
+  "page": "21",
+  "ref": "§ 143-460(29)c"
+ },
+ {
+  "id": "l5-014",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A hardware store sells only home and garden pesticides in consumer-sized packages, none of them restricted use. Is it a pesticide dealer?",
+  "choices": [
+   "Yes, unless the store's total pesticide sales stay under a threshold the Board sets",
+   "No, provided the store also files annual sales reports with the Board",
+   "No, that trade is excluded from the definition of pesticide dealer",
+   "Yes, because any retail sale of pesticides makes the seller a dealer"
+  ],
+  "answer": 2,
+  "explanation": "A pesticide dealer is a person in the business of distributing, selling, offering for sale, or holding for sale restricted use pesticides directly to users. Sellers limited to consumer-sized packages labeled and intended for home and garden use that are not restricted use pesticides are excluded, as are practicing veterinarians and physicians who prescribe, dispense, or use pesticides in their professional services.",
+  "page": "22",
+  "ref": "§ 143-460(30)"
+ },
+ {
+  "id": "l5-015",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which products does the definition of \"plant regulator\" exclude?",
+  "choices": [
+   "Defoliants and desiccants, which the Article defines separately",
+   "Any substance applied to ornamental plants rather than to crop plants and the produce of those plants",
+   "Any substance that retards growth rather than accelerating it",
+   "Plant nutrients, trace elements, nutritional chemicals, plant inoculants, and soil amendments"
+  ],
+  "answer": 3,
+  "explanation": "A plant regulator is a substance intended, through physiological action, to accelerate or retard growth or maturation or otherwise alter the behavior of ornamental or crop plants or their produce. To the extent substances are intended as plant nutrients, trace elements, nutritional chemicals, plant inoculants, or soil amendments, they are not plant regulators.",
+  "page": "22",
+  "ref": "§ 143-460(32)"
+ },
+ {
+  "id": "l5-016",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Who is a \"public operator\" in the Pesticide Law?",
+  "choices": [
+   "A person in charge of equipment applying pesticides for a public utility, State agency, municipal corporation, or other governmental agency",
+   "Any employee of a State or local government, whatever the person's role in the application",
+   "A person applying pesticides on public property, including private contractors under a government contract",
+   "An elected official responsible for a governmental pest control program"
+  ],
+  "answer": 0,
+  "explanation": "A public operator is any person in charge of equipment used by public utilities, State agencies, municipal corporations, or other governmental agencies applying pesticides. The definition turns on being in charge of the equipment, and public operators are named in the definition of pesticide applicator, so they must be licensed.",
+  "page": "22",
+  "ref": "§ 143-460(33)"
+ },
+ {
+  "id": "l5-017",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "What makes a product a restricted use pesticide in North Carolina?",
+  "choices": [
+   "A signal word of DANGER on the label, whoever classified the product",
+   "Classification as restricted by the EPA Administrator, or designation as such by the Pesticide Board",
+   "Classification as restricted by the EPA Administrator, the Board having no separate power to add products",
+   "Designation by the Pesticide Board, federal classification having effect only after the Board adopts it"
+  ],
+  "answer": 1,
+  "explanation": "A restricted use pesticide, or pesticide classified for restricted use, means any pesticide or use classified as restricted by the Administrator of the U.S. Environmental Protection Agency, or any other pesticide or use the Board has designated as restricted under its own restricted use section. Either route makes the product restricted in this State.",
+  "page": "22",
+  "ref": "§ 143-460(35)"
+ },
+ {
+  "id": "l5-018",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "The statutory definition of a rodenticide covers substances intended for which purposes?",
+  "choices": [
+   "Preventing, destroying, or repelling rodents and any other mammal, wild or domesticated",
+   "Destroying rodents in and around structures, field rodents being covered as pests generally",
+   "Preventing, destroying, repelling, attracting, or mitigating rodents or another vertebrate the Board declares a pest",
+   "Destroying or mitigating rodents only, since attracting an animal to a bait station is not itself an act of pest control"
+  ],
+  "answer": 2,
+  "explanation": "Rodenticide means any substance or mixture intended for preventing, destroying, repelling, attracting, or mitigating rodents or any other vertebrate animal the Board declares to be a pest. Attracting counts, which is what brings baits and lures inside the definition.",
+  "page": "22",
+  "ref": "§ 143-460(36)"
+ },
+ {
+  "id": "l5-019",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "An applicator uses a labeled product at half the labeled rate. Is that a use inconsistent with the labeling?",
+  "choices": [
+   "Yes; any departure from the rate stated on the label is a use inconsistent with the labeling of the product itself",
+   "No, but only where the label states a range of rates rather than a single rate",
+   "Yes, unless the reduced rate is recommended in a publication the Board recognizes",
+   "No; applying at a dosage, concentration, or frequency less than the labeling specifies is expressly excluded"
+  ],
+  "answer": 3,
+  "explanation": "The statute defines using a pesticide in a manner inconsistent with its labeling as using it in a manner the labeling does not permit, then excludes four practices, the first of which is applying at any dosage, concentration, or frequency less than the labeling specifies.",
+  "page": "22",
+  "ref": "§ 143-460(36a)a"
+ },
+ {
+  "id": "l5-020",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A label lists the crop being treated but not the pest the grower is after. When may the product still be applied?",
+  "choices": [
+   "When the application is to a crop, animal, or site the labeling specifies, unless the labeling limits use to the pests it names",
+   "Whenever the pest is one the same product controls on any other labeled crop",
+   "Only after the Board issues a written permit for the unlisted target pest",
+   "Only when a Board-recognized publication recommends the product for that pest"
+  ],
+  "answer": 0,
+  "explanation": "Applying a pesticide against a target pest not specified on the labeling is excluded from the meaning of an inconsistent use, provided the application is to a crop, animal, or site the labeling specifies. The exclusion falls away if the labeling states specifically that the pesticide may be used only for the pests it names.",
+  "page": "22",
+  "ref": "§ 143-460(36a)b"
+ },
+ {
+  "id": "l5-021",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which two further practices are excluded from the meaning of using a pesticide inconsistently with its labeling?",
+  "choices": [
+   "Applying with equipment the labeling does not name, and applying at a higher concentration on a smaller area",
+   "Using a method of application the labeling does not prohibit, and mixing with another pesticide or a fertilizer where the labeling does not prohibit it",
+   "Using a method of application the labeling recommends, and mixing only with products carrying the same active ingredient",
+   "Treating a site the labeling omits, and applying more frequently than the labeling specifies"
+  ],
+  "answer": 1,
+  "explanation": "Beyond lower rates and unlisted target pests on a labeled site, the definition also excludes employing any method of application not prohibited by the labeling, and mixing pesticides or mixing a pesticide with a fertilizer where the labeling does not prohibit that mixture. In each case the test is what the labeling forbids, not what it happens to mention.",
+  "page": "23",
+  "ref": "§ 143-460(36a)c"
+ },
+ {
+  "id": "l5-022",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "How does the Pesticide Law define \"wildlife\"?",
+  "choices": [
+   "Game species and other animals the Wildlife Resources Commission manages",
+   "All nondomesticated mammals and birds, aquatic life being covered separately",
+   "All living things that are neither human, domesticated, nor pests, including mammals, birds, and aquatic life",
+   "All vertebrate animals living in the wild, including any species that the Board has declared to be a pest by rule"
+  ],
+  "answer": 2,
+  "explanation": "Wildlife means all living things that are neither human, domesticated, nor pests as the Article defines them, including but not limited to mammals, birds, and aquatic life. An organism declared a pest is thereby outside the protection the term carries elsewhere in the law.",
+  "page": "23",
+  "ref": "§ 143-460(38)"
+ },
+ {
+  "id": "l5-023",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "The Board is adopting a rule that would sharply reduce the value of stock and equipment licensees already hold. What does the law say it should do?",
+  "choices": [
+   "Compensate affected licensees for the documented loss in value",
+   "Exempt existing inventories and equipment from the rule permanently",
+   "Submit the rule to the General Assembly before it takes effect",
+   "Give the rule a future effective date to minimize undue economic loss, absent overriding policy considerations"
+  ],
+  "answer": 3,
+  "explanation": "Unless the Board finds there are overriding policy considerations, a regulation that in its judgment will severely curtail the usefulness or value of inventories or equipment already in licensees' hands should be given a future effective date, so as to minimize undue potential economic loss.",
+  "page": "23",
+  "ref": "§ 143-461(1)"
+ },
+ {
+  "id": "l5-024",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Which power may the Pesticide Board never delegate?",
+  "choices": [
+   "Its power to adopt rules and regulations of any kind",
+   "Its power to conduct public hearings on contested matters",
+   "Its power to conduct investigations it deems necessary",
+   "Its power to settle or compromise actions it has brought"
+  ],
+  "answer": 0,
+  "explanation": "The Board may delegate powers it deems necessary to one or more of its members, to the Commissioner, or to a qualified employee, but its rulemaking power is expressly carved out. Any delegation must be set out in the Board's official regulations, and a person delegated to conduct a hearing must report the hearing with its evidence and record back to the Board for decision.",
+  "page": "23",
+  "ref": "§ 143-461(5)"
+ },
+ {
+  "id": "l5-025",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Does suing for an injunction to stop a violation take the place of the Article's other penalties?",
+  "choices": [
+   "No, but a civil penalty already assessed must be refunded if an injunction issues",
+   "No; neither the action nor the proceedings in it relieve any party from any other penalty or remedy the Article prescribes",
+   "Yes; the injunction is the Board's exclusive remedy once it has been sought",
+   "Yes, for as long as the defendant complies with the terms of the injunction"
+  ],
+  "answer": 1,
+  "explanation": "On a violation of the Article or of a Board regulation, the Board may institute a civil action in superior court in the name of the State for injunctive relief, either before or after other civil or criminal proceedings. Neither that action nor its proceedings relieve any party from any other penalty or remedy prescribed for the same violation.",
+  "page": "24",
+  "ref": "§ 143-461(7)"
+ },
+ {
+  "id": "l5-026",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "The Board proposes to deny someone permission to sit a license examination. What procedure governs?",
+  "choices": [
+   "A superior court action, examinations being outside the administrative process",
+   "No formal procedure; permission to take an examination is granted at the Board's discretion",
+   "Chapter 150B of the General Statutes, the same as for revoking or suspending a license",
+   "The Board's own hearing rules, since no license exists yet to be affected"
+  ],
+  "answer": 2,
+  "explanation": "Chapter 150B, the Administrative Procedure Act, applies to all proceedings whose effect would be to revoke, suspend, deny, or withhold renewal of a dealer or applicator license, and to proceedings to deny permission to take an examination for one. Rulemaking and pesticide registration decisions are governed by the same Chapter.",
+  "page": "24",
+  "ref": "§ 143-462"
+ },
+ {
+  "id": "l5-027",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "An applicator licensed in a neighboring state wants to work in North Carolina. What does the reciprocity provision allow?",
+  "choices": [
+   "The Board must license the nonresident without examination if the other state offers North Carolina licensees the same courtesy",
+   "The Board may waive the license fee, but the examination must still be taken",
+   "The Board may issue a temporary license for one season while the examination is scheduled",
+   "The Board may license the nonresident without examination if that state's licensing is substantially in accordance with the Article and financial security is met"
+  ],
+  "answer": 3,
+  "explanation": "The Board may issue any license the Article requires on a reciprocal basis with other states, without examination, to a nonresident licensed in another state substantially in accordance with the Article's provisions, provided the financial security required by the Article is met. The word is may: reciprocity is the Board's option, not the applicant's right.",
+  "page": "24",
+  "ref": "§ 143-465(a)"
+ },
+ {
+  "id": "l5-028",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A town wants to pass an ordinance restricting how pesticides are applied within its limits. May it?",
+  "choices": [
+   "No; no county, city, or other political subdivision may regulate pesticides in an area subject to the Board's regulation",
+   "Yes, so long as the ordinance is at least as strict as the Board's rules",
+   "Yes, if the Board approves the ordinance before it takes effect",
+   "No, unless the ordinance applies only to town-owned property"
+  ],
+  "answer": 0,
+  "explanation": "No county, city, or other political subdivision may adopt or continue any ordinance, rule, regulation, or resolution regulating the use, sale, distribution, storage, transportation, disposal, formulation, labeling, registration, manufacture, or application of pesticides in any area subject to the Board's regulation. Pesticide regulation in North Carolina is a State matter.",
+  "page": "24",
+  "ref": "§ 143-465(d)"
+ },
+ {
+  "id": "l5-029",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "What local authority survives the ban on local pesticide regulation?",
+  "choices": [
+   "Authority to license pesticide dealers operating within the jurisdiction",
+   "Planning and zoning authority under Chapter 160D, and fire prevention and inspection authority",
+   "Authority to regulate pesticide storage and application within municipal water supply watersheds",
+   "Authority to require notice to neighbors before an application inside city limits"
+  ],
+  "answer": 1,
+  "explanation": "The preemption provision expressly leaves counties, cities, and other political subdivisions free to exercise their planning and zoning authority under Chapter 160D of the General Statutes and their fire prevention or inspection authority. What they may not do is regulate pesticides themselves.",
+  "page": "25",
+  "ref": "§ 143-465(d)"
+ },
+ {
+  "id": "l5-030",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "How long must a licensee keep the pesticide sale and application records the Board prescribes?",
+  "choices": [
+   "Three years from the end of the calendar year the records were made in",
+   "Five years from the date of the application the records refer to",
+   "Three years from the date of the application the records refer to",
+   "Two years from the date of the application the records refer to"
+  ],
+  "answer": 2,
+  "explanation": "The Board requires licensees to keep records of the sale and application of the pesticides it prescribes, and those records must be kept for three years from the date of the application they refer to. They must be available for inspection and copying by the Board or its agents on request.",
+  "page": "25",
+  "ref": "§ 143-466(a)"
+ },
+ {
+  "id": "l5-031",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "For which of these purposes may a Board inspector enter private premises at a reasonable time?",
+  "choices": [
+   "To inspect a licensee's financial records for evidence of unreported income",
+   "To inspect any premises where a complaint about a pesticide odor has been received from a neighbor",
+   "To take possession of pesticides the inspector believes are unregistered",
+   "To inspect land actually or reportedly exposed to pesticides, or storage or disposal areas"
+  ],
+  "answer": 3,
+  "explanation": "Designated inspectors may enter public or private premises at reasonable times to inspect the premises and equipment subject to the Article, to inspect land actually or reported to be exposed to pesticides, to inspect storage or disposal areas, to inspect or investigate complaints of injury to humans, land, or plants, and to sample pesticides being applied or to be applied.",
+  "page": "25",
+  "ref": "§ 143-466(e)"
+ },
+ {
+  "id": "l5-032",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A landowner refuses a credentialed Board representative access to land the Board needs to inspect. What may the Board do?",
+  "choices": [
+   "Apply to a court of competent jurisdiction for a search warrant authorizing access",
+   "Enter anyway, since the statute forbids refusing entry to a credentialed representative",
+   "Suspend any license the landowner holds until access is granted",
+   "Refer the refusal for criminal prosecution and take no further steps"
+  ],
+  "answer": 0,
+  "explanation": "No person may refuse entry or access to an authorized representative of the Board who requests entry for inspection and presents appropriate credentials, nor obstruct, hamper, or interfere with that representative. Where access is nonetheless denied, the Board may apply to any court of competent jurisdiction for a search warrant, and the court may issue it for the purposes requested.",
+  "page": "25",
+  "ref": "§ 143-466(e)"
+ },
+ {
+  "id": "l5-033",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "In what forms may the Board require evidence of an applicator's financial responsibility?",
+  "choices": [
+   "Any form the licensee chooses to file, so long as the coverage amounts to at least fifty thousand dollars",
+   "A surety bond, liability insurance, or a cash deposit, in an amount the Board sets in light of the risk",
+   "Liability insurance only, in an amount fixed by statute for each license classification",
+   "A surety bond only, running to the State for the benefit of injured persons"
+  ],
+  "answer": 1,
+  "explanation": "The Board may require a licensee or applicant to show financial ability to indemnify persons suffering damage from the use or application of pesticides, in the form of a surety bond, liability insurance, or a cash deposit. The Board sets the amount in light of the risk of damage, and the requirement may extend to damage to persons and property from the equipment used, aircraft included.",
+  "page": "25",
+  "ref": "§ 143-467(a)"
+ },
+ {
+  "id": "l5-034",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A neighbor's crop is damaged by an application made by a bonded licensee. What does the law let the neighbor do?",
+  "choices": [
+   "Sue the surety only after the Board has revoked or suspended the licensee's pesticide applicator license for cause",
+   "Recover only from the licensee directly, the bond running to the State alone",
+   "Sue on the licensee's performance bond in the neighbor's own name, in any court of competent jurisdiction",
+   "File a claim with the Board, which pays damages out of the bond after a hearing"
+  ],
+  "answer": 2,
+  "explanation": "Where the Board requires a performance bond securing a licensee's contractual obligations, any person injured by a breach of those obligations, or damaged by pesticides or by the equipment used to apply them, may sue on the bond in that person's own name in any court of competent jurisdiction to recover the damages sustained.",
+  "page": "26",
+  "ref": "§ 143-467(b)"
+ },
+ {
+  "id": "l5-035",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Where does the additional assessment charged on registering a brand or grade of pesticide go?",
+  "choices": [
+   "The General Fund, for appropriation by the General Assembly each biennium",
+   "The Civil Penalty and Forfeiture Fund, along with the proceeds of civil penalties",
+   "The Department's operating budget, along with every other fee the Board collects",
+   "The Pesticide Environmental Trust Fund, a nonreverting account in the Department of Agriculture and Consumer Services"
+  ],
+  "answer": 3,
+  "explanation": "Most fees and charges received under the Article are credited to the Department of Agriculture and Consumer Services for administering and enforcing it, but the additional assessment on registering a brand or grade of pesticide is credited to the Pesticide Environmental Trust Fund, a nonreverting account the Department administers.",
+  "page": "26",
+  "ref": "§ 143-468(b)"
+ },
+ {
+  "id": "l5-036",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "What share of the Pesticide Environmental Trust Fund goes to the Department's pesticide disposal and environmental programs?",
+  "choices": [
+   "Seventy-five percent",
+   "Fifty percent",
+   "Twenty percent, the balance going to the General Fund",
+   "Ninety-five percent"
+  ],
+  "answer": 0,
+  "explanation": "Seventy-five percent of the Fund goes to the Department of Agriculture and Consumer Services for the costs of its pesticide disposal program and its environmental programs. Twenty percent supports an extension agromedicine specialist position at NC State's Department of Toxicology, and two and one-half percent each goes to the NC State Cooperative Extension Service and the East Carolina University School of Medicine for their joint agromedicine work.",
+  "page": "26",
+  "ref": "§ 143-468(b)(4)"
+ },
+ {
+  "id": "l5-037",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "What criminal penalty does a violation of the Pesticide Law or a Board rule carry?",
+  "choices": [
+   "An infraction, with criminal charges reserved for repeat offenders",
+   "A Class 2 misdemeanor",
+   "A Class 1 misdemeanor",
+   "A Class I felony where a restricted use pesticide is involved"
+  ],
+  "answer": 1,
+  "explanation": "Any person adjudged to have violated a provision of the Article, or a regulation adopted under it, is guilty of a Class 2 misdemeanor. If the person continues or further violates the Article after written notice from the Board, the court may treat each day the violation continued or was repeated as a separate violation.",
+  "page": "26",
+  "ref": "§ 143-469(a)"
+ },
+ {
+  "id": "l5-038",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "What is the largest civil penalty the Board may assess for a violation of the Pesticide Law?",
+  "choices": [
+   "Five thousand dollars",
+   "Five hundred dollars",
+   "Two thousand dollars",
+   "One thousand dollars"
+  ],
+  "answer": 2,
+  "explanation": "A civil penalty of not more than two thousand dollars may be assessed by the Board against any person who violates, or directly causes a violation of, any provision of the Article or any rule adopted under it. Assessment proceedings are governed by Chapter 150B.",
+  "page": "27",
+  "ref": "§ 143-469(b)"
+ },
+ {
+  "id": "l5-039",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "A grower producing a commodity on their own land is found to have violated the Pesticide Law. What limits the civil penalty?",
+  "choices": [
+   "It may not exceed five hundred dollars, whether or not the violation was willful",
+   "It may not exceed two thousand dollars, but only a willful violation may be charged against a grower",
+   "There is no special limit; the ordinary two-thousand-dollar ceiling applies",
+   "It may not exceed five hundred dollars, and may be assessed only for a willful violation"
+  ],
+  "answer": 3,
+  "explanation": "For a person within the private-production exclusion from the definition of pesticide applicator, the maximum civil penalty is five hundred dollars, and penalties may be assessed against such a person only for willful violations.",
+  "page": "27",
+  "ref": "§ 143-469(d)"
+ },
+ {
+  "id": "l5-040",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "An assessed civil penalty goes unpaid. What may the Board do to collect it?",
+  "choices": [
+   "Bring an action in the superior court of the county where the person resides or has a principal place of business",
+   "Direct the Department to withhold the amount from any State payment owed to the person or to the person's business",
+   "Add the unpaid amount to the person's next license fee as a condition of renewal",
+   "Refer the matter for criminal prosecution, civil collection not being available"
+  ],
+  "answer": 0,
+  "explanation": "If a person assessed a civil penalty fails to pay it to the Department of Agriculture and Consumer Services, the Board may bring an action in the superior court of the county where the person resides or has a principal place of business to recover the unpaid amount. Such an action does not relieve any party from other penalties prescribed by law.",
+  "page": "27",
+  "ref": "§ 143-469(c)"
+ },
+ {
+  "id": "l5-041",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Where do the clear proceeds of civil penalties assessed under the Pesticide Law go?",
+  "choices": [
+   "The county in which the violation occurred, for local environmental programs",
+   "The Civil Penalty and Forfeiture Fund",
+   "The Pesticide Environmental Trust Fund",
+   "The Department of Agriculture and Consumer Services, for enforcement costs"
+  ],
+  "answer": 1,
+  "explanation": "The clear proceeds of civil penalties assessed under the Article are remitted to the Civil Penalty and Forfeiture Fund. The registration assessment, by contrast, goes to the Pesticide Environmental Trust Fund, and ordinary fees go to the Department for administering the Article.",
+  "page": "27",
+  "ref": "§ 143-469(e)"
+ },
+ {
+  "id": "l5-042",
+  "section": 5,
+  "sectionName": "General Provisions",
+  "sectionLabel": "pt. 5",
+  "manual": "law",
+  "question": "Must the Board begin proceedings for every minor violation it finds?",
+  "choices": [
+   "No; but only where the violator has no previous violations on record",
+   "Yes for criminal proceedings, though administrative proceedings remain within the Board's discretion entirely",
+   "No; it may give a suitable written notice or warning where that adequately serves the public interest",
+   "Yes; the Article requires proceedings for every violation the Board documents"
+  ],
+  "answer": 2,
+  "explanation": "Nothing in the Article requires the Board or the Commissioner to initiate criminal or administrative proceedings for minor violations where they believe the public interest will be adequately served by a suitable written notice or warning.",
+  "page": "27",
+  "ref": "§ 143-470.1"
+ },
+ {
+  "id": "r5-001",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "For purposes of the North Carolina pesticide rules, which products count as restricted use pesticides?",
+  "choices": [
+   "Products EPA requires to bear the Restricted Use Pesticide designation, and nothing else",
+   "Any product bearing the signal word DANGER, plus arsenic trioxide",
+   "Products EPA restricts, plus any product the Commissioner of Agriculture lists by order",
+   "Products EPA requires to bear the Restricted Use Pesticide designation, arsenic trioxide, and pesticides approved under the emergency-use rule"
+  ],
+  "answer": 3,
+  "explanation": "The rules define a restricted use pesticide as any pesticide EPA requires to bear the \"Restricted Use Pesticide\" designation on its labeling, arsenic trioxide, and any pesticide approved under the Subchapter's rule on exempting agencies for emergency use.",
+  "page": "6",
+  "ref": ".0502"
+ },
+ {
+  "id": "r5-002",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How many licensed pesticide applicators must a business location have?",
+  "choices": [
+   "At least one, who is responsible for the application of pesticides for routine pest control",
+   "At least one for every five employees who mix, load, or apply pesticides at that business location",
+   "At least two, so that one is available whenever the other is in the field",
+   "One for each pest control category the business advertises"
+  ],
+  "answer": 0,
+  "explanation": "At least one person at each business location must hold a pesticide applicator license and be responsible for the application of pesticides for routine pest control. That licensee also supervises and guides all personnel applying pesticides from the location.",
+  "page": "6",
+  "ref": ".0503(a)"
+ },
+ {
+  "id": "r5-003",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "In which categories must a pesticide applicator be certified to supervise a noncertified applicator's use of a pesticide?",
+  "choices": [
+   "In every category the business location is licensed for",
+   "In each category applicable to the supervised pesticide use",
+   "In the core category alone, which covers supervision of any use",
+   "In at least one category, whether or not it matches the work supervised"
+  ],
+  "answer": 1,
+  "explanation": "A supervising pesticide applicator must know the federal, state, and tribal supervisory requirements that apply, including any on the product label and labeling, and must be certified in each category applicable to the supervised pesticide use. Supervision does not extend a licensee's reach beyond the categories earned.",
+  "page": "6",
+  "ref": ".0503(d)(1)"
+ },
+ {
+  "id": "r5-004",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How old must a noncertified applicator be to use pesticides under a licensed applicator's direct supervision?",
+  "choices": [
+   "At least 21 years old for restricted use pesticides and 18 for others",
+   "There is no minimum, so long as the supervisor is physically present",
+   "At least 18 years old",
+   "At least 16 years old"
+  ],
+  "answer": 2,
+  "explanation": "Among the things a supervising applicator must ensure before a noncertified applicator uses any pesticide is that the person has met the minimum age, and the rule states that a noncertified applicator must be at least 18 years old. The same minimum applies to the licensed applicator.",
+  "page": "6",
+  "ref": ".0503(d)(4)"
+ },
+ {
+  "id": "r5-005",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How recently must a noncertified applicator have been instructed in the safe operation of the equipment used?",
+  "choices": [
+   "Within the last 24 months, for any equipment used to mix, load, transfer, or apply pesticides",
+   "Before first use of each machine, with no repeat instruction required afterward",
+   "Within the last 12 months, for application equipment only",
+   "Within the last 12 months, for any equipment used to mix, load, transfer, or apply pesticides"
+  ],
+  "answer": 3,
+  "explanation": "The supervising applicator must ensure that the noncertified applicator has been instructed within the last 12 months in the safe operation of any equipment he or she will use for mixing, loading, transferring, or applying pesticides.",
+  "page": "6",
+  "ref": ".0503(d)(3)"
+ },
+ {
+  "id": "r5-006",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What access to the product labeling must a noncertified applicator have?",
+  "choices": [
+   "Access to the applicable product labeling at all times during its use",
+   "A copy of the labeling reviewed with the supervisor before the day's work begins",
+   "Access to the labeling at the business location, on request",
+   "The label's precautionary statements, summarized in writing by the supervisor"
+  ],
+  "answer": 0,
+  "explanation": "The supervising pesticide applicator must ensure that each noncertified applicator has access to the applicable product labeling at all times during its use. A briefing beforehand does not satisfy the rule; the labeling has to be available throughout.",
+  "page": "6",
+  "ref": ".0503(d)(5)"
+ },
+ {
+  "id": "r5-007",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "When must a supervising pesticide applicator be physically present at the site of a supervised use?",
+  "choices": [
+   "Whenever the noncertified applicator has less than a year of experience",
+   "When the product labeling requires it",
+   "Whenever a restricted use pesticide is being applied",
+   "At the start of each day's application, and at no other time"
+  ],
+  "answer": 1,
+  "explanation": "The supervising applicator must be physically present at the site of the use being supervised when the product labeling requires it. Otherwise the requirement is that a means of immediate communication with the supervisor is available to the noncertified applicator.",
+  "page": "7",
+  "ref": ".0503(d)(10)"
+ },
+ {
+  "id": "r5-008",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What contact must a noncertified applicator have with the supervising applicator during a supervised application?",
+  "choices": [
+   "A written record of the supervisor's instructions, signed before the work begins",
+   "None, provided the supervisor is reachable at the business location that day",
+   "A means to communicate with the supervisor immediately",
+   "A scheduled check-in call at the midpoint of each application"
+  ],
+  "answer": 2,
+  "explanation": "The supervising applicator must ensure that a means to immediately communicate with the supervisor is available to each noncertified applicator using a pesticide under direct supervision. Physical presence is required only where the product labeling calls for it.",
+  "page": "7",
+  "ref": ".0503(d)(9)"
+ },
+ {
+  "id": "r5-009",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How often must the supervising applicator confirm that mixing, loading, and application equipment is in proper operating condition?",
+  "choices": [
+   "Before each individual application",
+   "Once each week the equipment is in service",
+   "At the start and the end of each season",
+   "Before each day of use"
+  ],
+  "answer": 3,
+  "explanation": "Before each day of use, the supervising applicator must ensure that equipment used for mixing, loading, transferring, or applying pesticides is in proper operating condition as the manufacturer intended and can be used without risk of reasonably foreseeable adverse effects to the noncertified applicator, other persons, or the environment.",
+  "page": "7",
+  "ref": ".0503(d)(8)"
+ },
+ {
+  "id": "r5-010",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "The labeling requires personal protective equipment for loading. What must the supervising applicator ensure?",
+  "choices": [
+   "That the noncertified applicator has clean, labeling-required PPE in proper operating condition and wears it correctly",
+   "That the noncertified applicator has been offered PPE and has signed for it",
+   "That PPE is available at the business location for the noncertified applicator to collect",
+   "That the noncertified applicator has been trained in PPE use within the last 12 months"
+  ],
+  "answer": 0,
+  "explanation": "Where the labeling requires personal protective equipment for mixing, loading, application, or other use activities, the supervising applicator must ensure that any noncertified applicator has clean, labeling-required PPE in proper operating condition, and that it is worn and used correctly for its intended purpose.",
+  "page": "6",
+  "ref": ".0503(d)(6)"
+ },
+ {
+  "id": "r5-011",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which of these qualifies a noncertified applicator to use a pesticide under direct supervision?",
+  "choices": [
+   "Having attended a grower meeting on the crop being treated within the last 12 months",
+   "Having met the training requirements for an agricultural handler under the federal Worker Protection Standard within the last 12 months",
+   "Having worked for the licensed applicator for at least one full season",
+   "Having read the product labeling and signed a statement acknowledging its precautions"
+  ],
+  "answer": 1,
+  "explanation": "A noncertified applicator qualifies by one of four routes: training under the rule's own program within the last 12 months, agricultural handler training under 40 CFR 170.501 within the last 12 months, requirements set by a certifying authority that meet or exceed the rule's training standards, or being a certified applicator who is simply not certified for that type of application or not certified in North Carolina.",
+  "page": "7",
+  "ref": ".0503(e)(2)"
+ },
+ {
+  "id": "r5-012",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How must general noncertified applicator training be delivered?",
+  "choices": [
+   "By any method, provided a written examination follows and is passed",
+   "Orally by a licensed applicator, who may leave once the written material has been covered with the trainees",
+   "Orally from written materials or audio visually, with the trainer present throughout and answering questions",
+   "In writing, with a signed acknowledgment that the materials were read"
+  ],
+  "answer": 2,
+  "explanation": "The training must be presented to noncertified applicators orally from written materials or audio visually, in a manner they can understand, and the person conducting it must be present during the entire program and respond to the trainees' questions.",
+  "page": "7",
+  "ref": ".0503(f)(1)"
+ },
+ {
+  "id": "r5-013",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Who may conduct noncertified applicator training?",
+  "choices": [
+   "Any employee of the business who has applied pesticides for at least three years",
+   "A currently certified applicator only, since the training supports supervised use",
+   "Any person the supervising applicator designates in writing for the purpose",
+   "A currently certified applicator, a designated trainer of applicators or handlers, or someone who has completed an EPA-approved train-the-trainer program"
+  ],
+  "answer": 3,
+  "explanation": "The trainer must meet at least one of three criteria: be currently certified as a pesticide applicator; be currently designated as a trainer of certified applicators or pesticide handlers by EPA, the certifying authority, or a state, tribal, or federal agency with jurisdiction; or have completed an EPA-approved pesticide safety train-the-trainer program for trainers of handlers.",
+  "page": "7",
+  "ref": ".0503(f)(2)"
+ },
+ {
+  "id": "r5-014",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Where and for how long must records of a noncertified applicator's qualifications be kept?",
+  "choices": [
+   "At the supervising applicator's principal place of business, for three years from the date the noncertified applicator uses the pesticide",
+   "At the site of each application, for two years from the date of the application",
+   "At the supervising applicator's principal place of business, for one year after employment ends",
+   "With the Structural Pest Control and Pesticides Division, filed annually"
+  ],
+  "answer": 0,
+  "explanation": "The supervising pesticide applicator must have access to the qualification records at the principal place of business for three years from the date the noncertified applicator uses the pesticide, and must create or verify those records before allowing any supervised use.",
+  "page": "9",
+  "ref": ".0503(h)"
+ },
+ {
+  "id": "r5-015",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "A noncertified applicator qualified by training under the rule's own program. What must the record contain?",
+  "choices": [
+   "A copy of the training materials used and a roster of everyone who attended",
+   "The person's printed name and signature, the date the training requirement was met, who provided the training, and its title or description",
+   "The person's printed name and signature, and the date of the next scheduled refresher",
+   "The person's certification number and its expiration date"
+  ],
+  "answer": 1,
+  "explanation": "For a noncertified applicator trained under the rule's program, the record must contain the noncertified applicator's printed name and signature, the date the training requirement was met, the name of the person who provided the training, and the title or a description of the training. A person qualifying as a certified applicator from elsewhere is recorded by name, certification number, expiration date, and issuing authority instead.",
+  "page": "8",
+  "ref": ".0503(g)(1)(A)"
+ },
+ {
+  "id": "r5-016",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which work falls in the aquatic pest control category?",
+  "choices": [
+   "Using or supervising the use of pesticides in fish hatcheries and aquaculture ponds only",
+   "Using or supervising the use of pesticides in any wetland, whether or not standing water is present",
+   "Using or supervising the use of any pesticide applied to standing or running water, apart from public health work",
+   "Using or supervising the use of pesticides applied to standing water such as ponds only, running water being right-of-way work"
+  ],
+  "answer": 2,
+  "explanation": "Aquatic pest control means using or supervising the use of any pesticide applied to standing or running water, excluding applicators engaged in the public health and commercial public health activities the rule defines separately.",
+  "page": "9",
+  "ref": ".0504(4)"
+ },
+ {
+  "id": "r5-017",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which sites make up the right-of-way pest control category?",
+  "choices": [
+   "Public roads and railway rights-of-way only, utility corridors being ornamental and turf work",
+   "Any linear corridor, including private farm lanes and field borders",
+   "Public roads and pipelines maintained by State agencies, private corridors excepted",
+   "Public roads, electric powerlines, pipelines, railway rights-of-way, and similar areas"
+  ],
+  "answer": 3,
+  "explanation": "Right-of-way pest control means using or supervising the use of pesticides in the maintenance of public roads, electric powerlines, pipelines, railway rights-of-way, or other similar areas.",
+  "page": "9",
+  "ref": ".0504(5)"
+ },
+ {
+  "id": "r5-018",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What distinguishes public health pest control from commercial public health pest control?",
+  "choices": [
+   "Public health pest control is done by government employees and contractors in government-sponsored programs; commercial is the same work done commercially",
+   "Public health pest control covers mosquitoes and commercial public health covers rodents and other vertebrates",
+   "Public health pest control is indoor work and commercial public health is outdoor work",
+   "Public health pest control requires a public operator license and commercial public health requires none"
+  ],
+  "answer": 0,
+  "explanation": "Public health pest control means state, tribal, federal, or other governmental employees and contractors using or supervising pesticide use in government-sponsored public health programs to manage pests of medical and public health importance. Commercial public health pest control is the same management done commercially, and is one of the categories North Carolina adds beyond the federal list.",
+  "page": "10",
+  "ref": ".0504(6)"
+ },
+ {
+  "id": "r5-019",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which treatment belongs in the wood treatment category?",
+  "choices": [
+   "Treating logs and shingles already installed as part of a finished building",
+   "Treating crossties, poles, and posts that are not part of a structure when treated",
+   "Treating the framing of a house against termites after construction",
+   "Pretreating a building site against termites and other wood-destroying organisms before construction"
+  ],
+  "answer": 1,
+  "explanation": "Wood treatment means applying pesticides to wood products such as crossties, poles, logs, shingles, and posts that are not part of a structure when treated and are or will be exposed to insects, fungi, marine pests, or weather. It excludes treatment for termites and other wood-destroying organisms in houses, and pretreatment before a structure is built.",
+  "page": "10",
+  "ref": ".0504(11)"
+ },
+ {
+  "id": "r5-020",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What does the soil and growing media fumigation category leave out?",
+  "choices": [
+   "Fumigating soil ahead of a crop, which belongs to agricultural crop pest control",
+   "Fumigating with any product not classified for restricted use",
+   "Fumigating raw agricultural commodities and structural fumigation such as boxcars, warehouses, tractor trailers, and grain bins",
+   "Fumigating greenhouse growing media, which belongs to ornamental and turf pest control"
+  ],
+  "answer": 2,
+  "explanation": "Soil and growing media fumigation pest control covers using or supervising the use of any fumigant injected or applied to soils or growing media, but excludes fumigating raw agricultural commodities and all structural fumigation such as boxcars, warehouses, tractor trailers, and grain bins.",
+  "page": "10",
+  "ref": ".0504(12)"
+ },
+ {
+  "id": "r5-021",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which aircraft does the aerial pest control category cover?",
+  "choices": [
+   "Fixed wing aircraft only, helicopter work falling under the category being treated",
+   "Any aircraft, including uncrewed aircraft under 55 pounds",
+   "Rotary wing aircraft only, fixed wing work being covered by the ground categories",
+   "Both fixed and rotary wing aircraft"
+  ],
+  "answer": 3,
+  "explanation": "Aerial pest control is the category of commercial applicators who use or supervise the use of pesticides applied by fixed or rotary wing aircraft. Aerial applicators are licensed by the equipment they use as well as by the pests and sites they treat.",
+  "page": "10",
+  "ref": ".0504(13)"
+ },
+ {
+  "id": "r5-022",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which federal certification categories does North Carolina decline to create?",
+  "choices": [
+   "Sodium cyanide predator control and sodium fluoroacetate predator control",
+   "Regulatory pest control and demonstration and research pest control categories",
+   "Seed treatment and wood treatment",
+   "Public health pest control and aquatic pest control"
+  ],
+  "answer": 0,
+  "explanation": "North Carolina adopts the federal commercial applicator certification categories by reference but creates neither the sodium cyanide predator control nor the sodium fluoroacetate predator control category. It adds three categories the federal guidelines do not establish: commercial public health pest control, wood treatment, and livestock pest control with its subcategories.",
+  "page": "10",
+  "ref": ".0505(a)(1)"
+ },
+ {
+  "id": "r5-023",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which categories does North Carolina add beyond the federal certification categories?",
+  "choices": [
+   "Demonstration and research pest control and right-of-way pest control",
+   "Commercial public health pest control, wood treatment, and livestock pest control with its subcategories",
+   "Aerial pest control, seed treatment, and regulatory pest control",
+   "Soil and growing media fumigation, aquatic pest control, and forest pest control in forest nurseries and seed orchards"
+  ],
+  "answer": 1,
+  "explanation": "The additional classifications created in North Carolina, which the federal guidelines do not establish, are commercial public health pest control, wood treatment, and livestock pest control, the last including the subsections of livestock, poultry, and small animals.",
+  "page": "11",
+  "ref": ".0505(a)(2)"
+ },
+ {
+  "id": "r5-024",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "In a county where the health department applies pesticides but has no control over municipal employees who also apply them, who must be licensed?",
+  "choices": [
+   "One municipal employee for each municipality, the county being covered by the State",
+   "Every county and municipal employee who applies pesticides",
+   "One county environmental health specialist and one municipal employee for each municipality",
+   "One county environmental health specialist only, covering every municipality in the county alike"
+  ],
+  "answer": 2,
+  "explanation": "Where health department personnel apply pesticides but have no direct control over municipal employees who apply them, one county environmental health specialist and one municipal employee for each municipality must be licensed. Where the health department does supervise the municipal employees weekly or more often, at least one county environmental health specialist must be licensed.",
+  "page": "12",
+  "ref": ".0506(5)(b)"
+ },
+ {
+  "id": "r5-025",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "In a county where only municipal, sanitary district, or mosquito control district personnel apply pesticides, what does the rule require?",
+  "choices": [
+   "One licensed supervisor for the county, covering all such districts within it",
+   "Every district employee applying pesticides must be individually licensed",
+   "One licensed county environmental health specialist to oversee all such districts in the county",
+   "One licensed supervisor for each municipality, sanitary district, or mosquito control district"
+  ],
+  "answer": 3,
+  "explanation": "In counties where only municipal, sanitary district, or mosquito control district personnel apply pesticides, one licensed supervisor is required for each municipality, sanitary district, or mosquito control district.",
+  "page": "12",
+  "ref": ".0506(5)(c)"
+ },
+ {
+  "id": "r5-026",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What education does an applicant for a pest control consultant license need?",
+  "choices": [
+   "A degree in an agricultural or biological science with 30 semester hours or 45 quarter hours in the subject areas licensed for",
+   "A degree in an agricultural or biological science from any college, with no minimum coursework in the subject areas the license covers",
+   "Any bachelor's degree, plus two years of supervised consulting experience",
+   "A degree in an agricultural or biological science with 15 semester hours in the subject areas licensed for"
+  ],
+  "answer": 0,
+  "explanation": "The applicant must hold a Ph.D., master's, or bachelor's degree in an agricultural or biological science from an accredited college or university, with 30 semester hours or 45 quarter hours of credit in the subject areas the license is sought in. The emphasis of study must include insect, plant, bacterial, and fungal pests as applicable to the category, and integrated pest management.",
+  "page": "13",
+  "ref": ".0509(a)"
+ },
+ {
+  "id": "r5-027",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Who is exempt from the consultant education requirements?",
+  "choices": [
+   "Anyone restricted to making recommendations from publications the Board recognizes for the category",
+   "Anyone holding a valid North Carolina pest control consultant license on or before July 1, 1992",
+   "Anyone who has consulted in the category for at least ten years",
+   "Anyone also holding a pesticide applicator license in the same category"
+  ],
+  "answer": 1,
+  "explanation": "The education requirements do not apply to anyone who held a valid North Carolina pest control consultant license on or before July 1, 1992. Everyone licensed since must meet the degree and coursework standard.",
+  "page": "13",
+  "ref": ".0509(b)"
+ },
+ {
+  "id": "r5-028",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What is the minimum age for a pesticide applicator in North Carolina?",
+  "choices": [
+   "21 years old",
+   "18 for aerial applicators and 16 for ground applicators",
+   "18 years old",
+   "16 years old"
+  ],
+  "answer": 2,
+  "explanation": "The rules state flatly that a pesticide applicator must be at least 18 years old, and the same minimum applies to a noncertified applicator working under direct supervision.",
+  "page": "13",
+  "ref": ".0512"
+ },
+ {
+  "id": "r5-029",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "A business location loses the only person licensed there as a pesticide dealer. How long may it keep operating?",
+  "choices": [
+   "Up to six months, on the rule's conditions",
+   "Until the end of the calendar year, when the license expires anyway",
+   "Not at all; sales must stop the day the licensee leaves",
+   "Up to two months, on the rule's conditions"
+  ],
+  "answer": 3,
+  "explanation": "A firm, corporation, or government unit deprived of the services of the sole individual licensed as a pesticide dealer at a business location may continue to operate in its usual manner for a maximum of two months, provided it meets the rule's three conditions.",
+  "page": "14",
+  "ref": ".0516"
+ },
+ {
+  "id": "r5-030",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What must a business do to qualify for that two-month continuance after losing its licensed dealer?",
+  "choices": [
+   "Request an examination appointment for a designated individual within two weeks, and have that person supervise sales in the interim",
+   "Request an examination appointment for a designated individual within two months, and stop selling restricted use pesticides meanwhile",
+   "Notify the Board within two weeks and hire a licensed dealer from another location to visit weekly",
+   "Apply to the Board for a temporary license and pay the ordinary license fee again"
+  ],
+  "answer": 0,
+  "explanation": "The business must direct a request for an examination appointment for a designated individual to the Structural Pest Control and Pesticides Division within two weeks of losing its licensed dealer, must have available a designated individual who has worked in pesticide sales under a licensed dealer's supervision for at least three months, and that individual must supervise pesticide sales during the interim.",
+  "page": "14",
+  "ref": ".0516(1)"
+ },
+ {
+  "id": "r5-031",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What is the passing grade on a North Carolina pesticide license examination?",
+  "choices": [
+   "65",
+   "70",
+   "75",
+   "80"
+  ],
+  "answer": 1,
+  "explanation": "The rule sets the passing grade for the examinations at 70. The same standard applies across the dealer, applicator, and consultant examinations.",
+  "page": "14",
+  "ref": ".0517"
+ },
+ {
+  "id": "r5-032",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What does certification entitle a licensed applicator to do?",
+  "choices": [
+   "Use restricted use pesticides personally, supervision requiring a separate endorsement",
+   "Use or supervise the use of restricted use pesticides anywhere the license classification allows equipment to reach",
+   "Use or supervise the use of restricted use pesticides, but only for uses covered by the categories certified in",
+   "Use or supervise the use of any restricted use pesticide, whatever the category certified in"
+  ],
+  "answer": 2,
+  "explanation": "Applicators, public operators, and consultants who have completed the license examination requirements are certified to use or supervise the use of any restricted use pesticide, but the certification is valid only for the uses covered by the individual's certification categories.",
+  "page": "14",
+  "ref": ".0519(a)"
+ },
+ {
+  "id": "r5-033",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How long is a term of certification for ground equipment, and how long for aerial?",
+  "choices": [
+   "Five years for both, with aerial applicators taking an extra examination",
+   "Three years for ground, one year for aerial contractors and pilots",
+   "Two years for ground, five years for aerial contractors and pilots",
+   "Five years for ground, two years for aerial contractors and pilots"
+  ],
+  "answer": 3,
+  "explanation": "The term of certification is five years for individuals licensed to use ground equipment and two years for the contractors and pilots licensed to use aerial equipment. Certification is not the same as licensure: every individual still renews the pesticide license annually.",
+  "page": "14",
+  "ref": ".0519(b)"
+ },
+ {
+  "id": "r5-034",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What is a continuing certification credit?",
+  "choices": [
+   "One hour of approved continuing certification training",
+   "One approved training program, whatever its length",
+   "One half-day of approved continuing certification training",
+   "One year of documented work in the certified category"
+  ],
+  "answer": 0,
+  "explanation": "A continuing certification credit is defined as one hour of approved continuing certification training. Training is approved by the Board against the EPA standards for certification and recertification of applicators, and credits are assigned in increments of no less than one-half hour.",
+  "page": "15",
+  "ref": ".0522(a)"
+ },
+ {
+  "id": "r5-035",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How many continuing certification credits does agricultural crop pest control require per five-year period?",
+  "choices": [
+   "Three",
+   "Ten",
+   "Six",
+   "Four"
+  ],
+  "answer": 1,
+  "explanation": "Crop pest control requires 10 credits per five-year period, as do ornamental and turf pest control and demonstration and research pest control. Livestock, forest, aquatic, public health, commercial public health, and regulatory pest control each require 6.",
+  "page": "15",
+  "ref": ".0522(a)(1)"
+ },
+ {
+  "id": "r5-036",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which categories carry the lowest continuing certification credit requirement?",
+  "choices": [
+   "Forest pest control and aquatic pest control, at 4 credits each per five-year period",
+   "Aerial and right-of-way, at 2 credits each",
+   "Seed treatment and soil and growing media fumigation, at 3 credits each",
+   "Right-of-way and wood treatment, at 3 credits each"
+  ],
+  "answer": 2,
+  "explanation": "Seed treatment and soil and growing media fumigation each require 3 credits per five-year period, the lowest in the schedule. Right-of-way, wood treatment, and aerial each require 4.",
+  "page": "15",
+  "ref": ".0522(a)(11)"
+ },
+ {
+  "id": "r5-037",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What is required of the four continuing certification credits an aerial applicator must earn?",
+  "choices": [
+   "All four must be obtained through training in aerial methods",
+   "Two of them must be obtained in the year the certification expires",
+   "They must be earned in a single approved program rather than accumulated",
+   "One of them must be obtained through training in aerial methods"
+  ],
+  "answer": 3,
+  "explanation": "Aerial requires 4 credits per five-year period, and the credits required for aerial applicators must include one credit obtained through training in aerial methods. Ground category credits carry a different constraint: they must be obtained in at least two years of the five-year period.",
+  "page": "15",
+  "ref": ".0522(a)(14)"
+ },
+ {
+  "id": "r5-038",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "An applicator earns all the required ground-category credits at a single seminar in the final year. Does that satisfy the rule?",
+  "choices": [
+   "No; the credits for a ground category must be obtained in at least two years of the five-year period",
+   "Yes; the rule counts total credits without regard to when they were earned",
+   "No; at least half of the credits must be earned in each year of the five-year recertification period",
+   "Yes, provided the seminar was approved for the applicator's own category"
+  ],
+  "answer": 0,
+  "explanation": "The continuing certification credits established for each ground application pest control category must be obtained in at least two years of the five-year period, so the whole requirement cannot be crammed into one year.",
+  "page": "15",
+  "ref": ".0522(a)"
+ },
+ {
+  "id": "r5-039",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Besides earning continuing certification credits, how may an applicator recertify?",
+  "choices": [
+   "By paying a recertification fee set at twice the annual license fee",
+   "By passing a written comprehensive examination given by Department of Agriculture and Consumer Services personnel",
+   "By submitting a record of pesticide applications made during the certification period",
+   "By having a supervising applicator attest to continued competence in the category"
+  ],
+  "answer": 1,
+  "explanation": "Pesticide applicators, public operators, and pest control consultants may be recertified by passing a written comprehensive examination administered by North Carolina Department of Agriculture and Consumer Services personnel, as an alternative to the continuing certification credit route.",
+  "page": "15",
+  "ref": ".0522(b)"
+ },
+ {
+  "id": "r5-040",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "An applicator wants to keep certification in several ground categories through training. What does that take?",
+  "choices": [
+   "The full credit requirement of the category carrying the highest requirement, and nothing more",
+   "The full credit requirement of the category carrying the highest requirement, plus one continuing certification credit in each additional category",
+   "The full credit requirement of the category carrying the highest requirement, plus three credits in each additional category",
+   "The full credit requirement of every category held, with no credit counted twice"
+  ],
+  "answer": 2,
+  "explanation": "To retain certification through continuing certification training in more than one ground pest control category, an individual completes the total credit requirement in the category with the highest requirement, plus three credits in each additional category. For multiple aerial categories the additional requirement is one credit in each.",
+  "page": "16",
+  "ref": ".0523(b)"
+ },
+ {
+  "id": "r5-041",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "On what date does a recertification period expire?",
+  "choices": [
+   "December 31",
+   "The anniversary of the individual's original certification",
+   "January 1",
+   "June 30"
+  ],
+  "answer": 3,
+  "explanation": "The recertification period expires on June 30. Each certified individual is notified 6 to 9 months before that date of the remaining requirements for recertification.",
+  "page": "16",
+  "ref": ".0524(a)"
+ },
+ {
+  "id": "r5-042",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How far ahead of the recertification expiration date is a certified individual notified of what remains to be done?",
+  "choices": [
+   "6 to 9 months",
+   "3 to 6 months",
+   "30 to 60 days",
+   "12 to 18 months"
+  ],
+  "answer": 0,
+  "explanation": "Each certified individual is notified 6 to 9 months prior to the recertification expiration date of that individual's remaining requirements for recertification.",
+  "page": "16",
+  "ref": ".0524(b)"
+ },
+ {
+  "id": "r5-043",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "An applicator reaches the recertification expiration date having completed none of the recertification options. What now?",
+  "choices": [
+   "Only the categories with unmet credit requirements are lost; the rest continue",
+   "A comprehensive license examination must be retaken and passed before a license is reissued in any category",
+   "A grace period of six months runs, during which the missing continuing certification credits may still be earned",
+   "The credits may be earned in the next period, with the license suspended meanwhile"
+  ],
+  "answer": 1,
+  "explanation": "A certified individual who has completed none of the recertification options before the expiration date must retake and pass the comprehensive license examination before a license will be reissued in any category. Nor may credits be carried over from one recertification period to another.",
+  "page": "16",
+  "ref": ".0524(c)"
+ },
+ {
+  "id": "r5-044",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "An applicator earns more credits than the category requires. What happens to the extras?",
+  "choices": [
+   "They may be applied to an additional category in the same period",
+   "They shorten the next recertification period by a proportionate amount",
+   "They are lost; no credits may be carried from one recertification period to another",
+   "They carry over to the next recertification period in the same certification category"
+  ],
+  "answer": 2,
+  "explanation": "No individual is allowed to carry over any continuing certification credits from one recertification period to another. Credits count only within the period they were earned in.",
+  "page": "16",
+  "ref": ".0524(d)"
+ },
+ {
+  "id": "r5-045",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How many continuing certification credits does a pesticide dealer need to recertify?",
+  "choices": [
+   "Ten, obtained in at least two years of the five-year period",
+   "Five, which may all be earned in the final year of the period",
+   "Three, obtained in at least two years of the five-year period",
+   "Five, obtained in at least two years of the five-year period"
+  ],
+  "answer": 3,
+  "explanation": "A pesticide dealer may be recertified by completing five approved Pesticide Dealer Continuing Certification Credits, and those credits must be obtained in at least two years of the five-year period. A dealer may instead pass a written comprehensive examination.",
+  "page": "16",
+  "ref": ".0526(a)"
+ },
+ {
+  "id": "r5-046",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "How long does a pesticide dealer's certification last?",
+  "choices": [
+   "Five years, though the license itself is renewed annually",
+   "Five years, and the license runs for the same five years",
+   "Two years, though the license itself is renewed annually",
+   "Three years, though the license itself is renewed annually"
+  ],
+  "answer": 0,
+  "explanation": "Dealers who have completed the license examination requirements are certified for five years, but must still renew their pesticide licenses annually as the Pesticide Law requires. A dealer's license will not keep being renewed past five years without recertification.",
+  "page": "16",
+  "ref": ".0525(a)"
+ },
+ {
+  "id": "r5-047",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "In what increments are continuing certification credits assigned to an approved program?",
+  "choices": [
+   "Whole credits only, with partial programs earning nothing",
+   "No less than one-half hour",
+   "No less than one full hour",
+   "No less than one-quarter hour"
+  ],
+  "answer": 1,
+  "explanation": "The pesticide section evaluates each proposed program against criteria the Board approves and assigns credits, in increments of no less than one-half hour. Each assignment is reviewable by the Board.",
+  "page": "17",
+  "ref": ".0528(b)"
+ },
+ {
+  "id": "r5-048",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "A licensee is convicted under the criminal provisions of the federal pesticide law. What does that mean for the North Carolina license?",
+  "choices": [
+   "It suspends the license automatically for the length of the federal sentence",
+   "It is a ground for action only where the conviction involved the misuse of a restricted use pesticide product",
+   "It is a ground for denial, suspension, or revocation of any license or certification the Board issues",
+   "It has no effect until the Board finds a separate violation of State law"
+  ],
+  "answer": 2,
+  "explanation": "A final order imposing civil liability under FIFRA section 14(a), or a criminal conviction or a plea of guilty or nolo contendere under section 14(b), against a dealer, applicator, public operator, or consultant is a ground for denying, suspending, or revoking any license or certification the Board issues.",
+  "page": "17",
+  "ref": ".0530"
+ },
+ {
+  "id": "r5-049",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "Which examination requirements must be met for every category and subcategory of licensure?",
+  "choices": [
+   "The core requirements, except for applicators licensed only in a single subcategory",
+   "The competency standards for the North Carolina categories, the core being optional for public operators",
+   "The core requirements, except for public operators, whose fees are also waived",
+   "The core requirements described in the federal standards for certification of commercial applicators"
+  ],
+  "answer": 3,
+  "explanation": "The Board incorporates the federal standards for certification of commercial applicators by reference, and the core requirements described there must be met for all categories and subcategories. Each North Carolina category then adds its own competency standards on top.",
+  "page": "17",
+  "ref": ".0531(b)"
+ },
+ {
+  "id": "r5-050",
+  "section": 5,
+  "sectionName": "Pesticide Licenses",
+  "sectionLabel": "sec. .0500",
+  "manual": "rules",
+  "question": "What practical knowledge must a wood treatment applicator demonstrate?",
+  "choices": [
+   "Wood types and tree anatomy, common disease and insect problems, preservative types with their PPE requirements, and disposal of treated wood",
+   "Structural framing methods, termite biology, and the building code requirements for treated lumber",
+   "Kiln operation, moisture metering, and the grading standards for treated lumber",
+   "Marine pest biology and the permitting requirements for treating wood used in water"
+  ],
+  "answer": 0,
+  "explanation": "Wood treatment applicators must demonstrate practical knowledge of the different types of wood, tree anatomy and physiology and the treatment factors specific to each; common disease and insect problems and factors such as moisture that must be considered before treatment; the different types of wood preservatives with the specific PPE requirements and cautions of each; and proper disposal of treated and unused wood.",
+  "page": "18",
+  "ref": ".0531(c)(2)"
+ },
+ {
+  "id": "r6-001",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "What does the disposal rules' definition of a \"container\" leave out?",
+  "choices": [
+   "Drums that have been triple rinsed",
+   "Spray applicator tanks",
+   "Bulk storage tanks holding more than 500 gallons",
+   "Bags and other single-use packaging"
+  ],
+  "answer": 1,
+  "explanation": "For the disposal rules, a container is any package, can, bottle, bag, barrel, drum, tank, or other containing device used to enclose a pesticide or pesticide-related waste, excluding spray applicator tanks.",
+  "page": "18",
+  "ref": ".0601(1)"
+ },
+ {
+  "id": "r6-002",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "What are \"excess pesticides\" under the disposal rules?",
+  "choices": [
+   "All pesticides held past the manufacturer's stated shelf life",
+   "All pesticides whose registration has been cancelled or suspended by the Board",
+   "All pesticides that cannot be legally sold or that are to be discarded",
+   "All pesticides left in the tank after an application is finished"
+  ],
+  "answer": 2,
+  "explanation": "Excess pesticides means all pesticides that cannot legally be sold or that are to be discarded. Pesticide-related wastes are defined separately as the pesticide-containing wastes or by-products of manufacturing or processing that are to be discarded and are not ordinarily part of an industrial waste stream.",
+  "page": "18",
+  "ref": ".0601(2)"
+ },
+ {
+  "id": "r6-003",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "What is the first preference for anyone disposing of pesticides?",
+  "choices": [
+   "Returning the excess pesticide to the dealer who sold it, for credit or safe handling",
+   "Delivering the excess pesticide to a permitted hazardous waste facility",
+   "Diluting the excess pesticide until it can be applied at less than the labeled rate",
+   "Recovering some useful value from the excess pesticide, using it as labeled for the purpose originally intended where possible"
+  ],
+  "answer": 3,
+  "explanation": "Any person disposing of pesticides must give first preference to recovering some useful value from excess pesticides, and whenever possible the excess must be used according to its labeling for the purpose originally intended. Only what cannot be used is disposed of, and then in accordance with labeling requirements.",
+  "page": "18",
+  "ref": ".0602(a)"
+ },
+ {
+  "id": "r6-004",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "Beyond the Pesticide Board's rules, what other State rules govern disposal of excess pesticides?",
+  "choices": [
+   "The Commission for Public Health's hazardous waste and solid waste management rules",
+   "The Environmental Management Commission's water quality rules alone",
+   "The Department of Transportation's hazardous materials packaging and shipping rules for pesticides",
+   "None; pesticide disposal is regulated by the Pesticide Board exclusively"
+  ],
+  "answer": 0,
+  "explanation": "The disposal rule notes that in addition to its own requirements, disposal of excess pesticides and pesticide-related wastes is subject to the rules the North Carolina Commission for Public Health has adopted for hazardous waste management and solid waste management.",
+  "page": "18",
+  "ref": ".0602(b)"
+ },
+ {
+  "id": "r6-005",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "What must be done to a pesticide container before it is disposed of?",
+  "choices": [
+   "It must be returned to the dealer, who is responsible for emptying it",
+   "It must be emptied by shaking, pumping, pouring, triple rinsing, or an equivalent practice, draining into the application tank",
+   "It must be punctured and crushed so that it cannot be reused for any purpose",
+   "It must be rinsed once with clean water and the rinsate sent to a permitted facility"
+  ],
+  "answer": 1,
+  "explanation": "Before disposal, all pesticide containers must be emptied using the practices used to remove material from that type of container, including shaking, pumping, pouring, triple rinsing, or the equivalent, draining into the application tank. What is removed is then applied to the labeled site or otherwise disposed of under the Section.",
+  "page": "19",
+  "ref": ".0603(a)"
+ },
+ {
+  "id": "r6-006",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "What happens to the material rinsed out of a pesticide container?",
+  "choices": [
+   "It is poured onto an unplanted area of the property well away from any water",
+   "It is diluted with clean water until it may be discharged to a sewer",
+   "It is applied to the labeled site, or else disposed of under the disposal rules",
+   "It is held in a sealed drum for collection by the Department's disposal program"
+  ],
+  "answer": 2,
+  "explanation": "The material removed in emptying a container drains into the application tank and must be applied to the labeled site, or otherwise disposed of in accordance with the disposal Section. Rinsate is product, and the label's use directions still govern it.",
+  "page": "19",
+  "ref": ".0603(a)"
+ },
+ {
+  "id": "r6-007",
+  "section": 6,
+  "sectionName": "Pesticide and Pesticide Container Disposal",
+  "sectionLabel": "sec. .0600",
+  "manual": "rules",
+  "question": "Which disposal practices do the rules prohibit outright?",
+  "choices": [
+   "Open dumping and water dumping, burning being allowed where the label permits it",
+   "Burial on the property where the pesticide was used, and any disposal in a landfill",
+   "Disposal of containers that have not been punctured and crushed, and any disposal off the premises",
+   "Open dumping, open burning, water dumping, and ocean dumping of pesticides or their containers"
+  ],
+  "answer": 3,
+  "explanation": "No person may dispose of a pesticide or pesticide container in a manner inconsistent with the rules, in a way that causes or allows open dumping or open burning of pesticides or containers, in a way that causes or allows water dumping or ocean dumping, or so as to violate any applicable provision of the North Carolina Pesticide Law.",
+  "page": "19",
+  "ref": ".0604"
+ },
+ {
+  "id": "r7-001",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "Which animals has the Pesticide Board declared pests under the name \"orchard rats\"?",
+  "choices": [
+   "Pine voles and meadow voles, on or adjacent to cultivated land, orchards, nurseries, and similar plantings",
+   "Norway rats and roof rats, in and around orchards and packing houses",
+   "Eastern moles and hairy-tailed moles, wherever they tunnel in cultivated ground",
+   "Cotton rats and rice rats, on or adjacent to cultivated land, forest plantations, and orchards in residential areas"
+  ],
+  "answer": 0,
+  "explanation": "The Board declares pine voles and meadow voles, called orchard rats, to be pests on or adjacent to cultivated land, forest plantations, ornamental nurseries, orchards, and horticultural plantings in institutional, recreational, and residential areas. Pesticides used against them must be applied according to label directions to minimize hazards to nontarget species.",
+  "page": "19",
+  "ref": ".0701"
+ },
+ {
+  "id": "r7-002",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "Under what circumstances has the Board declared gulls to be pests?",
+  "choices": [
+   "Around aquaculture ponds, where they take stock from the water",
+   "On or adjacent to airport runways, where they occur so as to endanger air traffic on landings and takeoffs",
+   "Anywhere they concentrate in numbers large enough to be a nuisance",
+   "On or adjacent to landfills and waste transfer stations, where they spread refuse across neighboring property"
+  ],
+  "answer": 1,
+  "explanation": "Gulls, members of the genus Larus, are declared pests on or adjacent to airport runways when they occur in a manner that may endanger air traffic by affecting landings and takeoffs. The declaration is tied to that hazard rather than to gulls generally.",
+  "page": "19",
+  "ref": ".0703"
+ },
+ {
+  "id": "r7-003",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "How soon must unconsumed pigeon bait that is not in a protected bait station be picked up?",
+  "choices": [
+   "Within 48 hours",
+   "Within one month",
+   "Within one week",
+   "Within 24 hours"
+  ],
+  "answer": 2,
+  "explanation": "Pesticides used against pigeons must be distributed so as to minimize hazard to non-target species, and all unconsumed bait that is not in protected bait stations must be picked up within one week. Only materials registered for pigeons may be used, and they must be used according to label directions.",
+  "page": "20",
+  "ref": ".0705(3)"
+ },
+ {
+  "id": "r7-004",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "In a municipality, how must dead pigeons from a control program be handled?",
+  "choices": [
+   "Picked up and either incinerated or buried, at intervals not exceeding one week",
+   "Left in place, since removing carcasses disturbs the remaining flock",
+   "Picked up daily and delivered to the county health department for testing",
+   "Picked up and either incinerated or buried, at intervals not exceeding 24 hours"
+  ],
+  "answer": 3,
+  "explanation": "In municipalities, dead birds must be picked up and disposed of by incineration or burial at intervals not to exceed 24 hours. Unconsumed bait outside protected bait stations is on a longer clock: one week.",
+  "page": "20",
+  "ref": ".0705(4)"
+ },
+ {
+  "id": "r7-005",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "When may a pesticide registered for red-winged blackbirds be used against them?",
+  "choices": [
+   "When they are committing or about to commit depredations, or are concentrated so as to be a health hazard or nuisance",
+   "At any time of the year, since the Board has declared the species to be a pest without qualification of any kind",
+   "Only when a county agent has confirmed crop damage in writing",
+   "Only during the months when the birds are not nesting"
+  ],
+  "answer": 0,
+  "explanation": "The Board declares the red-winged blackbird a pest, and pesticides registered to control it may be used when it is committing or about to commit depredations on ornamental or shade trees, agricultural crops, livestock, or wildlife, or when concentrated in such numbers or manner as to constitute a health hazard or other nuisance.",
+  "page": "20",
+  "ref": ".0706(b)"
+ },
+ {
+  "id": "r7-006",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "Where may a pesticide be used against eastern and hairy-tailed moles?",
+  "choices": [
+   "Only on residential property, other sites requiring a Board permit",
+   "Where they tunnel in managed turf, such as lawns, golf courses, sod farms, athletic fields, and cemeteries",
+   "Anywhere they tunnel, including pastures and hayfields",
+   "In managed turf and in federal and State parks, where mole damage is worst"
+  ],
+  "answer": 1,
+  "explanation": "Pesticides registered for the eastern mole and the hairy-tailed mole may be used where either species is tunneling in managed turf on residential, commercial, or government property excluding federal and State parks, on golf courses, driving ranges and golf instructional facilities, sod farms, athletic fields, or cemeteries. Managed turf does not include pastures.",
+  "page": "20",
+  "ref": ".0707(b)"
+ },
+ {
+  "id": "r7-007",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "How close to water may a mole pesticide be applied?",
+  "choices": [
+   "No closer than 100 feet to a stream or river, ponds and wetlands being excepted",
+   "There is no setback, provided the product is registered for the species",
+   "No closer than 100 feet to any natural or man-made body of water, including streams, ponds, and wetlands",
+   "No closer than 25 feet to any natural or man-made body of water, including streams, ponds, swamps, and wetlands"
+  ],
+  "answer": 2,
+  "explanation": "Pesticides used to control the eastern mole and the hairy-tailed mole may not be applied within 100 feet of natural or man-made bodies of water, including streams, rivers, ponds, swamps, lakes, and wetlands.",
+  "page": "20",
+  "ref": ".0707(d)"
+ },
+ {
+  "id": "r7-008",
+  "section": 7,
+  "sectionName": "Declaration of Pests and Restrictions on Their Control",
+  "sectionLabel": "sec. .0700",
+  "manual": "rules",
+  "question": "What elevation limit applies to mole pesticides in North Carolina?",
+  "choices": [
+   "They may not be applied at elevations of 2500 feet or greater",
+   "They may not be applied below 1000 feet, where water tables are highest",
+   "No elevation limit applies once the 100-foot water setback is met",
+   "They may not be applied at elevations of 4000 feet or greater"
+  ],
+  "answer": 3,
+  "explanation": "Pesticides used to control the eastern mole and the hairy-tailed mole may not be applied at elevations of 4000 feet or greater, which keeps them out of the high mountain habitats where other mole species and sensitive wildlife occur.",
+  "page": "20",
+  "ref": ".0707(e)"
+ },
+ {
+  "id": "r10-001",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What is a \"custom application\" in North Carolina's aerial application rules?",
+  "choices": [
+   "Any application of pesticides by aircraft for which a payment is made",
+   "Any application of pesticides by aircraft to a crop the pilot does not own",
+   "Any application of pesticides by aircraft using a tank mix blended for one customer",
+   "Any application of pesticides by aircraft outside the applicator's home county"
+  ],
+  "answer": 0,
+  "explanation": "A custom application is any application of pesticides by aircraft for which a payment is made. A contractor, correspondingly, is any person who owns or manages an aerial application business engaged in custom application.",
+  "page": "22",
+  "ref": ".1001(6)"
+ },
+ {
+  "id": "r10-002",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Who is the \"pilot\" for purposes of the aerial application rules?",
+  "choices": [
+   "The person who owns or manages the aerial application business",
+   "The person in control of the aircraft during the application of a pesticide",
+   "The person holding the FAA certificate under which the agricultural aircraft operation is flown",
+   "Any licensed aerial applicator aboard the aircraft during the application"
+  ],
+  "answer": 1,
+  "explanation": "The pilot is the person in control of the aircraft during the application of a pesticide. The contractor is the separate role of owning or managing the aerial application business, and North Carolina licenses both.",
+  "page": "23",
+  "ref": ".1001(11)"
+ },
+ {
+  "id": "r10-003",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What makes an apiary a \"registered apiary\" under these rules?",
+  "choices": [
+   "It holds at least five colonies and is registered with the county cooperative extension office",
+   "It is registered with the Department and is located within one mile of cropland",
+   "One or more colonies of bees are kept there and it is registered with the Department of Agriculture and Consumer Services",
+   "One or more colonies of bees are kept there and the beekeeper holds a State apiary license issued by the Plant Industry Division"
+  ],
+  "answer": 2,
+  "explanation": "A registered apiary is any place where one or more colonies of bees are kept and which is registered with the North Carolina Department of Agriculture and Consumer Services. Registration is what puts the apiary on the listings that drive the notification duty.",
+  "page": "23",
+  "ref": ".1001(12)"
+ },
+ {
+  "id": "r10-004",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What counts as a respirator under the aerial application rules?",
+  "choices": [
+   "Any air-purifying respirator fitted with an organic vapor cartridge",
+   "Any respirator the pesticide's labeling permits, whether or not it has been tested",
+   "One tested by the Occupational Safety and Health Administration for agricultural use",
+   "One tested by the National Institute of Occupational Safety and Health and found satisfactory for the particular pesticide being used"
+  ],
+  "answer": 3,
+  "explanation": "A respirator means a respirator or mask of a type that the National Institute of Occupational Safety and Health has tested and found satisfactory for protection against the particular pesticide being used. The protection has to match the product, not merely exist.",
+  "page": "23",
+  "ref": ".1001(13)"
+ },
+ {
+  "id": "r10-005",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Which products are Toxicity Category I pesticides in the aerial rules?",
+  "choices": [
+   "Products required to display the signal word DANGER on the label",
+   "Products required to display the signal word WARNING or DANGER on the label",
+   "Products classified for restricted use by the EPA Administrator",
+   "Products bearing the skull and crossbones symbol, whatever the signal word"
+  ],
+  "answer": 0,
+  "explanation": "The rules define Toxicity Category I pesticides as any pesticide products required to display the signal word \"Danger\" on the label. That signal word is the trigger, not the restricted use classification.",
+  "page": "23",
+  "ref": ".1001(16)"
+ },
+ {
+  "id": "r10-006",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "A State pesticide rule conflicts with the Federal Aviation Regulations for agricultural aircraft. Which governs?",
+  "choices": [
+   "The Federal Aviation Regulations, unless the Board has granted a written exemption",
+   "The Federal Aviation Regulations, along with the federal and State occupational safety laws, take precedence over these rules",
+   "The State pesticide rule, since the Pesticide Board regulates the application of every pesticide used anywhere in North Carolina",
+   "Whichever is more protective of people on the ground, as the Board determines"
+  ],
+  "answer": 1,
+  "explanation": "All agricultural aircraft operations in North Carolina must comply with the federal Occupational Safety and Health Act, the North Carolina Occupational Safety and Health Law and its rules, and the Federal Aviation Regulations at 14 CFR Part 137. In any case of conflict, those authorities take precedence over the Board's aerial rules.",
+  "page": "23",
+  "ref": ".1002(a)"
+ },
+ {
+  "id": "r10-007",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What must every aerial application business have?",
+  "choices": [
+   "At least two licensed pilots, so that no aircraft flies unsupervised",
+   "A licensed consultant to review each recommendation before application",
+   "A licensed contractor",
+   "A licensed contractor who is also a licensed pilot"
+  ],
+  "answer": 2,
+  "explanation": "Each aerial application business must have a licensed contractor. The Pesticide Law separately requires that both the contractor and each pilot involved in aerial application hold licenses.",
+  "page": "23",
+  "ref": ".1002(b)"
+ },
+ {
+  "id": "r10-008",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "How soon after an aerial application must the written record be completed?",
+  "choices": [
+   "Within 72 hours, with no provision for an earlier demand",
+   "Within 30 days, matching the ground application recordkeeping deadline",
+   "Before the aircraft is next loaded, whenever that occurs",
+   "Within 72 hours, or sooner if a Pesticide Section employee asks for it during an incident investigation"
+  ],
+  "answer": 3,
+  "explanation": "All agricultural aircraft operations, pilot or contractor, must keep a written record completed within 72 hours after each application, unless an employee of the Pesticide Section requests it sooner for the purposes of a pesticide incident investigation.",
+  "page": "23",
+  "ref": ".1002(c)"
+ },
+ {
+  "id": "r10-009",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What must the aerial application record say about timing?",
+  "choices": [
+   "The year, month, date, and specific time of day each application was completed",
+   "The date each application was completed, with the time of day being optional for the record",
+   "The date and the weather conditions at the start of the application",
+   "The date each application began and the date the record was signed"
+  ],
+  "answer": 0,
+  "explanation": "The record must contain the year, month, date, and the specific time of day when each pesticide application was completed. Each day of application is recorded as a separate record.",
+  "page": "23",
+  "ref": ".1002(c)(6)"
+ },
+ {
+  "id": "r10-010",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Which of these must appear in an aerial application record?",
+  "choices": [
+   "The wind speed and direction recorded at the target area",
+   "The brand name and EPA registration number of each pesticide applied",
+   "The lot number of each pesticide container opened for the job",
+   "The name and address of the dealer who sold the pesticide to the contractor"
+  ],
+  "answer": 1,
+  "explanation": "The record must include the brand name and EPA registration number of the pesticides, along with the contractor's name, the name and address of the person for whom the pesticide was applied, the farm or land sites treated, the crop treated, the total acres treated, the timing, the amount of formulated product or active material per acre, the total gallons or pounds of final tank mix per acre, the pilot's name, and the signature of the person completing the record.",
+  "page": "23",
+  "ref": ".1002(c)(7)"
+ },
+ {
+  "id": "r10-011",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "A contractor treats three separate fields over two days for one customer. How are the records kept?",
+  "choices": [
+   "One record covers the whole job, listing each field and date",
+   "One record covers each customer per calendar month",
+   "Each day of application is recorded as a separate record",
+   "Each field is recorded as a separate record, whatever day it was treated"
+  ],
+  "answer": 2,
+  "explanation": "Each day of application must be recorded as a separate record. A single job spanning two days therefore produces two records, each complete with all the required information.",
+  "page": "23",
+  "ref": ".1002(d)"
+ },
+ {
+  "id": "r10-012",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What must a pilot learn and confirm before making an application?",
+  "choices": [
+   "The boundaries and exact location of the target areas, with hazards being the contractor's responsibility to identify",
+   "The crop stage and the customer's preferred time of day for the application",
+   "The forecast wind speed and the location of the nearest alternate airstrip",
+   "The boundaries and exact location of the target areas, and the nontarget areas and safety hazards on or next to them"
+  ],
+  "answer": 3,
+  "explanation": "Before the application the pilot must learn and confirm the boundaries and exact location of the target areas, and the identity of nontarget areas and safety hazards located on or adjacent to them. Both halves are the pilot's duty under the rule.",
+  "page": "23",
+  "ref": ".1002(e)"
+ },
+ {
+  "id": "r10-013",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "When may spray and spreading equipment go unrinsed after an agricultural aircraft operation?",
+  "choices": [
+   "When the next operation uses the same pesticide, or a compatible one that will cause no adverse effect",
+   "When the next operation is scheduled for the same calendar day",
+   "When the equipment was rinsed within the previous 72 hours",
+   "When the product applied was not classified for restricted use"
+  ],
+  "answer": 0,
+  "explanation": "Spray and spreading equipment must be rinsed after each agricultural aircraft operation, except where the next operation will use the same pesticide, or a pesticide compatible with the previous one according to the manufacturer's recommendations that will not result in any adverse effect.",
+  "page": "23",
+  "ref": ".1002(f)"
+ },
+ {
+  "id": "r10-014",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What does the rule require of the pesticide flow and mixture during an aerial application?",
+  "choices": [
+   "Both must be checked against the calibration record before each load",
+   "Both must be uniform, and the equipment used must be able to maintain them that way",
+   "The flow must be uniform, while the mixture is governed by the product labeling alone",
+   "Both must be uniform except during turns at the ends of the field"
+  ],
+  "answer": 1,
+  "explanation": "During application the flow and mixture of the pesticide must be uniform, and pilots and contractors must use equipment that will maintain a uniform mixture and flow throughout the application.",
+  "page": "23",
+  "ref": ".1002(g)"
+ },
+ {
+  "id": "r10-015",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What does the rule require of aerial spray and spreading equipment?",
+  "choices": [
+   "That it carry a shutoff the pilot can reach without releasing the controls",
+   "That it be replaced whenever the manufacturer issues a superseding model",
+   "That it be free of leaks and have a positive shutoff system to prevent dissemination over nontarget areas",
+   "That it be free of leaks and be inspected by a representative of the Pesticide Section before each season begins"
+  ],
+  "answer": 2,
+  "explanation": "Aircraft must be equipped with spray or spreading equipment suited to the pesticide according to the manufacturer's recommendations, and all such equipment must be free of leaks and have a positive shutoff system to prevent leaking and dissemination of pesticides over any nontarget area the flight passes over. It must not allow spillage, dripping, backflow, or create a hazard from vapors or drift.",
+  "page": "23",
+  "ref": ".1002(h)"
+ },
+ {
+  "id": "r10-016",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What must be true of the shape of an aerial applicator's tank or hopper?",
+  "choices": [
+   "It must allow complete drainage on the ground, in-flight dumping being prohibited",
+   "It must be baffled to keep the load from shifting during turns",
+   "It must be sized so that a full load can be applied within one flight",
+   "It must allow complete drainage both in flight and on the ground"
+  ],
+  "answer": 3,
+  "explanation": "The shape of the tank or hopper of the spray or spreading equipment must be such as to allow complete drainage during flight and on the ground. The loading area must separately be kept free of pesticide contamination.",
+  "page": "24",
+  "ref": ".1002(k)"
+ },
+ {
+  "id": "r10-017",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Who may be in the target area while an aerial application is being made?",
+  "choices": [
+   "Only persons assisting in the application",
+   "Only persons assisting in the application and the landowner",
+   "Anyone wearing the personal protective equipment the labeling requires",
+   "Anyone, provided the pilot has been told where they are working"
+  ],
+  "answer": 0,
+  "explanation": "No pesticide may be applied by an aerial applicator while any persons other than those assisting in the application are in the target area. Certain public agency and public health operations may be exempted from this requirement on the rule's conditions.",
+  "page": "24",
+  "ref": ".1002(j)"
+ },
+ {
+  "id": "r10-018",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Pesticide is released accidentally from an aircraft's application equipment. Who must be told, and how soon?",
+  "choices": [
+   "The Pesticide Section, within one week",
+   "The Secretary of the Board, within 24 hours",
+   "The Secretary of the Board, within 72 hours",
+   "The county health director, immediately"
+  ],
+  "answer": 1,
+  "explanation": "The contractor or pilot must notify the Secretary of the Board within 24 hours of any emergency or accidental release of pesticides from the application or auxiliary equipment, and must supply the ten items of information the rule lists.",
+  "page": "24",
+  "ref": ".1002(l)"
+ },
+ {
+  "id": "r10-019",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Reporting an accidental release, how far around the spill must the surroundings be described?",
+  "choices": [
+   "Within 300 feet downwind of the spill",
+   "Within a quarter mile of the spill, in all directions",
+   "Within 300 feet from the edge of the spill, in all directions",
+   "Within 100 feet from the edge of the spill, in all directions"
+  ],
+  "answer": 2,
+  "explanation": "Among the ten items reported is a description of what is located within 300 feet from the edge of the spill in all directions. The report also covers the pilot, contractor, property owner or operator, location, pesticide, estimated amount, estimated size of the area that received the spill, the number of humans or animals known to have been contaminated, and the weather conditions.",
+  "page": "24",
+  "ref": ".1002(l)(8)"
+ },
+ {
+  "id": "r10-020",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "How does the North Carolina drift control rule for aerial application read?",
+  "choices": [
+   "No person may apply pesticides aerially when the wind speed measured at the target area exceeds 10 miles per hour during the application",
+   "No person may apply pesticides aerially unless a drift control agent is included in the tank mix",
+   "No person may apply pesticides aerially within one-half mile of a sensitive crop",
+   "No person may apply pesticides aerially under conditions where drift from particles or vapors results in adverse effect"
+  ],
+  "answer": 3,
+  "explanation": "The drift control rule is written as an outcome standard: no person may apply a pesticide aerially under such conditions that drift from pesticide particles or vapors results in adverse effect. Adverse effect is defined as personal injury, damage to personal or real property, damage to the environment, or any combination of these.",
+  "page": "24",
+  "ref": ".1003"
+ },
+ {
+  "id": "r10-021",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "May a pesticide be applied by aircraft inside a congested area?",
+  "choices": [
+   "Only when permission is granted under 14 CFR Part 137",
+   "Only when the application is made outside daylight hours",
+   "Only when the pesticide is not a Toxicity Category I product",
+   "Never, whatever permissions the operator holds"
+  ],
+  "answer": 0,
+  "explanation": "No pesticide may be applied by aircraft within the limits of any congested area except when permission is granted under 14 CFR Part 137, the Federal Aviation Regulation covering agricultural aircraft operations.",
+  "page": "24",
+  "ref": ".1005(a)"
+ },
+ {
+  "id": "r10-022",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "How close to a school, hospital, nursing home, or church may an aerial applicator deposit pesticide?",
+  "choices": [
+   "No closer than 500 feet from the premises, where any person is in the building or on the premises",
+   "No closer than 300 feet from the premises, where any person is in the building or on the premises",
+   "No closer than 100 feet from the premises, where any person is in the building or on the premises",
+   "No closer than 300 feet from the premises, whether or not anyone is present"
+  ],
+  "answer": 1,
+  "explanation": "No pesticide may be deposited by aircraft within 300 feet of the premises of schools, hospitals, nursing homes, churches, or any building other than a residence that is used for business or social activities, if any person is in the building or on the premises.",
+  "page": "24",
+  "ref": ".1005(b)"
+ },
+ {
+  "id": "r10-023",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What setback applies to a public road during an aerial application?",
+  "choices": [
+   "No deposit within 100 feet of the road, measured from the pavement edge",
+   "No deposit on the right-of-way of the road or within 25 feet of it, whichever distance is less",
+   "No deposit on the right-of-way or within 25 feet of the road, whichever distance is greater",
+   "No deposit on the right-of-way, which the rule treats as the full setback"
+  ],
+  "answer": 2,
+  "explanation": "No pesticide may be deposited by aircraft on the right-of-way of a public road or within 25 feet of the road, whichever is the greater distance. Where the right-of-way is narrow, the 25-foot measure governs.",
+  "page": "24",
+  "ref": ".1005(c)"
+ },
+ {
+  "id": "r10-024",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "How close to a residence may an aerial applicator deposit pesticide?",
+  "choices": [
+   "No closer than 300 feet",
+   "No closer than 25 feet",
+   "No closer than 100 feet, and only if no one is at home",
+   "No closer than 100 feet"
+  ],
+  "answer": 3,
+  "explanation": "No pesticide may be deposited by aircraft within 100 feet of any residence. Occupied schools, hospitals, nursing homes, churches, and other nonresidential buildings used for business or social activities carry the longer 300-foot setback.",
+  "page": "24",
+  "ref": ".1005(e)"
+ },
+ {
+  "id": "r10-025",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "When may a pesticide labeled toxic to aquatic life be deposited in or beside a body of water?",
+  "choices": [
+   "When that aquatic life is the intended target of the pesticide",
+   "When the water body is entirely on the customer's own property",
+   "When the deposit is upstream of any drinking water intake",
+   "Never; the rule admits no exception for aquatic sites"
+  ],
+  "answer": 0,
+  "explanation": "No pesticide labeled toxic or harmful to aquatic life may be deposited in or adjacent to any body of water in a manner hazardous to aquatic life, unless that aquatic life is the intended target of the pesticide. Aquatic pest control is its own licensing category for exactly that work.",
+  "page": "24",
+  "ref": ".1005(d)"
+ },
+ {
+  "id": "r10-026",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Beyond the specific setbacks, what general limit applies to deposits on nontarget areas?",
+  "choices": [
+   "No pesticide may be deposited on a nontarget area unless the product applied is a general use pesticide rather than a restricted use one",
+   "No pesticide may be deposited on a nontarget area where it is more likely than not that an adverse effect will occur",
+   "No pesticide may be deposited on a nontarget area under any circumstances",
+   "No pesticide may be deposited on a nontarget area without the owner's written consent"
+  ],
+  "answer": 1,
+  "explanation": "The restricted areas rule closes with a catch-all: no pesticide may be deposited onto any nontarget area in such a manner that it is more likely than not that an adverse effect will occur. The specific setbacks are floors, not the whole of the duty.",
+  "page": "24",
+  "ref": ".1005(f)"
+ },
+ {
+  "id": "r10-027",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "A State agency plans an aerial pest control operation and wants relief from the restricted-area setbacks. What must it do?",
+  "choices": [
+   "Obtain a proclamation from the Commissioner of Agriculture declaring an emergency",
+   "Notify the affected landowners in writing and proceed without further approval",
+   "Present a complete description of the operation to the Pesticide Section at least 30 days before it begins",
+   "Present a complete description of the operation to the Pesticide Section at least 10 days before it begins"
+  ],
+  "answer": 2,
+  "explanation": "A State, federal, or public agency, or an aerial applicator under contract with and supervised by such an agency, may be exempted from the bystander rule and from the setbacks in .1005(b) through (e), provided it presents the Pesticide Section a complete description of the operation at least 30 days before the proposed start. The Pesticide Section approves, disapproves, or refers each application to the Board.",
+  "page": "25",
+  "ref": ".1006(3)"
+ },
+ {
+  "id": "r10-028",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What must the environmental evaluation in such an exemption request include about alternatives?",
+  "choices": [
+   "A description of alternative control methods, a no-treatment alternative not being a realistic option for a public agency project",
+   "A cost comparison of aerial and ground application for the same acreage",
+   "A statement that no alternative method would control the target pest",
+   "A description of alternative control methods, including a no-treatment alternative, with the probable consequences of each"
+  ],
+  "answer": 3,
+  "explanation": "The environmental evaluation must identify or map hospitals, schools, nursing homes, watersheds, and other sensitive areas near the treatment area; list rare, threatened, or endangered species and measures to lessen impacts on them; describe alternative methods of pest control, including a no-treatment alternative, with the probable environmental consequences of each; and describe any mitigation measures.",
+  "page": "25",
+  "ref": ".1006(3)(d)"
+ },
+ {
+  "id": "r10-029",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "For a project under 50 acres or with fewer than 20 landowners, how may preliminary notification be given?",
+  "choices": [
+   "Individually, by written, oral, or digital communication or by mailings",
+   "Only through print, broadcast, or internet news media",
+   "Only at a public meeting held in the affected community",
+   "Individually, by certified mail with a return receipt requested from each landowner"
+  ],
+  "answer": 0,
+  "explanation": "For small projects, meaning less than 50 acres or fewer than 20 landowners, individual notification by written, oral, or digital communication or by mailings may be used. Larger projects may use print, broadcast, or internet news media, and a public meeting may also serve as a preliminary notification tool.",
+  "page": "25",
+  "ref": ".1006(3)(e)(i)"
+ },
+ {
+  "id": "r10-030",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What must the notification plan for such a project provide for people with health concerns?",
+  "choices": [
+   "Reimbursement for lodging elsewhere during the treatment",
+   "An evacuation plan with a notification procedure so they can leave the treatment area while the project is underway",
+   "A medical monitoring program for the duration of the project",
+   "An option to have their property excluded from the treatment area"
+  ],
+  "answer": 1,
+  "explanation": "The notification and public input plan must include an evacuation plan: for persons concerned about the project for health reasons, there must be a notification procedure so they may leave the treatment area while the project is underway. A contact person and telephone number must also be listed in the public notice.",
+  "page": "26",
+  "ref": ".1006(3)(e)(v)"
+ },
+ {
+  "id": "r10-031",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "A local health director runs a mosquito control operation by air. What must happen before it starts?",
+  "choices": [
+   "The Commissioner must proclaim an emergency covering the affected county",
+   "Nothing; public health operations are outside the aerial rules altogether",
+   "The Secretary of the Board must be notified, with the applicator, area, target pests, products, dates, and nature of the operation",
+   "The Pesticide Board must approve the operation at a public meeting"
+  ],
+  "answer": 2,
+  "explanation": "A local health director, or an aerial applicator licensed in commercial public health work under that director's supervision, is exempted from the bystander rule, the drift control rule, and the .1005(b) through (e) setbacks when controlling disease vectors or other pests of public health significance, provided the director or an authorized designee notifies the Secretary of the Board beforehand with the applicator or contractor's name, the location and general description of the operation areas, the target pests, the brand names and EPA registration numbers, the scheduled dates, and an outline of the operation.",
+  "page": "26",
+  "ref": ".1006(4)"
+ },
+ {
+  "id": "r10-032",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Does an exemption from the aerial rules relieve the applicator of the label's requirements?",
+  "choices": [
+   "Yes, to the extent the exemption names the label requirement in question",
+   "Yes, for public health operations conducted under a local health director's supervision",
+   "No, except where the Commissioner has proclaimed an emergency",
+   "No; all pesticides must still be applied in compliance with label requirements"
+  ],
+  "answer": 3,
+  "explanation": "The exemptions rule ends by stating that all pesticides must be applied in compliance with label requirements. Relief from a State rule is not relief from the labeling, which is enforceable in its own right under both federal and State law.",
+  "page": "26",
+  "ref": ".1006"
+ },
+ {
+  "id": "r10-033",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Who must notify registered apiaries before an aerial application of a pesticide labeled toxic to bees?",
+  "choices": [
+   "The person who hires the services of the aerial applicator",
+   "The pilot who makes the application",
+   "The contractor who owns the aerial application business",
+   "The Pesticide Section, from its quarterly registration list"
+  ],
+  "answer": 0,
+  "explanation": "The duty falls on any person who hires the services of an aerial applicator to apply a pesticide labeled as toxic to bees. The Pesticide Law puts the same duty on the person who contracts for the application, rather than on the applicator.",
+  "page": "26",
+  "ref": ".1009(a)"
+ },
+ {
+  "id": "r10-034",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Which registered apiaries must be notified before such an application?",
+  "choices": [
+   "Every registered apiary in the county where the target area lies",
+   "Those within one mile of the target area, based on available listings",
+   "Those within two miles of the target area, based on available listings",
+   "Those within one-half mile of the target area, based on available listings"
+  ],
+  "answer": 1,
+  "explanation": "The person hiring the aerial applicator must notify, based on available listings of registered apiaries, the owner or operator of any registered apiary located within one mile of the target area.",
+  "page": "26",
+  "ref": ".1009(a)"
+ },
+ {
+  "id": "r10-035",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What is the timing window for notifying a registered apiary?",
+  "choices": [
+   "Not less than 48 hours and not more than 30 days before the application or seasonal spray schedule begins",
+   "At least 48 hours beforehand, with no outer limit on how early notice may be given",
+   "Not less than 48 hours and not more than 10 days before the application or seasonal spray schedule begins",
+   "Not less than 24 hours and not more than 10 days before the application or seasonal spray schedule begins"
+  ],
+  "answer": 2,
+  "explanation": "Notice must be given not less than 48 hours nor more than 10 days before the beginning of a single application or of a seasonal spray schedule. Notice given too early is as much a failure as notice given too late, because the beekeeper cannot act on stale information.",
+  "page": "26",
+  "ref": ".1009(a)"
+ },
+ {
+  "id": "r10-036",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "What information must the notice to a registered apiary contain?",
+  "choices": [
+   "The exact time of the application and the EPA registration number of each pesticide to be used",
+   "The acreage to be treated and the name of the pilot who will fly the job",
+   "The approximate time of day and the expected wind direction during the application",
+   "The approximate time of day of the application and the type of pesticide to be used"
+  ],
+  "answer": 3,
+  "explanation": "The notice must give the approximate time of day of the application and the type of pesticide to be used, which is what lets a beekeeper decide whether to close, move, or cover the colonies.",
+  "page": "27",
+  "ref": ".1009(a)"
+ },
+ {
+  "id": "r10-037",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "Which forms of notification to a beekeeper does the rule accept?",
+  "choices": [
+   "Written, oral, or digital, including mail, a notice left at the residence, telephone, email, or cellular text message",
+   "Written only, by U.S. mail or a notice left at the residence",
+   "Written or oral, digital communication not being recognized by the rule",
+   "Any form, provided the beekeeper acknowledges receipt in writing"
+  ],
+  "answer": 0,
+  "explanation": "Notification may be written, by U.S. mail, left at the residence, or left at the alternate address on the honeybee registration list; oral, by telephone, in person, or with the alternate person designated on the list; or digital, by electronic mail or instant cellular text messaging.",
+  "page": "27",
+  "ref": ".1009(b)"
+ },
+ {
+  "id": "r10-038",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "How does a farmer learn which apiaries are registered nearby?",
+  "choices": [
+   "Beekeepers are required to notify neighboring farmers directly when they register",
+   "The Pesticide Section mails new registrations quarterly to farmers growing crops within one mile of the apiaries",
+   "The farmer must request the current registration list from the Plant Industry Division before each application is made",
+   "The county extension office posts the list at the start of each growing season"
+  ],
+  "answer": 1,
+  "explanation": "The Pesticide Section distributes new registrations of beekeepers and their alternates by U.S. mail on the first of each quarter, on January 1, April 1, July 1, and October 1, to all farmers growing crops within one mile of the apiaries identified on the Plant Industry Division's Apiary Registration Form.",
+  "page": "27",
+  "ref": ".1009(c)"
+ },
+ {
+  "id": "r10-039",
+  "section": 10,
+  "sectionName": "Aerial Application of Pesticides",
+  "sectionLabel": "sec. .1000",
+  "manual": "rules",
+  "question": "When does a revised list of registered apiaries take effect, and how long does a registration last?",
+  "choices": [
+   "On the fifth day of the first month of the quarter, with registration effective for 12 months from the date filed",
+   "On receipt by the farmer, with registration effective until the beekeeper cancels it",
+   "On the fifth day of the first month of the quarter, with registration effective for the calendar year",
+   "On the first day of the quarter, with registration effective for the calendar year"
+  ],
+  "answer": 2,
+  "explanation": "The revised list of registered apiaries becomes effective on the fifth day of the first month of the quarter it was distributed in, and the registration of apiaries is effective for the calendar year in which they are registered.",
+  "page": "27",
+  "ref": ".1009(c)"
+ },
+ {
+  "id": "r11-001",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "Who is a private pesticide applicator under the certification rules?",
+  "choices": [
+   "A person using restricted use pesticides on any agricultural land in the State, whoever owns it and whatever the pay arrangement",
+   "A person applying any pesticide, restricted use or not, on their own farm",
+   "A person applying restricted use pesticides for compensation on farms in their own county",
+   "A person using restricted use pesticides to produce an agricultural commodity on property they or their employer own or rent"
+  ],
+  "answer": 3,
+  "explanation": "A private pesticide applicator uses or supervises the use of restricted use pesticides to produce an agricultural commodity on property owned or rented by that person or the person's employer, or applies them on another person's property without compensation beyond the trading of personal services between producers of agricultural commodities.",
+  "page": "27",
+  "ref": ".1102(3)"
+ },
+ {
+  "id": "r11-002",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What is a private pesticide applicator certification standards review?",
+  "choices": [
+   "A training session designed by the NC State Pesticide Safety Extension Specialist to advance a private applicator's practical knowledge",
+   "An audit by the Pesticide Section of a private applicator's records and storage",
+   "A written self-assessment a private applicator files with each recertification",
+   "A field evaluation of a private applicator's equipment and calibration by an extension agent"
+  ],
+  "answer": 0,
+  "explanation": "It is a training session designed by the North Carolina State University Pesticide Safety Extension Specialist to advance a private applicator's practical knowledge, covering pest problems and control practices, storage and disposal, labels and labeling, local environmental situations, poisoning symptoms and accident procedures, protective clothing and worker protection, pesticide law, current technology, and where to get advice.",
+  "page": "27",
+  "ref": ".1102(4)"
+ },
+ {
+  "id": "r11-003",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "Who may teach a private pesticide applicator certification standards review?",
+  "choices": [
+   "Any licensed pesticide dealer whose location serves the county",
+   "Cooperative Extension Service pesticide training agents, or others the Board approves case by case on education, experience, and knowledge",
+   "Cooperative Extension Service pesticide training agents only",
+   "Any certified private applicator with at least five years of experience"
+  ],
+  "answer": 1,
+  "explanation": "These training sessions must be taught by Cooperative Extension Service pesticide training agents, or by other individuals the Pesticide Board approves case by case, based on the individual's education, experience, and knowledge of the subject areas the review covers.",
+  "page": "28",
+  "ref": ".1102(4)"
+ },
+ {
+  "id": "r11-004",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "Besides private applicator training, where may a private applicator earn continuing certification credits?",
+  "choices": [
+   "Only at grower meetings sponsored by the Cooperative Extension Service",
+   "At any agricultural meeting, with credit assigned by the county extension office",
+   "At training sessions credited in listed commercial categories such as crop, forest, ornamental and turf, and aerial pest control",
+   "At any training session credited in any commercial category the Board recognizes"
+  ],
+  "answer": 2,
+  "explanation": "A continuing certification credit is one hour of continuing certification training, offered at grower meetings, seminars, short courses, or other presentations. Private applicators may also earn credits by attending sessions credited in the commercial categories of agricultural pest control including crop and livestock, forest, ornamental and turf, aquatic, seed treatment, soil and growing media fumigation, and aerial pest control.",
+  "page": "28",
+  "ref": ".1102(5)"
+ },
+ {
+  "id": "r11-005",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What is a passing grade on the private pesticide applicator certification examination?",
+  "choices": [
+   "75 percent",
+   "80 percent",
+   "65 percent",
+   "70 percent"
+  ],
+  "answer": 3,
+  "explanation": "The rule sets a passing grade of 70 percent for the private applicator certification examination, the same standard the commercial examinations use.",
+  "page": "28",
+  "ref": ".1103(b)"
+ },
+ {
+  "id": "r11-006",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "A grower wants to be certified in the aerial private applicator subclass. What comes first?",
+  "choices": [
+   "Becoming certified as a private pesticide applicator",
+   "Holding a commercial aerial pest control license for one year",
+   "Passing the Aerial Methods examination for commercial applicators",
+   "Obtaining a single purchase emergency certification permit for the intended product"
+  ],
+  "answer": 0,
+  "explanation": "Any applicant for initial certification in a private applicator certification subclass must first become certified as a private pesticide applicator. The subclasses of soil and growing media fumigation, agricultural commodity fumigation, and aerial build on that base certification.",
+  "page": "28",
+  "ref": ".1103(c)"
+ },
+ {
+  "id": "r11-007",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What does a Single Purchase Emergency Certification Permit authorize?",
+  "choices": [
+   "Purchase of one restricted use pesticide, its application to be made by a licensed pesticide applicator",
+   "Purchase and use of one restricted use pesticide for one application to a crop or site, for 10 days",
+   "Purchase and use of any restricted use pesticide for 10 days, on any crop the applicant grows",
+   "Purchase and use of one restricted use pesticide for one growing season"
+  ],
+  "answer": 1,
+  "explanation": "The permit runs 10 days and authorizes the purchase and use of one restricted use pesticide for one application to a crop or site. It is issued by the applicant's resident county agricultural extension service pesticide coordinator.",
+  "page": "28",
+  "ref": ".1104(a)"
+ },
+ {
+  "id": "r11-008",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "Who issues a Single Purchase Emergency Certification Permit?",
+  "choices": [
+   "Any licensed pesticide dealer at the point of sale",
+   "The Secretary of the Pesticide Board, on the recommendation of a county extension agent",
+   "The applicant's resident county agricultural extension service pesticide coordinator",
+   "The Structural Pest Control and Pesticides Division, on written application"
+  ],
+  "answer": 2,
+  "explanation": "The permit is issued by the applicant's resident county agricultural extension service pesticide coordinator, who first supplies a training manual and information on obtaining full certification, and discusses proper use of the restricted use pesticide with the applicant.",
+  "page": "28",
+  "ref": ".1104(a)"
+ },
+ {
+  "id": "r11-009",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "When may an emergency certification permit NOT be issued?",
+  "choices": [
+   "When the applicant has held a permit at any time in the previous five years",
+   "When the pesticide needed costs more than the certification fee",
+   "When the county extension office has issued its quota of permits for the year",
+   "When there is time to become certified, when the applicant let a certification lapse, or when a general use pesticide would do"
+  ],
+  "answer": 3,
+  "explanation": "A permit may not be issued if there is sufficient time before the needed use for the individual to become certified, if the individual was previously certified but let the certification lapse, or if discussion with the extension agent shows that a general pesticide, available to the public without certification, could be used instead.",
+  "page": "28",
+  "ref": ".1104(a)(1)"
+ },
+ {
+  "id": "r11-010",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "For which use will no Single Purchase Emergency Certification Permit be issued?",
+  "choices": [
+   "Fumigation of soil, growing media, or agricultural commodities",
+   "Any application made from an aircraft",
+   "Any application to a crop grown for direct human consumption or for feed",
+   "Any use of a product bearing the signal word DANGER"
+  ],
+  "answer": 0,
+  "explanation": "A Single Purchase Emergency Certification Permit may not be issued for fumigation of soil, growing media, or agricultural commodities. Those uses have their own private applicator subclasses, each requiring certification.",
+  "page": "29",
+  "ref": ".1104(e)"
+ },
+ {
+  "id": "r11-011",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What must the county extension pesticide coordinator do before issuing an emergency certification permit?",
+  "choices": [
+   "Collect the ten-dollar certification fee on the Department's behalf",
+   "Give the applicant a training manual and information on full certification, and discuss proper use of the pesticide",
+   "Inspect the applicant's storage and application equipment",
+   "Obtain the Pesticide Section's approval of the intended product and site"
+  ],
+  "answer": 1,
+  "explanation": "Before issuing the permit the coordinator must provide the applicant with a training manual and information on obtaining full private pesticide applicator certification, and must discuss the proper use of the restricted use pesticide with the applicant.",
+  "page": "29",
+  "ref": ".1104(b)"
+ },
+ {
+  "id": "r11-012",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What must a copy of an issued emergency certification permit record?",
+  "choices": [
+   "The applicant's certification number, the pesticide, and the expected date of application",
+   "The applicant's name, the pesticide, and the reason certification was not obtained in advance",
+   "The applicant's name and address, the pesticide and amount, the crop or site, and the date of issue",
+   "The applicant's name and address, the name of the dealer who will supply the pesticide, and the date of issue"
+  ],
+  "answer": 2,
+  "explanation": "The extension pesticide coordinator keeps a copy of the permit containing the name and address of the applicant, the name and amount of restricted use pesticide, the crop or site to be treated, and the date the permit was issued. The copies must be available for review by the Department.",
+  "page": "29",
+  "ref": ".1104(d)"
+ },
+ {
+  "id": "r11-013",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "A noncertified employee applies a restricted use pesticide under a certified applicator's direct supervision. What must be available at the application site?",
+  "choices": [
+   "The supervisor's certification card and a copy of the sales record for the product",
+   "A written application plan signed by the supervising certified applicator",
+   "The Safety Data Sheet and a log of the hours worked that day",
+   "Written directions for applying it, written injury-prevention instructions, and instructions for contacting the supervisor directly"
+  ],
+  "answer": 3,
+  "explanation": "The noncertified applicator must have available at the application site, or at the loading and mixing site if different, detailed written directions for applying the pesticide, detailed written instructions on procedures to prevent injury and unreasonable adverse effects, and detailed instructions for contacting the supervising certified applicator that result in direct communication. The product label suffices for the first two.",
+  "page": "30",
+  "ref": ".1105(d)"
+ },
+ {
+  "id": "r11-014",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "Do the pesticide product's own label and labeling satisfy the written-instruction requirement for a supervised application?",
+  "choices": [
+   "Yes for the use directions and the injury-prevention procedures, but not for the contact instructions",
+   "Yes for all three requirements, since the label covers use, safety, and emergency contact information",
+   "No; the supervising applicator must prepare separate written instructions for each",
+   "Yes for the injury-prevention procedures only"
+  ],
+  "answer": 0,
+  "explanation": "The rule says the pesticide product label will suffice both for the detailed directions for applying the pesticide and for the instructions on preventing injury and adverse effects. Instructions for reaching the supervising certified applicator, such as a name, location, telephone number, or radio contact, are additional and must actually result in direct communication.",
+  "page": "30",
+  "ref": ".1105(d)(3)"
+ },
+ {
+  "id": "r11-015",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What is the supervising certified applicator's continuing duty toward a noncertified applicator?",
+  "choices": [
+   "To review the noncertified applicator's work at least once a week",
+   "To be available when needed, and to keep the person fully aware of the directions for use and the cautions for safe application",
+   "To be physically present at the site for the whole of every application",
+   "To inspect the treated site after each application and record the result"
+  ],
+  "answer": 1,
+  "explanation": "The certified applicator providing direct supervision must be available to the noncertified applicator if needed, and is responsible for keeping that person fully aware of all directions for use and cautions necessary for the safe use and application of any restricted use pesticide they are directed to apply.",
+  "page": "30",
+  "ref": ".1105(c)"
+ },
+ {
+  "id": "r11-016",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "How long must a certified applicator keep the records of a noncertified applicator's qualifications?",
+  "choices": [
+   "Three years from the date the noncertified applicator was last trained by the supervisor",
+   "For as long as the noncertified applicator remains employed",
+   "Three years from the date the noncertified applicator uses the pesticide",
+   "Two years from the date the noncertified applicator uses the pesticide"
+  ],
+  "answer": 2,
+  "explanation": "The supervising certified applicator must have access to the qualification records for three years from the date the noncertified applicator uses the pesticide, and must create or verify those records before allowing any supervised use of a restricted use pesticide.",
+  "page": "30",
+  "ref": ".1105(b)(3)"
+ },
+ {
+  "id": "r11-017",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "How old must someone be to be certified as a private pesticide applicator?",
+  "choices": [
+   "At least 16, with a parent or employer countersigning the application",
+   "At least 18, but only for the fumigation and aerial subclasses",
+   "At least 21, matching the age the rules set for purchasing and applying restricted use fumigants",
+   "At least 18, before participating in a certification option or being issued an emergency permit"
+  ],
+  "answer": 3,
+  "explanation": "Individuals who wish to be certified as private pesticide applicators must be at least 18 years old before participating in a certification option or being issued a single purchase permit under the emergency certification procedure.",
+  "page": "30",
+  "ref": ".1107"
+ },
+ {
+  "id": "r11-018",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "How long does private pesticide applicator certification last?",
+  "choices": [
+   "Three years",
+   "Five years",
+   "Two years",
+   "One year, renewed with the license"
+  ],
+  "answer": 0,
+  "explanation": "The term of certification for a private pesticide applicator is three years. Commercial certification runs five years for ground equipment and two for aerial contractors and pilots.",
+  "page": "30",
+  "ref": ".1108(a)"
+ },
+ {
+  "id": "r11-019",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What does a private applicator need to recertify without taking a written examination?",
+  "choices": [
+   "Two hours of certification standards review, with credits required only for subclasses",
+   "Two hours of private pesticide applicator certification standards review plus two continuing certification credit hours",
+   "Four hours of private pesticide applicator certification standards review",
+   "Two continuing certification credit hours, in any approved category"
+  ],
+  "answer": 1,
+  "explanation": "To be recertified without a written examination, a private pesticide applicator completes two hours of private pesticide applicator certification standards review plus two continuing certification credit hours.",
+  "page": "30",
+  "ref": ".1108(b)"
+ },
+ {
+  "id": "r11-020",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "A private applicator holds the aerial subclass. What extra training keeps it?",
+  "choices": [
+   "One hour of the private applicator certification standards review, aerial section",
+   "Nothing extra, provided the base certification is renewed on time",
+   "One hour of continuing certification credit specific to that subclass",
+   "Two hours of continuing certification credit specific to that subclass"
+  ],
+  "answer": 2,
+  "explanation": "A private pesticide applicator certified in the soil and growing media fumigation, agricultural commodity fumigation, or aerial subclass must earn one hour of continuing certification credit specific to each applicable subclass to retain that subclass certification, on top of the base requirement.",
+  "page": "30",
+  "ref": ".1108(c)"
+ },
+ {
+  "id": "r11-021",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "Which subclassifications exist for private pesticide applicator certification?",
+  "choices": [
+   "Crop pest control, livestock pest control, and aerial",
+   "Soil fumigation, greenhouse production, and seed treatment of agricultural commodities",
+   "Fumigation, aquatic pest control, and aerial",
+   "Soil and growing media fumigation, agricultural commodity fumigation, and aerial"
+  ],
+  "answer": 3,
+  "explanation": "Three subclassifications are established for private applicators: soil and growing media fumigation, agricultural commodity fumigation, and aerial. Each covers restricted use work on property the applicator owns, leases, or works for an employer, or done in a trade of personal services between producers.",
+  "page": "30",
+  "ref": ".1109"
+ },
+ {
+  "id": "r11-022",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What does the private applicator \"aerial\" subclass cover?",
+  "choices": [
+   "Applying restricted use pesticides from an aircraft onto commodities on property the applicator owns, leases, or works for an employer",
+   "Applying any pesticide from an aircraft anywhere in the State",
+   "Supervising a licensed commercial aerial applicator hired to treat the applicator's own crops",
+   "Applying restricted use pesticides from an aircraft for neighboring producers, for a fee"
+  ],
+  "answer": 0,
+  "explanation": "The aerial subclass covers private pesticide applicators applying restricted use pesticides from an aircraft onto agricultural commodities on property they own or lease or that belongs to their employer, or applied without compensation other than the trading of personal services between producers of agricultural commodities. Flying for pay is commercial work.",
+  "page": "30",
+  "ref": ".1109(3)"
+ },
+ {
+  "id": "r11-023",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "By what date must a private applicator finish the continuing certification requirements to avoid an examination?",
+  "choices": [
+   "The anniversary of the original certification date",
+   "September 30 of the year the certification expires",
+   "June 30 of the year the certification expires",
+   "December 31 of the year the certification expires"
+  ],
+  "answer": 1,
+  "explanation": "A certified private pesticide applicator who has not completed the continuing certification requirements on or before September 30 of the year of certification expiration must pass a comprehensive examination administered by the Department in order to renew the certification. Credits cannot be carried from one recertification period to the next.",
+  "page": "31",
+  "ref": ".1110(a)"
+ },
+ {
+  "id": "r11-024",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "What fee is charged for private pesticide applicator certification or recertification?",
+  "choices": [
+   "Seventy-five dollars, nonrefundable",
+   "No fee; only commercial licenses carry one",
+   "Ten dollars, nonrefundable",
+   "Twenty-five dollars, nonrefundable"
+  ],
+  "answer": 2,
+  "explanation": "A nonrefundable fee of ten dollars is required for private pesticide applicator certification or recertification, which matches the ceiling the Pesticide Law sets for that fee.",
+  "page": "31",
+  "ref": ".1111"
+ },
+ {
+  "id": "r11-025",
+  "section": 11,
+  "sectionName": "Private Pesticide Applicator Certification",
+  "sectionLabel": "sec. .1100",
+  "manual": "rules",
+  "question": "A private applicator pleads no contest to a criminal charge under the federal pesticide law. What follows in North Carolina?",
+  "choices": [
+   "It has no effect on the State certification unless the same conduct also violated State pesticide law as well",
+   "The certification is suspended for the length of any federal probation",
+   "The applicator must retake the certification examination at the next opportunity",
+   "It is grounds for denial, suspension, or revocation of any license or certification the Board issues"
+  ],
+  "answer": 3,
+  "explanation": "A final order imposing civil liability under FIFRA section 14(a) against a private pesticide applicator, or a criminal conviction or a plea of guilty or nolo contendere under section 14(b), is a ground for denying, suspending, or revoking any license or certification the Board issues.",
+  "page": "31",
+  "ref": ".1112"
+ },
+ {
+  "id": "r12-001",
+  "section": 12,
+  "sectionName": "Arsenic Trioxide",
+  "sectionLabel": "sec. .1200",
+  "manual": "rules",
+  "question": "What restriction do the rules place on pesticide formulations containing arsenic trioxide?",
+  "choices": [
+   "They may not be used or stored inside or adjacent to any building used as a human dwelling",
+   "They may not be used or stored within 100 feet of a property line",
+   "They may not be sold to anyone other than a licensed structural pest control operator or applicator",
+   "They may not be used indoors, though indoor storage in a locked cabinet is allowed"
+  ],
+  "answer": 0,
+  "explanation": "All pesticide formulations containing the active ingredient arsenic trioxide may not be used or stored inside or adjacent to any building used as a human dwelling. Arsenic trioxide is also a restricted use pesticide in North Carolina by name, whatever the federal classification.",
+  "page": "32",
+  "ref": ".1201"
+ },
+ {
+  "id": "r12-002",
+  "section": 12,
+  "sectionName": "Arsenic Trioxide",
+  "sectionLabel": "sec. .1200",
+  "manual": "rules",
+  "question": "What must a dealer obtain when selling a formulation containing arsenic trioxide?",
+  "choices": [
+   "The purchaser's signature and the signature of a witness to the sale",
+   "The purchaser's signature attesting to knowledge of the use restrictions on arsenic trioxide",
+   "A copy of the purchaser's certification card and a written statement of the intended use site",
+   "A written permit issued by the Pesticide Board for that purchase"
+  ],
+  "answer": 1,
+  "explanation": "The pesticide dealer must secure the signature of the purchaser attesting that the purchaser knows the use restrictions on arsenic trioxide contained in the rules.",
+  "page": "32",
+  "ref": ".1202"
+ },
+ {
+  "id": "r12-003",
+  "section": 12,
+  "sectionName": "Arsenic Trioxide",
+  "sectionLabel": "sec. .1200",
+  "manual": "rules",
+  "question": "Who may use an arsenic trioxide formulation in or around a human dwelling?",
+  "choices": [
+   "Any purchaser who has signed the dealer's acknowledgment of the use restrictions",
+   "A certified private applicator, on a dwelling the applicator owns",
+   "A licensed pesticide applicator or structural pest control licensee, using it as labeled and out of reach of children",
+   "No one; the prohibition on use near dwellings admits no exception"
+  ],
+  "answer": 2,
+  "explanation": "A pesticide applicator licensed under the Pesticide Law, or a structural pest control licensee, may use formulations containing arsenic trioxide in or around human dwellings provided the use is consistent with the product label and the product is kept out of the reach of children.",
+  "page": "32",
+  "ref": ".1202"
+ },
+ {
+  "id": "r13-001",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "To whom may a restricted use pesticide lawfully be made available?",
+  "choices": [
+   "Certified private applicators and licensed pesticide applicators only",
+   "Anyone who signs the dealer's sales record and gives an intended use site",
+   "Anyone employed by a business that holds a pesticide dealer license",
+   "Certified private applicators, licensed applicators, structural pest control licensees, and holders of an emergency certification permit"
+  ],
+  "answer": 3,
+  "explanation": "It is unlawful to make a restricted use pesticide available for use to anyone other than a certified private applicator, a licensed pesticide applicator, a certified structural pest control applicator, a structural pest control licensee, or an individual holding a single purchase emergency certification permit.",
+  "page": "32",
+  "ref": ".1302"
+ },
+ {
+  "id": "r13-002",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "When may a restricted use pesticide be handed to a noncertified employee?",
+  "choices": [
+   "When the employee is at least 18 and acting under the direct supervision of a certified or licensed applicator",
+   "When the employee is at least 18 and has signed for the product at the point of sale",
+   "When the employee carries a written authorization from the employer",
+   "Never; only the certified or licensed applicator may take possession of the product from the licensed dealer"
+  ],
+  "answer": 0,
+  "explanation": "Restricted use pesticides may be made available to a noncertified employee under the direct supervision of a certified private or licensed pesticide applicator, certified structural pest control applicator, or structural pest control licensee, provided the employee is acting under that supervision and is at least 18 years old.",
+  "page": "33",
+  "ref": ".1303(a)"
+ },
+ {
+  "id": "r13-003",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "What must a noncertified employee do before being handed a restricted use pesticide?",
+  "choices": [
+   "Record the intended application site and the date of intended use in the dealer's sales log",
+   "Sign their name and list the certification number of the employer they are working under",
+   "Sign a statement that they have read the product's labeling",
+   "Present the supervising applicator's certification card"
+  ],
+  "answer": 1,
+  "explanation": "Before making restricted use pesticides available to a noncertified employee working under direct supervision, all persons must require the employee to sign their name and list the certification number of the employer under whose direction and supervision they are acting. That information must be available for routine inspection by the Board or its agent.",
+  "page": "33",
+  "ref": ".1303(c)"
+ },
+ {
+  "id": "r13-004",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "What must a dealer do before handing over a restricted use pesticide?",
+  "choices": [
+   "Confirm with the Pesticide Section that the certification is current",
+   "Obtain the recipient's written statement of the intended target pest",
+   "Verify the identity of the recipient",
+   "Photocopy the recipient's certification card for the file"
+  ],
+  "answer": 2,
+  "explanation": "Before making restricted use pesticides available to a certified or licensed applicator, or to a supervised noncertified employee, the pesticide dealer or the dealer's designated representative must verify the identity of the recipient.",
+  "page": "34",
+  "ref": ".1306"
+ },
+ {
+  "id": "r13-005",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "Which details must a dealer's record of a restricted use pesticide sale include about the buyer's credentials?",
+  "choices": [
+   "The certification or license number only, since the Department holds the rest",
+   "The certification number and the buyer's mailing address",
+   "The categories held and the date the buyer was last recertified",
+   "The certification or license number, its expiration date from the certification card, and the categories held"
+  ],
+  "answer": 3,
+  "explanation": "The sales record must show the certification or license number of the certified or licensed applicator, the certification or license expiration date as shown on the certification card, and the categories that person holds, along with the date of sale, the sales clerk's initials, and the buyer's name.",
+  "page": "33",
+  "ref": ".1305(4)"
+ },
+ {
+  "id": "r13-006",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "What must a dealer's restricted use pesticide sales record show about the product itself?",
+  "choices": [
+   "The brand name, EPA registration number, number and size of individual containers, and total quantity sold",
+   "The brand name, EPA registration number, and the price charged",
+   "The brand name and the total quantity sold, container sizes being immaterial",
+   "The active ingredient, its percentage, and the total quantity sold"
+  ],
+  "answer": 0,
+  "explanation": "The record of every restricted use pesticide sale must show the product brand name, the EPA registration number, the number of individual containers, the size of the individual containers, and the total quantity sold.",
+  "page": "33",
+  "ref": ".1305(7)"
+ },
+ {
+  "id": "r13-007",
+  "section": 13,
+  "sectionName": "Availability of Restricted Use Pesticides",
+  "sectionLabel": "sec. .1300",
+  "manual": "rules",
+  "question": "What does \"end use\" mean in the rules on availability of restricted use pesticides?",
+  "choices": [
+   "The last application permitted in a season under the label's seasonal maximum",
+   "Those activities attendant to the application of a pesticide to a site",
+   "The final sale of a pesticide to the person who will apply it",
+   "The disposal of a pesticide that cannot be applied as labeled"
+  ],
+  "answer": 1,
+  "explanation": "End use means those activities attendant to the application of a pesticide to a site. The distinction matters because the rule allowing supervised noncertified employees to handle restricted use pesticides also covers products in the channels of trade before they reach end use.",
+  "page": "32",
+  "ref": ".1301(a)"
+ },
+ {
+  "id": "r14-001",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "Which ground applications must be recorded under the ground application rules?",
+  "choices": [
+   "All applications of restricted use pesticides made on land the applicator does not own",
+   "All applications of restricted use pesticides made for compensation above a threshold acreage amount",
+   "All applications of restricted use pesticides made by pesticide applicators using ground equipment",
+   "All applications of any pesticide made by pesticide applicators using ground equipment"
+  ],
+  "answer": 2,
+  "explanation": "All pesticide applicators using ground equipment must keep records of all applications of restricted use pesticides. The records are created within 72 hours after each application and kept for three years.",
+  "page": "34",
+  "ref": ".1402"
+ },
+ {
+  "id": "r14-002",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "How soon must a ground application record be created, and how long is it kept?",
+  "choices": [
+   "Created within 30 days of the application, and kept for three years",
+   "Created within 72 hours of the application, and kept for two years",
+   "Created before the applicator leaves the site, and kept for three years",
+   "Created within 72 hours of the application, and kept for three years"
+  ],
+  "answer": 3,
+  "explanation": "The records must be created within 72 hours after each application and kept for three years, which matches the record retention the Pesticide Law imposes on licensees generally.",
+  "page": "34",
+  "ref": ".1402"
+ },
+ {
+  "id": "r14-003",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "What must a ground application record say about what was treated?",
+  "choices": [
+   "The site, the crop, commodity, or object treated, and the approximate acres, size, or number of objects",
+   "The site and the crop only, since the acreage can be derived from the amount of product applied to it",
+   "The crop and the growth stage at the time of treatment",
+   "The site, the target pest, and the level of infestation found"
+  ],
+  "answer": 0,
+  "explanation": "The record must identify the farm or sites treated, name the crop, commodity, or objects treated, and give the approximate acres, size, or number of other objects treated, alongside the applicator's name, the customer's name and address, the timing, the products and their EPA registration numbers, the amount applied per unit of measure, and the names of those applying.",
+  "page": "34",
+  "ref": ".1402(5)"
+ },
+ {
+  "id": "r14-004",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "An applicator treats fields on two consecutive days for the same customer. How is that recorded?",
+  "choices": [
+   "Each field is a separate record, whatever day it was treated",
+   "Each day of application is a separate record, each with the specific time of day the application was completed",
+   "One record covering both days, with the start and end dates noted",
+   "One record per customer per month, listing each treatment date"
+  ],
+  "answer": 1,
+  "explanation": "The record must give the year, month, date, and specific time of day when each pesticide application was completed, and each day of application must be recorded as a separate record. Aerial application records carry the same rule.",
+  "page": "34",
+  "ref": ".1402(6)"
+ },
+ {
+  "id": "r14-005",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "How does a licensed applicator identify a farm in a ground application record?",
+  "choices": [
+   "By the name of the customer alone, since the customer's mailing address appears elsewhere in the record",
+   "By latitude and longitude taken at the center of the treated field",
+   "By its Farm Service Agency farm number, common name, address, or other means of identification",
+   "By its county tax parcel number, which the record must state exactly"
+  ],
+  "answer": 2,
+  "explanation": "For recordkeeping, licensed pesticide applicators identify a farm by its Farm Service Agency farm number, the common name of the farm, the address of the farm, or another means of identification.",
+  "page": "34",
+  "ref": ".1401(4)"
+ },
+ {
+  "id": "r14-006",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "How does an applicator working for a public agency identify a treated site in the record?",
+  "choices": [
+   "By the specific street address nearest to each point treated along the route or right-of-way",
+   "By the agency's own project number for the work",
+   "By the Farm Service Agency farm number nearest the site",
+   "By county, city, or body of water names, or another means of identification of the site"
+  ],
+  "answer": 3,
+  "explanation": "Licensed applicators under contract with or supervised by a federal, State, or public agency identify sites by county names, city names, names of bodies of water, or other means of identification. All other licensed applicators use the name of the specific right-of-way, the name and address of the golf course, the specific address of the site, or another identifier.",
+  "page": "34",
+  "ref": ".1401(5)"
+ },
+ {
+  "id": "r14-007",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "What is an \"object\" in the ground application recordkeeping rules?",
+  "choices": [
+   "A physical or living thing on a site, such as a structure, animal, tree, ornamental plant, or material",
+   "Any item of application equipment used at the site",
+   "Any nontarget item that must be protected during the application",
+   "Any container or package holding the pesticide applied"
+  ],
+  "answer": 0,
+  "explanation": "An object means a physical or living thing occurring on a site, including a structure, animal, tree, ornamental plant, or material. It is what lets the record describe treatments that are not measured in acres of a crop.",
+  "page": "34",
+  "ref": ".1401(6)"
+ },
+ {
+  "id": "r14-008",
+  "section": 14,
+  "sectionName": "Ground Application of Pesticides",
+  "sectionLabel": "sec. .1400",
+  "manual": "rules",
+  "question": "What does the ground application drift control rule prohibit?",
+  "choices": [
+   "Applying pesticides by ground equipment when a temperature inversion is present",
+   "Applying pesticides under conditions where drift from particles or vapors results in adverse effect",
+   "Applying pesticides when the wind speed exceeds 10 miles per hour at the edge of the target area being treated",
+   "Applying pesticides within 100 feet of any property line"
+  ],
+  "answer": 1,
+  "explanation": "The ground application drift rule reads exactly like the aerial one: no person may apply pesticides under such conditions that drift from pesticide particles or vapors results in adverse effect, meaning personal injury, damage to personal or real property, damage to the environment, or any combination of these.",
+  "page": "35",
+  "ref": ".1404"
+ },
+ {
+  "id": "r18-001",
+  "section": 18,
+  "sectionName": "Worker Protection Standards for Agricultural Pesticides",
+  "sectionLabel": "sec. .1800",
+  "manual": "rules",
+  "question": "How does North Carolina regulate worker protection for agricultural pesticides?",
+  "choices": [
+   "By requiring each employer to file its own worker protection plan with the Board",
+   "By leaving the subject to the federal government, with no State rule on it",
+   "By incorporating the federal Worker Protection Standard at 40 CFR Part 170 by reference",
+   "By a State standard the Pesticide Board writes, which is stricter than the federal one on reentry"
+  ],
+  "answer": 2,
+  "explanation": "The Pesticide Board incorporates 40 CFR Part 170, the Worker Protection Standard, by reference, including subsequent amendments and editions. The State's own earlier worker protection rules on warnings, reentry times, and labels were repealed when it did so.",
+  "page": "36",
+  "ref": ".1805"
+ },
+ {
+  "id": "r18-002",
+  "section": 18,
+  "sectionName": "Worker Protection Standards for Agricultural Pesticides",
+  "sectionLabel": "sec. .1800",
+  "manual": "rules",
+  "question": "Who is a \"crop advisor\" for purposes of the Worker Protection Standard exemption in North Carolina?",
+  "choices": [
+   "Any person a grower hires to scout fields, whether or not that person holds a license",
+   "Any certified private applicator advising on their own or a neighbor's crop",
+   "Any employee of the Cooperative Extension Service who visits farms",
+   "A certified and licensed pest control consultant, or a licensed applicator certified in demonstration and research pest control, while doing crop advisor tasks"
+  ],
+  "answer": 3,
+  "explanation": "For the WPS crop advisor exemption, a crop advisor means a certified and licensed pest control consultant while performing crop advisor tasks, and any pesticide applicator currently certified and licensed in the demonstration and research pest control subcategory, but only while performing or supervising crop advisor tasks.",
+  "page": "36",
+  "ref": ".1806(1)"
+ },
+ {
+  "id": "r18-003",
+  "section": 18,
+  "sectionName": "Worker Protection Standards for Agricultural Pesticides",
+  "sectionLabel": "sec. .1800",
+  "manual": "rules",
+  "question": "What are \"crop advisor tasks\"?",
+  "choices": [
+   "Assessing pest numbers or damage, pesticide distribution, or the status or requirements of agricultural plants",
+   "Recommending pesticide products and rates to a grower for a fee",
+   "Supervising the application of pesticides on a grower's behalf",
+   "Training agricultural workers and handlers under the Worker Protection Standard"
+  ],
+  "answer": 0,
+  "explanation": "Crop advisor tasks means assessing pest numbers or damage, pesticide distribution, or the status or requirements of agricultural plants. The exemption reaches only the time spent on those tasks, not everything the advisor does.",
+  "page": "36",
+  "ref": ".1806(2)"
+ },
+ {
+  "id": "r19-001",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What does the storage rules' definition of \"storage\" exclude?",
+  "choices": [
+   "Pesticides held by an end user rather than by a dealer or manufacturer",
+   "Empty triple-rinsed containers, and RCRA hazardous wastes held by someone with a valid EPA identification number",
+   "Any pesticide held for less than 30 days between deliveries",
+   "Pesticides held in a locked cabinet inside an occupied building"
+  ],
+  "answer": 1,
+  "explanation": "Storage means the act of storing a pesticide or pesticide container except while it is being transported or used, and excludes containers that are empty and triple-rinsed or equivalent, and pesticides that qualify as RCRA hazardous wastes in the possession of a person holding a valid EPA RCRA identification number as a generator, transporter, or treatment, storage, or disposal facility.",
+  "page": "36",
+  "ref": ".1901(1)"
+ },
+ {
+  "id": "r19-002",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What is \"commercial storage\" of a pesticide?",
+  "choices": [
+   "Storage of any quantity of restricted use pesticides, whoever holds them",
+   "Storage of pesticides in quantities offered for resale rather than for the owner's own use",
+   "Storage by any person from the time of manufacture until the end user takes possession",
+   "Storage by any business licensed as a pesticide dealer or applicator"
+  ],
+  "answer": 2,
+  "explanation": "Commercial storage means storage of a pesticide by any person from the time of manufacture, prior to possession by the end user. A storage facility is the property or contiguous properties under the same ownership used for that storage, with multiple storage areas on them counting as one facility.",
+  "page": "36",
+  "ref": ".1901(2)"
+ },
+ {
+  "id": "r19-003",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What makes a storage facility a \"large storage facility\"?",
+  "choices": [
+   "Storing 10,000 pounds or more of any pesticide at any time",
+   "Storing 4,000 pounds or more of restricted use pesticides at any time",
+   "Storing restricted use pesticides in more than one building on the property",
+   "Storing 10,000 pounds or more of restricted use pesticides at any time"
+  ],
+  "answer": 3,
+  "explanation": "A large storage facility is any storage facility that stores 10,000 pounds or more of restricted use pesticides at any time. That threshold brings on the extra requirements of a Board-approved contingency plan and a 200-foot setback from institutional property lines.",
+  "page": "36",
+  "ref": ".1901(4)"
+ },
+ {
+  "id": "r19-004",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What size container brings commercial storage under the bulk storage rule?",
+  "choices": [
+   "A stationary container designed to hold 500 gallons or more of liquid, or 4,000 pounds or more of dry pesticide",
+   "A stationary container designed to hold 250 gallons or more of liquid, or 2,000 pounds or more of dry pesticide",
+   "Any container holding more than one day's application volume",
+   "A stationary container designed to hold 1,000 gallons or more of liquid, or 10,000 pounds or more of dry pesticide"
+  ],
+  "answer": 0,
+  "explanation": "Bulk storage means commercial storage of a pesticide held in stationary containers designed to hold undivided quantities of 500 gallons or more of liquid pesticide, or 4,000 pounds or more of dry pesticide.",
+  "page": "36",
+  "ref": ".1901(7)"
+ },
+ {
+  "id": "r19-005",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "Which stationary tank is outside the bulk storage rule?",
+  "choices": [
+   "One located inside a locked building rather than in the open",
+   "One holding only pesticide rinsates or wash waters and labeled accordingly",
+   "One holding a general use pesticide rather than a restricted use pesticide product",
+   "One holding a pesticide that will be applied within 30 days"
+  ],
+  "answer": 1,
+  "explanation": "A container is outside the bulk storage rule if it is empty, meaning all pesticide that draining, pumping, or aspirating can remove has been removed; if it holds only pesticide rinsates or wash waters and is labeled accordingly; if it holds only pesticides that would be gaseous at atmospheric temperature and pressure; or if it is dedicated to non-pesticide use and labeled accordingly.",
+  "page": "36",
+  "ref": ".1901(7)(b)"
+ },
+ {
+  "id": "r19-006",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What two aims does the general storage rule name for how pesticides are arranged?",
+  "choices": [
+   "Facilitating inspection and separating restricted use from general use products",
+   "Preventing theft and keeping aisles clear for firefighting access",
+   "Preventing leaking and facilitating inspection",
+   "Preventing leaking and keeping products in date order"
+  ],
+  "answer": 2,
+  "explanation": "Pesticides must be stored to prevent leaking and to facilitate inspection. The requirement applies to all pesticides, not only to restricted use products or to commercial storage.",
+  "page": "37",
+  "ref": ".1902(b)"
+ },
+ {
+  "id": "r19-007",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What minimum information must be legible and obvious on a container of formulated pesticide in storage?",
+  "choices": [
+   "Common chemical name, signal word, and the date the container was filled",
+   "Brand name, EPA registration number, and the name of the person who owns it",
+   "Common chemical name, percentage of each active ingredient, and the reentry interval",
+   "Common chemical name, percentage of each active ingredient, EPA registration number, signal word, and use classification"
+  ],
+  "answer": 3,
+  "explanation": "Formulated pesticide products may not be stored in unlabeled containers, and the minimum information that must be legible and obvious is the common chemical name, the percentage of each active ingredient, the EPA registration number, the signal word, and the use classification, restricted use or general use. A product still carrying its lawful FIFRA label is deemed to meet this.",
+  "page": "37",
+  "ref": ".1902(c)"
+ },
+ {
+  "id": "r19-008",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "May a diluted pesticide be kept in a rinsed-out drink bottle?",
+  "choices": [
+   "No; pesticides may not be stored in any food, feed, beverage, or medicine container previously used for those purposes",
+   "Yes, provided the bottle is relabeled with the product's required information",
+   "Yes, provided the bottle is kept inside a locked pesticide storage area",
+   "No, unless the dilution is a general use pesticide rather than a restricted use one"
+  ],
+  "answer": 0,
+  "explanation": "Pesticides, whether formulated products or dilutions, may not be stored in any food, feed, beverage, or medicine container that has previously been used for those purposes or that is designed to contain only those products. Relabeling does not cure it: the container itself is the hazard.",
+  "page": "37",
+  "ref": ".1902(d)"
+ },
+ {
+  "id": "r19-009",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "Which materials must pesticide storage be arranged to avoid contaminating?",
+  "choices": [
+   "Anything intended for sale to the public, whatever its nature",
+   "Foods, feeds, beverages, eating utensils, tobacco products, other pesticides, seeds, and fertilizers",
+   "Foods, feeds, and beverages, other agricultural inputs being outside the rule",
+   "Seeds and fertilizers, since foods and feeds are covered by the Department's own food safety rules instead"
+  ],
+  "answer": 1,
+  "explanation": "Pesticides may not be stored in a manner that could contaminate foods, feeds, beverages, eating utensils, tobacco, tobacco products, other pesticides, seeds, or fertilizers, or that is otherwise likely to result in accidental ingestion by humans or domestic animals.",
+  "page": "37",
+  "ref": ".1902(e)"
+ },
+ {
+  "id": "r19-010",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "Whose storage instructions govern how a pesticide is stored?",
+  "choices": [
+   "The Board's rules, which supersede any storage recommendation on a label",
+   "The fire code for the building, which sets the storage arrangement",
+   "Its own labeling, and the labeling of every other product, pesticide or not, held in the same storage area",
+   "Its own labeling only, other products being the concern of their own owners"
+  ],
+  "answer": 2,
+  "explanation": "Pesticides must be stored in accordance with the storage recommendations on their own labeling, if any, and with the labeling on all other products, including non-pesticide products, held in the same storage area. Compatibility is judged across everything in the room.",
+  "page": "37",
+  "ref": ".1902(f)"
+ },
+ {
+  "id": "r19-011",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What condition must any pesticide storage area meet?",
+  "choices": [
+   "It must be climate controlled to keep the temperature above freezing",
+   "It must have a sealed concrete floor with a curbed containment lip",
+   "It must be detached from any building used for other purposes",
+   "It must be dry, free of accumulating water, and ventilated"
+  ],
+  "answer": 3,
+  "explanation": "Pesticides must be stored in an area that is dry, does not accumulate water, and is ventilated. Where the pesticides stored are restricted use products in commercial storage, further requirements on water contact, security, and setbacks apply on top of this.",
+  "page": "37",
+  "ref": ".1902(h)"
+ },
+ {
+  "id": "r19-012",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What must be kept out of a pesticide storage area to control the fire hazard?",
+  "choices": [
+   "Combustibles such as gasoline, kerosene, and petroleum solvents unrelated to pesticide application, and debris like waste paper, rags, and used cardboard",
+   "All petroleum products, including those used with the pesticides applied",
+   "Anything flammable, including the pesticide products' own solvent carriers",
+   "Electrical equipment, heaters, and lighting fixtures of any kind"
+  ],
+  "answer": 0,
+  "explanation": "Storage areas must be free of combustible materials such as gasoline, kerosene, or petroleum solvents other than those associated with pesticide application, and free of debris such as waste paper, rags, or used cardboard boxes that could provide an ignition source. They must also be separated from fire-hazard operations such as welding or burning, and care must be taken with supplemental winter heating.",
+  "page": "37",
+  "ref": ".1902(i)"
+ },
+ {
+  "id": "r19-013",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What quantity of restricted use pesticides in commercial storage triggers the storage facility requirements?",
+  "choices": [
+   "10,000 pounds or more",
+   "Any quantity",
+   "500 pounds or more",
+   "1,000 pounds or more"
+  ],
+  "answer": 1,
+  "explanation": "The storage facility requirements apply to any quantity of restricted use pesticides in commercial storage, on top of the general requirements for all pesticides. The 10,000-pound threshold is what adds the further large storage facility requirements.",
+  "page": "38",
+  "ref": ".1905(a)"
+ },
+ {
+  "id": "r19-014",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What must a warning sign at the entrance to a non-display pesticide storage area say?",
+  "choices": [
+   "PESTICIDE STORAGE and the signal words of the products stored inside",
+   "RESTRICTED USE PESTICIDES and the certification number of the person in charge of the area",
+   "PESTICIDE STORAGE, AUTHORIZED PERSONNEL ONLY, and IN CASE OF EMERGENCY CALL with a number",
+   "DANGER PESTICIDES, NO SMOKING, and the name of the responsible licensee"
+  ],
+  "answer": 2,
+  "explanation": "A warning sign must be posted beside all entrances to non-display pesticide storage areas stating \"PESTICIDE STORAGE,\" \"AUTHORIZED PERSONNEL ONLY,\" and \"IN CASE OF EMERGENCY CALL\" with a number. Those areas must also be locked when unattended.",
+  "page": "38",
+  "ref": ".1905(b)"
+ },
+ {
+  "id": "r19-015",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What must a facility storing restricted use pesticides keep on hand for spills?",
+  "choices": [
+   "A supply of neutralizing chemicals matched to each product stored",
+   "A pressure washer and a sealed collection sump",
+   "Bagged activated carbon in a quantity sufficient to treat the largest single container stored at the site",
+   "Floor-sweeping compounds such as adsorptive clay, sand, sawdust, or lime, to absorb spills or leaks"
+  ],
+  "answer": 3,
+  "explanation": "Floor-sweeping compounds such as adsorptive clay, sand, sawdust, lime, or similar suitable materials must be kept on hand to absorb spills or leaks. Cleanup is done wearing appropriate PPE and handling the pesticide as its labeling directs, and contaminated adsorptive material is disposed of by safe techniques consistent with the labeling.",
+  "page": "38",
+  "ref": ".1905(c)"
+ },
+ {
+  "id": "r19-016",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "How far from a water supply may restricted use pesticides be stored?",
+  "choices": [
+   "No closer than 100 feet horizontally to a public water supply, or 50 feet horizontally to a private one",
+   "No closer than 100 feet horizontally to any water supply, public or private",
+   "No closer than 50 feet horizontally to a public water supply, or 25 feet to a private one",
+   "No closer than 200 feet horizontally to a public water supply, or 100 feet horizontally to a private one"
+  ],
+  "answer": 0,
+  "explanation": "Pesticides may not be stored within 100 feet horizontally of a public water supply, nor within 50 feet horizontally of a private water supply. The Board may grant an exemption on written request describing the conditions that require it, weighing the potential for groundwater or aquifer contamination.",
+  "page": "38",
+  "ref": ".1905(e)"
+ },
+ {
+  "id": "r19-017",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What does the Board weigh in deciding whether to exempt a storage facility from the water supply setback?",
+  "choices": [
+   "Whether the water supply serves fewer than a set number of households",
+   "The potential for groundwater or aquifer contamination, including how facility drainage and runoff are directed",
+   "The cost of relocating the storage against the value of the pesticides stored",
+   "Whether the facility has operated without incident for at least five years"
+  ],
+  "answer": 1,
+  "explanation": "In reviewing an exemption request the Board considers the potential for groundwater or aquifer contamination, such as whether the facility's drainage is designed to protect the water supply and direct runoff away from the source, whether the source is no longer used as a water supply, and whether a well has been properly closed and sealed.",
+  "page": "38",
+  "ref": ".1905(e)"
+ },
+ {
+  "id": "r19-018",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What fire planning does the person responsible for a pesticide storage facility have to do?",
+  "choices": [
+   "Post the products stored at each entrance and rely on the fire department's own preplanning",
+   "Install a sprinkler system approved by the local fire department",
+   "Develop a prefire plan, keep an approved copy at the facility, file one with the fire department, and request at least an annual inspection",
+   "Develop a prefire plan and keep it at the facility, filing it with the Board rather than the fire department"
+  ],
+  "answer": 2,
+  "explanation": "The responsible person must comply with State and local fire and building codes and applicable environmental laws, and must develop a prefire plan describing the facility's plans and procedures for managing fires involving pesticides. One copy approved by the fire department or emergency services office is kept at the facility office for Board inspection, one copy is filed with that office, and a written request must be made for no less than an annual inspection of the facility.",
+  "page": "38",
+  "ref": ".1905(f)"
+ },
+ {
+  "id": "r19-019",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "A fire releases pesticide from a storage facility in a way that threatens nearby residents. Who must be notified?",
+  "choices": [
+   "The local fire department only, which passes word to the State",
+   "The secretary of the Board only, who coordinates all other notifications",
+   "The Commissioner of Agriculture, who decides whether to notify local agencies",
+   "The secretary of the Board, in addition to the local fire department, emergency services, and any other agency requiring notice"
+  ],
+  "answer": 3,
+  "explanation": "On discovering a fire, spill, or unintended release that threatens the health, safety, or welfare of people, animals, or aquatic life, or threatens property damage, the person responsible for the facility must notify the secretary of the Board. That notification does not take the place of notifying the local fire department, emergency services office, or other State or federal agencies.",
+  "page": "39",
+  "ref": ".1905(g)"
+ },
+ {
+  "id": "r19-020",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What inventory must a pesticide storage facility maintain, and where?",
+  "choices": [
+   "A list of stored pesticides by brand name and formulation, updated every 30 days, with a copy kept away from the facility",
+   "A list of stored pesticides by brand name and quantity on hand, updated annually and kept inside the storage area for inspection",
+   "A running log of every container received and issued, kept with the shipping records",
+   "A list of restricted use pesticides only, filed with the Board each quarter"
+  ],
+  "answer": 0,
+  "explanation": "Any person operating a storage facility must maintain a current inventory list of the kinds of stored pesticides by brand name and formulation. The list counts as current if updated every 30 days, a copy must be kept in a separate location from the storage facility, and it must be made available to the Board or its agents on request.",
+  "page": "39",
+  "ref": ".1905(h)"
+ },
+ {
+  "id": "r19-021",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "Do the storage facility requirements reach a licensed applicator's own restricted use pesticide storage?",
+  "choices": [
+   "Only where the applicator also holds a pesticide dealer license",
+   "Yes; applicators storing restricted use pesticides are subject to the same requirements",
+   "No; those rules apply only to dealers and to commercial storage before the end user takes possession",
+   "Only where the applicator stores more than 500 pounds at a time"
+  ],
+  "answer": 1,
+  "explanation": "The rule states that pesticide applicators storing restricted use pesticides are subject to the same requirements it sets for storage facilities, and applicators storing 10,000 pounds or more are likewise subject to the large storage facility requirements.",
+  "page": "39",
+  "ref": ".1905(i)"
+ },
+ {
+  "id": "r19-022",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "How far must a large storage facility keep pesticides from a school or hospital?",
+  "choices": [
+   "At least 300 feet from the building itself, measured from the nearest wall",
+   "At least 200 feet from the building itself, measured from the nearest wall",
+   "At least 200 feet from the property line of the school, hospital, nursing home, or other institutional facility",
+   "At least 100 feet from the property line of the school, hospital, nursing home, or other institutional facility"
+  ],
+  "answer": 2,
+  "explanation": "At a large storage facility, meaning one holding 10,000 pounds or more of restricted use pesticides at any time, pesticides may not be stored within 200 feet of the property line of any school, hospital, nursing home, or other institutional facility.",
+  "page": "39",
+  "ref": ".1906(b)"
+ },
+ {
+  "id": "r19-023",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What extra plan must a large storage facility have?",
+  "choices": [
+   "A contingency plan kept at the facility, which the Board reviews only after an incident",
+   "An evacuation plan approved by the local emergency services office",
+   "A groundwater monitoring plan approved by the Environmental Management Commission",
+   "A contingency plan approved by the Board and submitted to it"
+  ],
+  "answer": 3,
+  "explanation": "The person responsible for a large storage facility must have a Board-approved contingency plan, submitted to the Board. The Board weighs the size of the facility, its location relative to sensitive environmental areas and to industrial, institutional, and residential areas, the types of pesticides stored, and the facility's capabilities for dealing with emergencies.",
+  "page": "39",
+  "ref": ".1906(c)"
+ },
+ {
+  "id": "r19-024",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "When must the provisions of a facility's contingency plan be carried out?",
+  "choices": [
+   "Whenever a fire, explosion, spill, or other release of pesticides or contaminated materials could threaten human health or the environment",
+   "Whenever a release exceeds the reportable quantity set for the pesticide involved",
+   "Whenever the local fire department is called to the facility for any reason",
+   "Whenever a release occurs outside normal working hours"
+  ],
+  "answer": 0,
+  "explanation": "The contingency plan's provisions must be carried out whenever there is a fire, explosion, spill, or other release of pesticides or pesticide contaminated materials that could threaten human health or the environment. The trigger is the potential threat, not a numeric quantity.",
+  "page": "39",
+  "ref": ".1907"
+ },
+ {
+  "id": "r19-025",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What contact information must a contingency plan list?",
+  "choices": [
+   "The name and number of one responsible person, available during business hours",
+   "Names, addresses, and office and home phone numbers of alternates reachable at any hour, seven days a week, with a primary alternate named",
+   "The names and office phone numbers of the facility's owners and managers",
+   "The phone numbers of the local fire department, police department, and nearest hospital only"
+  ],
+  "answer": 1,
+  "explanation": "The plan must list the names, addresses, and office and home phone numbers of all persons the owner or operator designates as alternates, who can be reached at any time of the day, seven days a week, and who know the facility's operational and emergency procedures. Where more than one is listed, one is named primary and the rest are listed in the order they assume responsibility.",
+  "page": "39",
+  "ref": ".1908(c)"
+ },
+ {
+  "id": "r19-026",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What arrangements must a contingency plan describe with outside responders?",
+  "choices": [
+   "A contract with a commercial spill response contractor covering the whole facility",
+   "Mutual aid agreements with other pesticide storage facilities in the county",
+   "Arrangements agreed with local police, fire departments, hospitals, contractors, and State and local emergency response teams",
+   "Arrangements agreed with the Board's own emergency response staff"
+  ],
+  "answer": 2,
+  "explanation": "The plan must describe the actions facility personnel will take in response to fires, explosions, spills, or other releases to air, soil, or surface water, and the arrangements agreed to by local police departments, fire departments, hospitals, contractors, and State and local emergency response teams to coordinate emergency services.",
+  "page": "39",
+  "ref": ".1908(b)"
+ },
+ {
+  "id": "r19-027",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "When must a contingency plan be amended and resubmitted to the Board?",
+  "choices": [
+   "Annually, whether or not anything about the facility has changed",
+   "Only when the Board requests a review after an inspection",
+   "When the facility changes ownership, other changes being noted at the next annual review",
+   "When the plan fails in an emergency, the facility changes, or the list of alternates or emergency equipment changes"
+  ],
+  "answer": 3,
+  "explanation": "The contingency plan must be reviewed and immediately amended and resubmitted to the Board, if necessary, whenever the plan fails in an emergency, the facility changes in design, construction, operation, or maintenance, the list of alternates changes, or the list of emergency equipment changes. A copy of the plan and every revision is kept at the facility and submitted to the Board through the Department's Pesticide Section.",
+  "page": "40",
+  "ref": ".1911"
+ },
+ {
+  "id": "r19-028",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What does the bulk storage rule require of a tank's outlets, filler, and access ports?",
+  "choices": [
+   "They must be locked when not in use, with keys held only by the purchaser and authorized employees",
+   "They must be locked at all times and opened only in the presence of a licensed pesticide applicator",
+   "They must be sealed with tamper-evident tags recording each opening",
+   "They must be fitted with antisiphon devices as well as locks"
+  ],
+  "answer": 0,
+  "explanation": "Outlets, filler, and access ports must be locked at all times when not in use, and keys must be in the possession of the purchaser and authorized employees only. Locks on the ports are not required if the bulk tanks are stored inside a facility that prevents unauthorized access to the bulk storage area.",
+  "page": "40",
+  "ref": ".1914(a)"
+ },
+ {
+  "id": "r19-029",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "How must a bulk pesticide storage tank display the product's signal word?",
+  "choices": [
+   "On a placard at the entrance to the storage area, rather than on the tank",
+   "On all sides exposed to view, in contrasting colors, with letters at least four inches high and one inch wide",
+   "On the side facing the loading area, in letters at least two inches high",
+   "On all sides exposed to view, in red letters at least four inches high"
+  ],
+  "answer": 1,
+  "explanation": "All bulk pesticide storage tanks must display the signal word shown on the product label on all sides exposed to view, either stenciled on the tank or on a durable sign attached to it. The letters must be a minimum of four inches in height and one inch in width and printed in colors contrasting with the tank.",
+  "page": "40",
+  "ref": ".1914(b)"
+ },
+ {
+  "id": "r19-030",
+  "section": 19,
+  "sectionName": "Pesticide Storage",
+  "sectionLabel": "sec. .1900",
+  "manual": "rules",
+  "question": "What sign must be posted at a bulk pesticide storage area?",
+  "choices": [
+   "A sign giving the tank capacities and the date each was last inspected",
+   "A sign naming the licensed applicator responsible for the area",
+   "A durable sign stating PESTICIDE STORAGE, AUTHORIZED PERSONNEL ONLY, and IN CASE OF EMERGENCY CALL with a number",
+   "A durable sign showing the signal words of every product stored in the area"
+  ],
+  "answer": 2,
+  "explanation": "All bulk storage areas must be posted with a durable sign stating \"PESTICIDE STORAGE,\" \"AUTHORIZED PERSONNEL ONLY,\" and \"IN CASE OF EMERGENCY CALL\" with a number, the same wording required at non-display storage area entrances. Applicators using bulk storage containers are subject to the same requirements.",
+  "page": "41",
+  "ref": ".1914(c)"
+ },
+ {
+  "id": "r20-001",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What is chemigation?",
+  "choices": [
+   "Any process applying pesticides mixed with fertilizer to a growing crop",
+   "Any process applying pesticides through an irrigation system connected to a public water supply",
+   "Any process applying pesticides in water volumes below one gallon per acre",
+   "Any process applying pesticides to land, crops, or plants using an irrigation system"
+  ],
+  "answer": 3,
+  "explanation": "Chemigation means any process whereby pesticides are applied to land, crops, or plants using an irrigation system, on sites such as agricultural fields, nurseries, turf, lawns, golf courses, and greenhouses.",
+  "page": "41",
+  "ref": ".2001(4)"
+ },
+ {
+  "id": "r20-002",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What does an antisiphon device do?",
+  "choices": [
+   "Prevents pesticide from flowing back into a water supply, or water from flowing back into a pesticide supply",
+   "Maintains a constant pesticide injection rate as irrigation pressure varies",
+   "Keeps air out of the pesticide injection line during startup",
+   "Filters pesticide residues from irrigation water before discharge"
+  ],
+  "answer": 0,
+  "explanation": "An antisiphon device is any equipment that prevents the backflow of a pesticide into a water supply or the backflow of water into a pesticide supply. Automatic low pressure drains, check valves, flow interrupters, and vacuum relief valves are all antisiphon devices.",
+  "page": "41",
+  "ref": ".2001(1)"
+ },
+ {
+  "id": "r20-003",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What does a functional systems interlock do?",
+  "choices": [
+   "Prevents the system from starting until the antisiphon devices have been inspected and logged",
+   "Shuts down the pesticide injection unit if the irrigation pump malfunctions or fails",
+   "Shuts down the irrigation pump if the pesticide injection unit fails",
+   "Locks the pesticide supply tank whenever the system is unattended"
+  ],
+  "answer": 1,
+  "explanation": "A functional systems interlock links irrigation pumps and pesticide injection units, other pumps, or supply tanks so that shutdown of the pesticide injection units occurs in the event of irrigation pump malfunction or failure. The point is that pesticide never keeps injecting into a line that has stopped carrying water.",
+  "page": "41",
+  "ref": ".2001(7)"
+ },
+ {
+  "id": "r20-004",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "Which device is NOT an irrigation system for purposes of the chemigation rules?",
+  "choices": [
+   "A greenhouse boom fed from a reservoir tank",
+   "A center pivot fed from a surface water pond",
+   "A handheld hose-end sprayer built so that an interruption in water flow prevents backflow to the supply",
+   "A drip line connected directly to a private well through a filter, valve, and pressure regulator assembly"
+  ],
+  "answer": 2,
+  "explanation": "An irrigation system means any device or combination of devices having hose, pipe, or other conduit connecting directly to a water supply, but the term excludes a handheld hose-end sprayer constructed so that an interruption in water flow prevents any backflow to the water supply.",
+  "page": "41",
+  "ref": ".2001(10)"
+ },
+ {
+  "id": "r20-005",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What two protections must an irrigation system used for chemigation carry?",
+  "choices": [
+   "Antisiphon devices and a pressure relief valve sized to the pump",
+   "A functional systems interlock and a flow meter recording injection volume",
+   "A backflow preventer approved by the local water authority",
+   "Antisiphon devices and a functional systems interlock"
+  ],
+  "answer": 3,
+  "explanation": "Irrigation systems used for chemigation must be fitted with antisiphon devices and a functional systems interlock that will prevent the backflow of pesticide or pesticide-water mixtures into water supplies and the backflow of water or pesticide-water mixtures into pesticide supplies during system failure or equipment shutdown.",
+  "page": "42",
+  "ref": ".2002(a)"
+ },
+ {
+  "id": "r20-006",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "Where may pesticide never be injected into an irrigation system?",
+  "choices": [
+   "On the suction side of the irrigation pump",
+   "On the discharge side of the irrigation pump",
+   "Between the check valves and the field",
+   "Anywhere upstream of the vacuum relief valve"
+  ],
+  "answer": 0,
+  "explanation": "Pesticides may not be injected into an irrigation system on the suction side of the irrigation pump. Injection happens downstream of the pump discharge, behind the double check valves that protect the water source.",
+  "page": "42",
+  "ref": ".2002(b)"
+ },
+ {
+  "id": "r20-007",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "Where must the double check valves in a chemigation system sit, and how must they be mounted?",
+  "choices": [
+   "Between the irrigation pump discharge and the injection point, mounted vertically",
+   "Between the irrigation pump discharge and the injection point, on a horizontal plane and level within 10 degrees",
+   "Between the point of pesticide injection and the field, mounted on a horizontal plane and level within 10 degrees",
+   "Between the pesticide tank and the injection unit, in any orientation"
+  ],
+  "answer": 1,
+  "explanation": "Double check valves must be located between the irrigation pump discharge and the point of pesticide injection into the irrigation pipeline, and when installed they must be on a horizontal plane and level, with a deviation of not more than 10 degrees from horizontal.",
+  "page": "42",
+  "ref": ".2002(d)(1)"
+ },
+ {
+  "id": "r20-008",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What is an inspection port for in a chemigation system, and where does it go?",
+  "choices": [
+   "To vent the line during startup, located at the highest point of the pipeline",
+   "To measure injection rate, located in the pesticide supply line",
+   "To see whether the check valve leaks, located between the pump discharge and the mainline check valves",
+   "To sample the injected mixture, located between the mainline check valves and the field being irrigated"
+  ],
+  "answer": 2,
+  "explanation": "An inspection port is a place on the irrigation pipeline used to determine visually whether the check valve leaks, and it must be located between the irrigation pump discharge and the mainline check valves. In many cases the vacuum relief valve connection can serve as the inspection port.",
+  "page": "42",
+  "ref": ".2002(d)(2)"
+ },
+ {
+  "id": "r20-009",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "Where does the vacuum relief valve go on a chemigation system, and what size orifice does a 4-inch pipe need?",
+  "choices": [
+   "On the bottom of the horizontal pipeline between the pump discharge and the check valve inlet, with an orifice of at least 3/4 inch",
+   "On top of the pipeline downstream of the injection point, with an orifice of at least 1/2 inch",
+   "On top of the horizontal pipeline between the pump discharge and the check valve inlet, with an orifice of at least 2 inches",
+   "On top of the horizontal pipeline between the pump discharge and the check valve inlet, with an orifice of at least 3/4 inch"
+  ],
+  "answer": 3,
+  "explanation": "The vacuum relief valve is located on top of the horizontal irrigation pipeline between the discharge side of the irrigation pump and the inlet side of the double check valves, with an orifice of at least 3/4 inch for a 4-inch diameter irrigation pipe, increasing proportionally as the pipe diameter increases. The automatic low pressure drain goes on the bottom of the same run of pipe.",
+  "page": "42",
+  "ref": ".2002(d)(3)"
+ },
+ {
+  "id": "r20-010",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "How far from a water supply must an automatic low pressure drain discharge?",
+  "choices": [
+   "At least 20 feet, with the discharge controlled so the drainage cannot reenter the water supply",
+   "At least 50 feet, with the discharge controlled so the drainage cannot reenter the water supply",
+   "At least 20 feet, the direction of discharge being immaterial",
+   "At least 100 feet, matching the storage setback from a public water supply"
+  ],
+  "answer": 0,
+  "explanation": "The automatic low pressure drain must discharge at least 20 feet from any water supply, and the discharge must be controlled to prevent the drainage from reentering the water supply.",
+  "page": "42",
+  "ref": ".2002(d)(4)"
+ },
+ {
+  "id": "r20-011",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "How must the automatic low pressure drain be positioned on the pipeline?",
+  "choices": [
+   "Level and at least twelve inches above grade, whatever the pipe diameter",
+   "Level, not extending past the inside surface of the pipe bottom, and at least two inches above grade",
+   "Level, extending at least one inch into the pipe, and flush with grade",
+   "Sloped toward the discharge point and buried below the frost line"
+  ],
+  "answer": 1,
+  "explanation": "The automatic low pressure drain sits on the bottom of the horizontal pipeline between the pump discharge and the check valve inlet. It must be level, must not extend beyond the inside surface of the bottom of the pipeline, and must be at least two inches above grade, with an orifice of at least 3/4 inch for a 4-inch pipe.",
+  "page": "42",
+  "ref": ".2002(d)(4)"
+ },
+ {
+  "id": "r20-012",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What protects the pesticide supply tank from overflowing during chemigation?",
+  "choices": [
+   "The automatic low pressure drain on the irrigation pipeline",
+   "The inspection port located between the irrigation pump discharge and the mainline check valves",
+   "A check valve on the injection line between the injection point and the injection unit",
+   "A vacuum relief valve on the pesticide supply line"
+  ],
+  "answer": 2,
+  "explanation": "A check valve must be located on the pesticide injection line between the point of injection into the irrigation system and the pesticide injection unit, to prevent the overflow of the pesticide supply tank or container. A flow interrupter goes further back, between the injection unit and the supply tank.",
+  "page": "42",
+  "ref": ".2002(d)(6)"
+ },
+ {
+  "id": "r20-013",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "The irrigation pump and the injection unit are at different sites. How may the interlock be arranged?",
+  "choices": [
+   "The operator may stay at the injection unit and shut it down by hand if the water pressure drops during the application",
+   "The two may be linked by a mechanical cable running between the sites",
+   "No interlock is required where the two are at different sites",
+   "A low pressure cutoff near the injection point may be electrically connected to shut down the injection unit"
+  ],
+  "answer": 3,
+  "explanation": "At a minimum, an interruption of irrigation water flow must shut down the pesticide injection unit. Where the irrigation pump and the injection unit are at different sites, a low pressure cutoff located near the point of injection may be electrically connected to the injection unit to shut it down when water pressure falls.",
+  "page": "42",
+  "ref": ".2002(d)(7)"
+ },
+ {
+  "id": "r20-014",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "May an irrigation system used for pesticide application be connected to a public water system?",
+  "choices": [
+   "No; water from a public system must be discharged into a reservoir tank first",
+   "Yes, provided double check valves and a vacuum relief valve are fitted to the line",
+   "Yes, with written permission from the water system's operator",
+   "No, unless the pesticide applied is a general use product"
+  ],
+  "answer": 0,
+  "explanation": "An irrigation system used for pesticide application may not be connected to a public water system. Water from a public system must be discharged into a reservoir tank, with a physical air gap between the outlet end of the fill pipe and the top or overflow rim of the tank.",
+  "page": "42",
+  "ref": ".2003(a)"
+ },
+ {
+  "id": "r20-015",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "How large must the air gap be between a public system's fill pipe and a reservoir tank?",
+  "choices": [
+   "At least four times the inside diameter of the fill pipe",
+   "At least twice the inside diameter of the fill pipe",
+   "At least the inside diameter of the fill pipe",
+   "At least six inches, whatever the pipe diameter"
+  ],
+  "answer": 1,
+  "explanation": "There must be a physical break, an air gap, between the outlet end of the fill pipe and the top or overflow rim of the reservoir tank of at least twice the inside diameter of the fill pipe. An air gap cannot fail the way a valve can.",
+  "page": "42",
+  "ref": ".2003(c)"
+ },
+ {
+  "id": "r20-016",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "What must the operator do with the antisiphon devices and interlock during chemigation?",
+  "choices": [
+   "Have them inspected annually by a representative of the Pesticide Section of the Department of Agriculture",
+   "Replace them on the schedule the manufacturer publishes, without inspection",
+   "Inspect them during periods of chemigation to ensure they function as the manufacturer directs",
+   "Test them once at the start of each irrigation season and record the result"
+  ],
+  "answer": 2,
+  "explanation": "The devices must be installed and maintained according to the manufacturer's directions, and during periods of chemigation the system operator must inspect the antisiphon devices and the functional systems interlock to ensure they are functioning properly per those directions.",
+  "page": "43",
+  "ref": ".2004(b)"
+ },
+ {
+  "id": "r20-017",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "An operator wants to use equipment other than what the chemigation rule specifies. What is required?",
+  "choices": [
+   "The manufacturer must certify the substitute equipment as equivalent",
+   "The change is permitted so long as it is documented before the season starts",
+   "The change requires a variance from the Environmental Management Commission",
+   "The Pesticide Board may allow the change in advance of use if water supply protection is at least equal"
+  ],
+  "answer": 3,
+  "explanation": "Where modifications or changes in design, technology, irrigation practices, or other reasons warrant using or placing equipment other than what the rule specifies, the Pesticide Board may allow the change in advance of use, provided the protection to the water supply is at least equal to what the rule's equipment and placement would give.",
+  "page": "43",
+  "ref": ".2004(c)"
+ },
+ {
+  "id": "r20-018",
+  "section": 20,
+  "sectionName": "Chemigation",
+  "sectionLabel": "sec. .2000",
+  "manual": "rules",
+  "question": "An inspector finds a chemigation system out of compliance. What happens?",
+  "choices": [
+   "A stop use order issues, and the equipment may not apply pesticides until repairs are made and the order is released in writing",
+   "The operator has 30 days to correct the fault before use must stop",
+   "The system may keep operating for irrigation and for pesticide application at reduced pressure",
+   "The Board schedules a hearing before any restriction on use takes effect"
+  ],
+  "answer": 0,
+  "explanation": "A representative of the Pesticide Section may inspect a chemigation irrigation system at any time. Where equipment is found not in compliance, the owner or operator is issued a stop use order, and the equipment may not be used to apply pesticides until proper repairs or alterations are made and the order is released by official notice from the Department.",
+  "page": "43",
+  "ref": ".2004(d)"
+ },
+ {
+  "id": "r22-001",
+  "section": 22,
+  "sectionName": "Interim Protection Measures for the Carolina Heelsplitter Mussel",
+  "sectionLabel": "sec. .2200",
+  "manual": "rules",
+  "question": "What are the Carolina heelsplitter rules meant to protect, and where do they apply?",
+  "choices": [
+   "A federally listed endangered freshwater snail, in the upper Rocky River watershed",
+   "A federally listed endangered mussel, in stretches of Goose, Duck, and Waxhaw Creeks in Union County",
+   "A federally listed endangered mussel, in every stream in the Yadkin and Catawba basins",
+   "A State-listed threatened mussel, in the coastal plain rivers and creeks of the eastern North Carolina counties"
+  ],
+  "answer": 1,
+  "explanation": "The rules set pesticide use limitation areas to protect the federally listed endangered Carolina heelsplitter, Lasmigona decorata, in Union County: the main stem of Goose Creek from the NC 218 bridge downstream to the Rocky River, the main stem of Duck Creek from the Mecklenburg county line downstream to Goose Creek, and the main stem of Waxhaw Creek from the NC 200 bridge downstream to the South Carolina line.",
+  "page": "44",
+  "ref": ".2202"
+ },
+ {
+  "id": "r22-002",
+  "section": 22,
+  "sectionName": "Interim Protection Measures for the Carolina Heelsplitter Mussel",
+  "sectionLabel": "sec. .2200",
+  "manual": "rules",
+  "question": "How far do the heelsplitter limitations reach up the tributaries of the protected stretches?",
+  "choices": [
+   "One-quarter mile up all streams and ditches that join the area, for every listed product",
+   "They do not extend up tributaries at all",
+   "One-half mile up all streams that join the area, for the products coded 1x and 2x",
+   "One mile up all streams that join the area, for every listed product"
+  ],
+  "answer": 2,
+  "explanation": "For the active ingredients coded 1x and 2x, the limitations apply within the described area and one-half mile up all streams that join it. The single ingredient coded 3z carries its buffer only within the described area itself.",
+  "page": "46",
+  "ref": ".2203"
+ },
+ {
+  "id": "r22-003",
+  "section": 22,
+  "sectionName": "Interim Protection Measures for the Carolina Heelsplitter Mussel",
+  "sectionLabel": "sec. .2200",
+  "manual": "rules",
+  "question": "For a pesticide coded 1x, how far from the water's edge must applications stay?",
+  "choices": [
+   "40 yards for ground applications and 200 yards for aerial applications",
+   "20 yards for ground applications and 200 yards for aerial applications",
+   "100 yards for ground applications and one-quarter mile for aerial applications",
+   "20 yards for ground applications and 100 yards for aerial applications"
+  ],
+  "answer": 3,
+  "explanation": "A 1x pesticide, such as benomyl, captan, methomyl, or permethrin, may not be applied within 20 yards from the edge of water for ground applications, or within 100 yards for aerial applications, inside the protected area and one-half mile up its tributaries.",
+  "page": "46",
+  "ref": ".2203(1)"
+ },
+ {
+  "id": "r22-004",
+  "section": 22,
+  "sectionName": "Interim Protection Measures for the Carolina Heelsplitter Mussel",
+  "sectionLabel": "sec. .2200",
+  "manual": "rules",
+  "question": "For a pesticide coded 2x, how far from the water's edge must applications stay?",
+  "choices": [
+   "40 yards for ground applications and 200 yards for aerial applications",
+   "20 yards for ground applications and 100 yards for aerial applications",
+   "40 yards for ground applications and 400 yards for aerial applications",
+   "100 yards for ground applications and one-quarter mile for aerial applications"
+  ],
+  "answer": 0,
+  "explanation": "A 2x pesticide, such as carbaryl, diazinon, malathion, or pendimethalin, may not be applied within 40 yards from the edge of water for ground applications, or within 200 yards for aerial applications, inside the protected area and one-half mile up its tributaries. That is double the 1x buffer in each case.",
+  "page": "46",
+  "ref": ".2203(2)"
+ },
+ {
+  "id": "r22-005",
+  "section": 22,
+  "sectionName": "Interim Protection Measures for the Carolina Heelsplitter Mussel",
+  "sectionLabel": "sec. .2200",
+  "manual": "rules",
+  "question": "Chlorpyrifos carries the code 3z. What buffer does that impose?",
+  "choices": [
+   "One-fourth mile for both ground and aerial applications",
+   "100 yards from the edge of water for ground applications and one-fourth mile for aerial applications",
+   "100 yards from the edge of water for ground applications and 200 yards for aerial applications by fixed wing aircraft",
+   "40 yards from the edge of water for ground applications and one-fourth mile for aerial applications"
+  ],
+  "answer": 1,
+  "explanation": "Chlorpyrifos is the one active ingredient coded 3z, the strictest of the three: within the described area it may not be applied within 100 yards from the edge of water for ground applications, or within one-fourth mile for aerial applications.",
+  "page": "46",
+  "ref": ".2203(3)"
  }
 ];

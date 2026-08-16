@@ -29,6 +29,30 @@ const sectionsOf = manual => [...new Set(
 const CORE_SECTIONS = sectionsOf('default');   // chapters 1-11 and appendices
 const AERIAL_SECTIONS = sectionsOf('aerial');  // chapters 1-6 and appendices
 
+// North Carolina's own law, which the national manuals cannot cover and every
+// NC exam asks about. Two documents: the statute (G.S. 143, Article 52, in
+// five Parts) and the Pesticide Board's rules under it (02 NCAC 09L, in
+// numbered Sections), so `section` is a Part in the one and a rule Section in
+// the other.
+const LAW_SECTIONS = sectionsOf('law');
+const RULE_SECTIONS = sectionsOf('rules');
+// Most of the rules bind every applicator, but three Sections are written for
+// one license and belong only to the exam that leads to it: .0500 licenses
+// commercial applicators, dealers and consultants, .1100 certifies private
+// applicators, and .1000 governs aerial application. Splitting them here is
+// what keeps a Private Applicator mock exam from asking about the dealer
+// license examination, or a Core one about aerial swath offsets.
+const RULES_CORE_ONLY = ['rules:5'];      // .0500 Pesticide Licenses
+const RULES_PRIVATE_ONLY = ['rules:11'];  // .1100 Private Pesticide Applicator Certification
+const RULES_AERIAL_ONLY = ['rules:10'];   // .1000 Aerial Application of Pesticides
+const RULES_EXAM_SPECIFIC = [...RULES_CORE_ONLY, ...RULES_PRIVATE_ONLY, ...RULES_AERIAL_ONLY];
+const RULES_SHARED = RULE_SECTIONS.filter(s => !RULES_EXAM_SPECIFIC.includes(s));
+// What the two core-material exams draw on: the national core manual plus NC
+// law, minus the rules meant for the other license.
+const CORE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED, ...RULES_CORE_ONLY];
+const PRIVATE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED, ...RULES_PRIVATE_ONLY];
+const AERIAL_EXAM_SECTIONS = [...AERIAL_SECTIONS, ...RULES_AERIAL_ONLY];
+
 // The category exams. Core licenses nobody on its own: a commercial applicator
 // passes Core and then one of these per category they want to work in, and an
 // aerial applicator adds Aerial Methods on top. Each is written from its own
@@ -95,6 +119,33 @@ const EXAM_CONFIG = {
       url: 'https://www.epa.gov/system/files/documents/2023-11/national-aerial-applicator-manual-2014.pdf',
       pages: AERIAL_PAGES,
     },
+    // North Carolina's pesticide law, and the Pesticide Board's rules under
+    // it. Both are cited the way lawyers and inspectors cite them, by section
+    // number rather than by page, so their questions carry a `ref` and
+    // `citeByRef` makes the bank validator insist on one. The page is still
+    // recorded, because it is what opens the PDF in the right place.
+    //
+    // These are the two documents NCDA&CS itself publishes as the law, and
+    // both are free to read, which is what lets the bank cover NC material at
+    // all: the state's study manuals are sold in print and cannot be cited.
+    law: {
+      title: 'North Carolina Pesticide Law of 1971 (G.S. 143, Article 52)',
+      cite: 'NC Pesticide Law', // citations read "NC Pesticide Law § 143-452(a)"
+      short: 'Law',             // section labels: "Law pt. 4 Pesticide Applicators and Consultants"
+      url: 'https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/ByArticle/Chapter_143/Article_52.pdf',
+      pages: LAW_PAGES,
+      citeByRef: true,
+    },
+    // Served over http because that is how the Office of Administrative
+    // Hearings publishes it; it answers on nothing else.
+    rules: {
+      title: 'North Carolina Pesticide Rules (02 NCAC 09L)',
+      cite: '02 NCAC 09L', // citations read "02 NCAC 09L .0503"
+      short: 'Rules',      // section labels: "Rules sec. .0500 Pesticide Licenses"
+      url: 'http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf',
+      pages: RULES_PAGES,
+      citeByRef: true,
+    },
   },
 
   // Mock exams: how many questions the real test asks, drawn from which
@@ -102,18 +153,18 @@ const EXAM_CONFIG = {
   // the aerial manual's feed Aerial Methods, so an aerial question never turns
   // up in a Core mock exam and vice versa.
   exams: [
-    { key: 'core', name: 'Commercial Core', sections: CORE_SECTIONS, count: 100 },
-    { key: 'private', name: 'Private Applicator', sections: CORE_SECTIONS, count: 50 },
-    { key: 'aerial', name: 'Aerial Methods', sections: AERIAL_SECTIONS, count: 50 },
+    { key: 'core', name: 'Commercial Core', sections: CORE_EXAM_SECTIONS, count: 100 },
+    { key: 'private', name: 'Private Applicator', sections: PRIVATE_EXAM_SECTIONS, count: 50 },
+    { key: 'aerial', name: 'Aerial Methods', sections: AERIAL_EXAM_SECTIONS, count: 50 },
     ...CATEGORY_EXAMS,
   ],
 
   // Exams -> the manual sections that cover them. The Settings picker offers
   // these, grouped by testGroups.
   tests: [
-    { key: 'core', group: 'cert', name: 'Commercial Core', note: 'the 100-question first exam for every commercial applicator license', sections: CORE_SECTIONS },
-    { key: 'private', group: 'cert', name: 'Private Applicator', note: 'the 50-question exam for producing an agricultural commodity on your own land', sections: CORE_SECTIONS },
-    { key: 'aerial', group: 'methods', name: 'Aerial Methods', note: 'the extra exam every aerial applicator takes on top of Core and a category', sections: AERIAL_SECTIONS },
+    { key: 'core', group: 'cert', name: 'Commercial Core', note: 'the 100-question first exam for every commercial applicator license', sections: CORE_EXAM_SECTIONS },
+    { key: 'private', group: 'cert', name: 'Private Applicator', note: 'the 50-question exam for producing an agricultural commodity on your own land', sections: PRIVATE_EXAM_SECTIONS },
+    { key: 'aerial', group: 'methods', name: 'Aerial Methods', note: 'the extra exam every aerial applicator takes on top of Core and a category', sections: AERIAL_EXAM_SECTIONS },
     ...CATEGORY_EXAMS.map(e => ({
       key: e.key,
       group: 'category',
@@ -195,38 +246,52 @@ const EXAM_CONFIG = {
   },
 
   // Prose that names the exam, injected as HTML into the matching views.
-  homeSubtitle: `${QUESTION_BANK.length} questions from the national pesticide applicator core and aerial manuals`,
+  homeSubtitle: `${QUESTION_BANK.length} questions from the national applicator manuals and North Carolina pesticide law`,
   disclaimerHTML: `Questions were extracted from the national
     <a href="https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf"
        target="_blank" rel="noopener">core</a> and
     <a href="https://www.epa.gov/system/files/documents/2023-11/national-aerial-applicator-manual-2014.pdf"
-       target="_blank" rel="noopener">aerial</a> applicator manuals;
-    accuracy is not guaranteed. Each question links to its manual page, so verify
-    anything important against the source. North Carolina's exams are written from the
-    NC manuals, which cover the same material plus NC law, and the actual
-    exam questions are not public; no claim is made that these match or resemble them.
-    All progress is stored locally in your browser and never sent to a server.`,
+       target="_blank" rel="noopener">aerial</a> applicator manuals and from North Carolina's
+    <a href="https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/ByArticle/Chapter_143/Article_52.pdf"
+       target="_blank" rel="noopener">pesticide law</a> and
+    <a href="http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf"
+       target="_blank" rel="noopener">rules</a>;
+    accuracy is not guaranteed. Each question links to the page it came from, so verify
+    anything important against the source, and check the law questions against the current
+    section: statutes and rules are amended, and fees and deadlines move first.
+    North Carolina's exams are written from the NC manuals, which cover the same material,
+    and the actual exam questions are not public; no claim is made that these match or
+    resemble them. All progress is stored locally in your browser and never sent to a server.`,
   aboutIntroHTML: `<p>NC Pesticide Trainer is a free, open-source study tool for the North Carolina
     pesticide applicator certification exams. Its ${QUESTION_BANK.length} questions were written from the
     <a href="https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf"
        target="_blank" rel="noopener">National Pesticide Applicator Certification
-    Core Manual</a>, which covers the Core exam, and the
+    Core Manual</a>, which covers the Core exam, the
     <a href="https://www.epa.gov/system/files/documents/2023-11/national-aerial-applicator-manual-2014.pdf"
        target="_blank" rel="noopener">National Aerial Applicator's Manual</a>, which
-    covers the Aerial Methods exam. Every question cites the manual page it came
-    from. The citation is a link, so it opens the PDF at that page and you can check
-    anything important against the source.</p>`,
-  aboutCaveatHTML: `<p><strong>Every question here comes from a national manual, not from a North
+    covers the Aerial Methods exam, and North Carolina's own pesticide law: the
+    <a href="https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/ByArticle/Chapter_143/Article_52.pdf"
+       target="_blank" rel="noopener">Pesticide Law of 1971</a> and the Pesticide Board's
+    <a href="http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf"
+       target="_blank" rel="noopener">rules</a> under it, which every NC exam asks about.
+    Every question cites where it came from, by page for the manuals and by section for
+    the law. The citation is a link, so it opens the PDF in the right place and you can
+    check anything important against the source.</p>`,
+  aboutCaveatHTML: `<p><strong>The subject matter here comes from the national manuals, not from a North
     Carolina one.</strong> The national manuals are published by the NASDA Research Foundation,
-    hosted by EPA, and free to read, which is why this bank can cite them page by page.
-    North Carolina's own study texts, the NC Pesticide Applicator Certification Core Manual
-    and the category manuals, are sold in print by the
+    hosted by EPA, and free to read, which is why this bank can cite them page by page. NC
+    pesticide law is free to read too, from the General Assembly and the Office of
+    Administrative Hearings, so this bank covers it. North Carolina's own study texts, the
+    NC Pesticide Applicator Certification Core Manual and the category manuals, are sold in
+    print by the
     <a href="https://go.ncsu.edu/psep" target="_blank" rel="noopener">NC State Pesticide Safety
-    Education Program</a>. They are adapted from these national manuals and add North
-    Carolina's pesticide law and rules, which this bank does not cover yet; questions
-    sourced from them are planned, and each will cite its own manual the same way.</p>
-    <p>Questions were extracted from the manuals by a language model and reviewed for
-    accuracy, but mistakes are possible and accuracy is not guaranteed. The
+    Education Program</a>. They are adapted from these national manuals and add material,
+    particularly for the categories, that nothing free covers; questions sourced from them
+    are planned, and each will cite its own manual the same way.</p>
+    <p>Questions were extracted from the sources by a language model and reviewed for
+    accuracy, but mistakes are possible and accuracy is not guaranteed. Law changes:
+    the statute and rules were current when the questions were written, and a citation
+    that no longer matches the linked section is a question to report. The
     actual exam questions are not public, and no claim is made that these match
     or resemble them.</p>`,
 };

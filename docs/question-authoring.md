@@ -55,8 +55,28 @@ core manual's:
 }
 ```
 
-- `id`: a per-manual letter (`s` for the core manual, `a` for the aerial one)
-  + chapter number + `-` + a three-digit counter, unique in the bank.
+A question from a document that is cited by section rather than by page, such
+as a statute or an administrative rule, adds a `ref`:
+
+```json
+{
+  "id": "l4-014",
+  "section": 4,
+  "sectionName": "Pesticide Applicators and Consultants",
+  "sectionLabel": "pt. 4",
+  "manual": "law",
+  "question": "...",
+  "choices": ["...", "...", "...", "..."],
+  "answer": 0,
+  "explanation": "...",
+  "page": "14",
+  "ref": "§ 143-453(a)"
+}
+```
+
+- `id`: a per-source letter (`s` for the core manual, `a` for the aerial one,
+  `l` for the NC Pesticide Law, `r` for the NC pesticide rules)
+  + section number + `-` + a three-digit counter, unique in the bank.
 - `section`: the chapter number **within its own manual**, counting from 1, so
   the core manual's chapter 1 and the aerial manual's chapter 1 are both
   `"section": 1` and the `manual` field is what tells them apart. Every entry
@@ -68,6 +88,13 @@ core manual's:
   `pdfPage` when the same label is printed on more than one PDF page, and a
   `manual` key when the exam config lists more than one manual. An exam whose
   config does not set `requireCitations` may omit citations entirely.
+- `ref`: what the citation reads as, for a source that is cited by section
+  rather than by page ("§ 143-452(a)", ".0503"). The `page` still decides
+  which page the link opens, so both are needed. A manual whose config entry
+  sets `citeByRef` must have a `ref` on every one of its questions; the
+  validator enforces that, because a law question that forgets its ref renders
+  as "NC Pesticide Law p. 12", which is right about the PDF and useless to a
+  reader looking for the section.
 
 `npm test` runs `tests/validate-bank.js`, which enforces the schema,
 uniqueness, and citation resolution, checks the question count stated in the
@@ -125,6 +152,14 @@ exception a test could ask about deserves a question, and a thin section
 gets full coverage before a dense section gets padding. As a yardstick, this
 bank averages three questions per labeled manual page, denser where the
 material is dense.
+
+A statute or a rule set is read the same way, but skip what is not law to
+follow: repealed and expired rules, history notes, and the internal
+housekeeping of the agency. Ask what the license holder has to do, and write
+the numbers exactly: fees, deadlines, setbacks, and credit counts are what
+these sources exist to fix, and they are what the exam asks about. Because
+they can be amended, cite the section rather than the page, so a reader who
+finds a question stale can see immediately which section to check.
 
 ## The loop
 

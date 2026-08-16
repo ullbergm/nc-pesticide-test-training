@@ -9,13 +9,13 @@ export default [
     // global each (QUESTION_BANK, FSRS, Store), consumed by js/app.js;
     // storage.js reads its localStorage key out of EXAM_CONFIG.
     files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/manual-pages.js',
-      'data/aerial-pages.js'],
+      'data/aerial-pages.js', 'data/law-pages.js', 'data/rules-pages.js'],
     languageOptions: {
       sourceType: 'script',
       globals: { ...globals.browser, EXAM_CONFIG: 'readonly' },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES)$' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES)$' }],
     },
   },
   {
@@ -41,6 +41,8 @@ export default [
         QUESTION_BANK: 'readonly',
         MANUAL_PAGES: 'readonly',
         AERIAL_PAGES: 'readonly',
+        LAW_PAGES: 'readonly',
+        RULES_PAGES: 'readonly',
       },
     },
     rules: {
@@ -102,7 +104,8 @@ export default [
       globals: {
         ...globals.node,
         QUESTION_BANK: 'readonly', MANUAL_PAGES: 'readonly',
-        AERIAL_PAGES: 'readonly', EXAM_CONFIG: 'readonly',
+        AERIAL_PAGES: 'readonly', LAW_PAGES: 'readonly',
+        RULES_PAGES: 'readonly', EXAM_CONFIG: 'readonly',
         FSRS: 'readonly', Readiness: 'readonly',
       },
     },

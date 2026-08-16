@@ -7,12 +7,17 @@
  * between the two. This walks the PDF, reads the label out of each page's
  * footer, and writes the result out as a plain script the page can load.
  *
- * Usage: node tools/gen-manual-pages.js [path-to-manual.pdf] [--out FILE] [--var NAME]
+ * Usage: node tools/gen-manual-pages.js [path-to-manual.pdf] [--out FILE] [--var NAME] [--identity]
  *   core manual:   node tools/gen-manual-pages.js
  *   aerial manual: node tools/gen-manual-pages.js aerial-applicator-manual.pdf \
  *                    --out data/aerial-pages.js --var AERIAL_PAGES
  * Needs pdftotext (poppler-utils) on PATH. The PDFs are not in the repo; grab
- * them from the EPA links in the README first.
+ * them from the links in the README first.
+ *
+ * `--identity` is for a document that prints no page numbers at all, which is
+ * how the state publishes its rules: there the only page number a reader has
+ * is the physical one, so the map is 1:1 and its only job is to record how far
+ * the document runs, which is what bounds the bank validator's page check.
  *
  * Footer shapes vary by manual: a page either leads with the number
  * ("6   CHAPTER 1") or ends with it ("PEST MANAGEMENT   7", and in the aerial
@@ -35,54 +40,74 @@ const pdf = argv.find(a => !a.startsWith('--') && argv[argv.indexOf(a) - 1] !== 
   || path.join(__dirname, '..', 'pesticide-core-manual.pdf');
 const outFile = flag('--out') || 'data/manual-pages.js';
 const varName = flag('--var') || 'MANUAL_PAGES';
+const identity = argv.includes('--identity');
 if (!fs.existsSync(pdf)) {
   console.error(`${pdf} not found. Download the manual PDF first, or pass its path.`);
   process.exit(1);
 }
 
 const text = execFileSync('pdftotext', ['-layout', pdf, '-'], { maxBuffer: 64 * 1024 * 1024 }).toString();
+// pdftotext ends the last page with a form feed too, so the split leaves an
+// empty tail that is not a page.
 const pages = text.split('\f');
-// Every plausible footer, kept as [printed label, physical page].
-const candidates = [];
-for (let i = 0; i < pages.length; i++) {
-  const lines = pages[i].split('\n').filter(l => l.trim());
-  // The label sits in the footer, beside the chapter or section name.
-  for (const line of lines.slice(-3)) {
-    // Case-insensitive: the aerial manual sets its running foot in lowercase
-    // ("making an aerial pesticide application   81").
-    // Digits inside the name too, for numbered back matter ("APPENDIX 2 101").
-    const m = /^\s*(\d{1,3})\s+[A-Za-z][A-Za-z0-9,&' ()-]*\s*$/.exec(line.trimEnd())
-      || /^\s*[A-Za-z][A-Za-z0-9,&' ()-]+?\s+(\d{1,3})\s*$/.exec(line.trimEnd());
-    if (m) candidates.push([m[1], i + 1]);
+if (pages.length && !pages[pages.length - 1].trim()) pages.pop();
+// Reads the footers and returns the printed-to-physical map, plus a line
+// describing what it found for the console.
+function fromFooters() {
+  // Every plausible footer, kept as [printed label, physical page].
+  const candidates = [];
+  for (let i = 0; i < pages.length; i++) {
+    const lines = pages[i].split('\n').filter(l => l.trim());
+    // The label sits in the footer, beside the chapter or section name.
+    for (const line of lines.slice(-3)) {
+      // Case-insensitive: the aerial manual sets its running foot in lowercase
+      // ("making an aerial pesticide application   81").
+      // Digits inside the name too, for numbered back matter ("APPENDIX 2 101").
+      const m = /^\s*(\d{1,3})\s+[A-Za-z][A-Za-z0-9,&' ()-]*\s*$/.exec(line.trimEnd())
+        || /^\s*[A-Za-z][A-Za-z0-9,&' ()-]+?\s+(\d{1,3})\s*$/.exec(line.trimEnd());
+      if (m) candidates.push([m[1], i + 1]);
+    }
   }
+
+  // Real footers all sit the same distance past the front matter, so the offset
+  // they agree on separates them from body text that happens to end in a number.
+  const tally = {};
+  for (const [label, page] of candidates) {
+    const off = page - Number(label);
+    tally[off] = (tally[off] || 0) + 1;
+  }
+  const modal = Number(Object.keys(tally).sort((a, b) => tally[b] - tally[a])[0]);
+  const map = {};
+  let rejected = 0;
+  for (const [label, page] of candidates) {
+    if (page - Number(label) !== modal) { rejected++; continue; }
+    if (!(label in map)) map[label] = page;
+  }
+  return { map, note: `offset ${modal}, ${rejected} off-offset lines ignored` };
 }
 
-// Real footers all sit the same distance past the front matter, so the offset
-// they agree on separates them from body text that happens to end in a number.
-const tally = {};
-for (const [label, page] of candidates) {
-  const off = page - Number(label);
-  tally[off] = (tally[off] || 0) + 1;
-}
-const modal = Number(Object.keys(tally).sort((a, b) => tally[b] - tally[a])[0]);
-const map = {};
-let rejected = 0;
-for (const [label, page] of candidates) {
-  if (page - Number(label) !== modal) { rejected++; continue; }
-  if (!(label in map)) map[label] = page;
+// A document that prints no page numbers has only physical ones, so the map
+// says exactly that and stops at the last page.
+function identityMap() {
+  const map = {};
+  for (let i = 1; i <= pages.length; i++) map[i] = i;
+  return { map, note: 'identity, this PDF prints no page numbers' };
 }
 
+const { map, note } = identity ? identityMap() : fromFooters();
 const labels = Object.keys(map).sort((a, b) => Number(a) - Number(b));
 const body = labels.map(l => `  '${l}': ${map[l]},`).join('\n');
 const out = `/* Generated by tools/gen-manual-pages.js. Do not edit by hand.
    Maps the manual's printed page numbers ("21") to physical page numbers in
-   the EPA-hosted PDF, so a citation can deep link with #page=. Regenerate
-   whenever a new revision of the manual is published. */
+   the hosted PDF, so a citation can deep link with #page=. Regenerate
+   whenever a new revision of the manual is published.${identity ? `
+   This one is the identity: the document prints no page numbers, so the page
+   a citation names is the physical page it is on.` : ''} */
 const ${varName} = {
 ${body}
 };
 `;
 const dest = path.join(__dirname, '..', outFile);
 fs.writeFileSync(dest, out);
-console.log(`wrote ${labels.length} page labels (offset ${modal}, ${rejected} off-offset lines ignored) `
+console.log(`wrote ${labels.length} page labels (${note}) `
   + `to ${path.relative(process.cwd(), dest)}`);

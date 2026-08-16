@@ -23,6 +23,8 @@ const CORE = [
   'data/questions.js',
   'data/manual-pages.js',
   'data/aerial-pages.js',
+  'data/law-pages.js',
+  'data/rules-pages.js',
   'data/exam-config.js',
   'manifest.webmanifest',
   'icons/icon-192.png',
