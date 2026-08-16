@@ -27,7 +27,6 @@
   // Bank order, which is each manual's chapters and then its back matter, in
   // printed order.
   const SECTION_IDS = Object.keys(SECTION_NAMES);
-  const SECTION_ORDER = new Map(SECTION_IDS.map((k, i) => [k, i]));
   // What a section calls itself, with no manual attached: "ch. 3", "app. C".
   // Use this under a heading that already names the manual, which is most
   // places, since repeating it on every row says nothing.
@@ -142,9 +141,19 @@
       .concat(order.filter(i => POSITIONAL.test(q.choices[i])));
   };
 
+  // The sections the studied exams cover, in bank order. Derived on every
+  // read rather than stored: an exam's section list grows when the bank does,
+  // and a stored copy would go stale the day that happens.
+  const enabledTests = () => {
+    const sel = Store.load().settings.tests;
+    const studiable = TESTS.filter(tst => tst.sections.length);
+    return sel && sel.length
+      ? studiable.filter(tst => sel.includes(tst.key))
+      : studiable;
+  };
   const enabledSections = () => {
-    const sel = Store.load().settings.sections;
-    return sel && sel.length ? sel : SECTION_IDS;
+    const secs = new Set(enabledTests().flatMap(tst => tst.sections));
+    return SECTION_IDS.filter(sec => secs.has(sec));
   };
 
   const endOfToday = () => {
@@ -1222,7 +1231,7 @@
 
   function renderSettings() {
     const s = Store.load();
-    const active = new Set(enabledSections());
+    const active = new Set(enabledTests().map(tst => tst.key));
     view.innerHTML = `
       <div class="settings">
         <h2>Settings</h2>
@@ -1248,7 +1257,7 @@
             <h4>${label}</h4>
             ${TESTS.filter(tst => tst.group === group).map(tst => {
               const count = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q))).length;
-              const checked = tst.sections.every(sec => active.has(sec));
+              const checked = active.has(tst.key);
               // Nothing to select for an exam the bank does not cover yet, so
               // it is shown but disabled rather than offering an empty study
               // queue. It becomes selectable as soon as it has questions.
@@ -1298,16 +1307,19 @@
     });
     view.querySelectorAll('input[data-test]').forEach(cb =>
       cb.addEventListener('change', () => {
-        // Deduplicated: two tests may cover the same chapters (Core and
-        // Private both draw on the whole core manual), and without this a
-        // section repeats once per test that claims it, so the "everything is
-        // selected" check below never matches and the stored list is junk.
-        const chosen = [...new Set([...view.querySelectorAll('input[data-test]:checked')]
-          .flatMap(x => TESTS.find(tst => tst.key === x.dataset.test).sections))]
-          .sort((a, b) => SECTION_ORDER.get(a) - SECTION_ORDER.get(b));
+        // What the boxes mean is what gets stored: the exams being studied
+        // for. The sections they cover are worked out on read, so an exam
+        // that grows a chapter later grows for everyone who picked it.
+        // An exam the bank has no questions for is filtered out rather than
+        // trusted to stay unchecked: it would store a choice that selects
+        // nothing, and leave the "everything is selected" test below unable
+        // to match.
+        const studiable = new Set(TESTS.filter(tst => tst.sections.length).map(tst => tst.key));
+        const chosen = [...view.querySelectorAll('input[data-test]:checked')]
+          .map(x => x.dataset.test).filter(key => studiable.has(key));
         // empty or complete selection both mean "study everything"
-        s.settings.sections =
-          chosen.length === 0 || chosen.length === SECTION_IDS.length ? [] : chosen;
+        s.settings.tests =
+          chosen.length === 0 || chosen.length === studiable.size ? [] : chosen;
         Store.save();
         if (chosen.length === 0) { renderSettings(); return; } // re-render so boxes show reality
         $('#paceinfo').textContent = paceInfo(); // pace depends on the selected sections

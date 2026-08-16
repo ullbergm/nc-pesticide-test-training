@@ -39,7 +39,10 @@ the NC aerial rules feed Aerial Methods, so a mock exam never mixes the two.
 The rules written for one license go only to its exam: commercial licensing
 (.0500) to Core, private applicator certification (.1100) to Private, aerial
 application (.1000) to Aerial Methods. Settings picks which exams you are
-studying for, and About lists every NC license and the exams it takes.
+studying for, and About lists every NC license and the exams it takes. That
+choice is remembered as the exams themselves, so when a release adds material
+to an exam you picked, it joins what you are studying without your having to
+go back and re-pick anything.
 
 North Carolina licenses on the Core exam plus a **category** exam for each kind
 of work you do, and aerial applicators add Aerial Methods on top. All fourteen
