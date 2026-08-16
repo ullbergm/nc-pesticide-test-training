@@ -10,13 +10,29 @@ export default [
     // storage.js reads its localStorage key out of EXAM_CONFIG.
     files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/manual-pages.js',
       'data/aerial-pages.js', 'data/law-pages.js', 'data/rules-pages.js',
-      'data/ncsu-anchors.js'],
+      'data/ncsu-anchors.js', 'data/problems.js'],
     languageOptions: {
       sourceType: 'script',
       globals: { ...globals.browser, EXAM_CONFIG: 'readonly' },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES|NCSU_ANCHORS)$' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES|NCSU_ANCHORS|PROBLEM_TEMPLATES)$' }],
+    },
+  },
+  {
+    // The drill engine reads its templates from data/problems.js and appends
+    // the questions it builds from them to the bank.
+    files: ['js/problems.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: {
+        ...globals.browser,
+        PROBLEM_TEMPLATES: 'readonly',
+        QUESTION_BANK: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^Problems$' }],
     },
   },
   {
@@ -64,6 +80,18 @@ export default [
     },
   },
   {
+    // The on-screen calculator is self-contained too: it owns its state and
+    // its markup and reads nothing but the DOM it was given.
+    files: ['js/calculator.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^Calculator$' }],
+    },
+  },
+  {
     files: ['js/app.js'],
     languageOptions: {
       sourceType: 'script',
@@ -71,7 +99,9 @@ export default [
         ...globals.browser,
         QUESTION_BANK: 'readonly',
         EXAM_CONFIG: 'readonly',
+        Calculator: 'readonly',
         FSRS: 'readonly',
+        Problems: 'readonly',
         Readiness: 'readonly',
         Store: 'readonly',
         License: 'readonly',
@@ -109,6 +139,7 @@ export default [
         AERIAL_PAGES: 'readonly', LAW_PAGES: 'readonly',
         RULES_PAGES: 'readonly', NCSU_ANCHORS: 'readonly', EXAM_CONFIG: 'readonly',
         FSRS: 'readonly', Readiness: 'readonly',
+        PROBLEM_TEMPLATES: 'readonly', Problems: 'readonly',
       },
     },
   },

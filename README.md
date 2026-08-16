@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-test-training)](LICENSE)
 [![Live site](https://img.shields.io/website?url=https%3A%2F%2Fnc-pesticide.ullberg.io&label=nc-pesticide.ullberg.io)](https://nc-pesticide.ullberg.io)
 
-[![Questions](https://img.shields.io/badge/questions-1133-blue)](data/questions.js)
+[![Questions](https://img.shields.io/badge/questions-1104-blue)](data/questions.js)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-blue)](package.json)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-blue)](manifest.webmanifest)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue)](CONTRIBUTING.md)
@@ -15,7 +15,7 @@ Practice questions with spaced repetition for the North Carolina pesticide
 applicator certification exams: the 100-question commercial Core exam, the
 50-question Private Applicator exam, the Aerial Methods exam every aerial
 applicator adds on top, and the Pesticide Dealer exam, all passed at 70%. The
-bank has 1133 questions, written
+bank has 1104 questions and 28 calculation drills, written
 with the recipe in
 [docs/question-authoring.md](docs/question-authoring.md) and covering five
 sources end to end: all eleven chapters of the
@@ -40,6 +40,23 @@ needs, and which states North Carolina has reciprocity with. Every question
 cites where it came from, as a link that opens the source at the right place:
 manual questions cite a page, law and rule questions cite their section number,
 and questions from AG-714 cite the heading they were written from.
+
+The 28 **calculation drills** are counted apart from the questions because they
+are not questions in the same sense. A drill is a method — the dosage formulas
+in the core manual's appendix C, the area and calibration-test arithmetic in
+its chapter 11, and the whole sequence the aerial manual's chapter 5 works
+through from a timed catch to the gallons that go in the tank — with new
+numbers drawn every time the card comes up. What gets easy is doing the
+conversion rather than recalling the answer it had last time, which is the one
+thing a fixed question cannot teach. Every wrong choice is a particular mistake
+with a name (a conversion left out, a ratio inverted, a decimal misplaced,
+43,560 where 43.5 belongs) rather than a number near the right one, and a wrong
+answer tells you which one you made: *You left the 100-gallon divisor out.* A
+nonprogrammable calculator is allowed at the exam site, so the arithmetic is
+fair game and every drill offers one on screen — four functions and a memory,
+the same as the handheld you may carry in. [docs/math-drills.md](docs/math-drills.md)
+is the design, and the worked calculations these replaced have been retired
+from the bank so that no method is drilled twice.
 
 Core chapters and NC law feed the Core and Private exams; aerial chapters and
 the NC aerial rules feed Aerial Methods, so a mock exam never mixes the two.
@@ -122,6 +139,21 @@ and import for backups or for moving between devices.
   credits on record. This is the one screen that contacts a server; the result is cached in the
   browser so it loads instantly and only refreshes when you press Refresh.
 
+A **calculation drill** turns up in whichever of those modes the card is due
+in, with a calculator beside it: North Carolina allows a nonprogrammable one at
+the exam site, so the drill is about the method rather than mental arithmetic.
+To drill the arithmetic on purpose rather than waiting for the cards to come
+due, open [#drill](https://nc-pesticide.ullberg.io/#drill), which runs every
+drill your selected exams ask for. It is a link rather than a tab on purpose: a
+calibration problem belongs in the ordinary study queue, and a Math tab gets
+practised by the people who already like arithmetic. Like the misses drill it
+leaves the schedule alone, so using it cannot pull a card forward or push it
+back.
+It opens on a button and stays open on later drills once you have opened it,
+starts cleared on every card, and takes keyboard input while the focus is
+inside it. Answer wrong and the feedback names the mistake behind the choice
+you picked before it explains the rule.
+
 On a keyboard, 1 through 4 pick an answer, Enter continues after a wrong answer,
 and 1/2/3 (or Enter for Good) grade a correct one. A stray tap is not final: an
 Undo button (or the U key) on the feedback screen takes back the answer and asks
@@ -202,12 +234,15 @@ reproduces. Treat it as a direction, not a score report.
 ```
 index.html               app shell
 css/style.css            styling (light/dark follows the device; Settings can force either)
+js/problems.js           calculation drills: draws a template's numbers and builds the question
+js/calculator.js         the on-screen calculator a drill offers (four functions, one memory)
 js/fsrs.js               FSRS-6 scheduler
 js/readiness.js          projected score and pass odds per exam
 js/storage.js            localStorage persistence, export/import
 js/license.js            NC license lookup (public NCDA&CS search) with an on-device cache
 js/app.js                UI and session logic
-data/questions.js        question bank (1133 questions, tagged by section and source page)
+data/questions.js        question bank (1104 questions, tagged by section and source page)
+data/problems.js         28 calculation drills, as methods with the numbers left open
 data/manual-pages.js     printed page numbers to PDF page numbers, for the citation links
 data/aerial-pages.js     the same map for the aerial manual
 data/law-pages.js        the same map for the NC Pesticide Law
@@ -219,12 +254,13 @@ sw.js                    service worker (offline cache, only active on the hoste
 manifest.webmanifest     PWA manifest, lets the app be installed to a home screen
 icons/                   app icons (icon.svg is the source, PNGs rendered from it)
 tests/validate-bank.js   question bank schema checks (node)
+tests/problems-test.js   calculation drills, swept over thousands of seeds (node)
 tests/fsrs-test.js       FSRS scheduler property tests (node)
 tests/readiness-test.js  readiness projection tests, incl. a Monte Carlo check (node)
 tests/test.html          end-to-end tests driven through the real UI
 tests/run-browser.sh     headless-Chrome runner for test.html (local + CI)
 docs/question-authoring.md  the recipe the question bank is written with
-docs/math-drills.md      design for generated calibration and dosage drills (not built yet)
+docs/math-drills.md      design for the calculation drills, and what is left to build
 docs/screenshots/        README images and the script that regenerates them
 ```
 
@@ -249,6 +285,9 @@ Create a new repository from this one and touch:
   to be followed by a person or handed to a language model per section
 - `data/exam-config.js`: the tests and exams, pass mark, manual links, storage
   keys, and every piece of prose that names the exam
+- `data/problems.js`: the calculation drills, if the exam has arithmetic in it;
+  [docs/math-drills.md](docs/math-drills.md) is the design. An exam with none
+  drops the file, and `js/problems.js` then adds nothing to the bank
 - `data/manual-pages.js`: regenerate with `node tools/gen-manual-pages.js`; the
   footer-label parsing in that script is written for this manual's page
   numbering, so adjust it to the new manual's
