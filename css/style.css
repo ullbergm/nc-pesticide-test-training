@@ -143,7 +143,8 @@ h2 { margin: 12px 0 8px; font-weight: 800; letter-spacing: -0.01em; }
 .sub { color: var(--muted); margin-top: 4px; }
 
 /* buttons: base first, variants after, so variants actually win */
-.actions button, .grades button, .done button, .examresult button, #feedback > button {
+.actions button, .grades button, .done button, .examresult button, #feedback > button,
+.licform button, .licfoot button {
   font: inherit;
   font-weight: 600;
   padding: 10px 18px;
@@ -162,7 +163,8 @@ button.primary {
 }
 button.primary:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
 button.danger { border-color: var(--bad); color: var(--bad); background: transparent; box-shadow: none; }
-.actions button:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.actions button:disabled,
+.licform button:disabled, .licfoot button:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
 
 /* exam banner: yellow signage strip */
 .exambanner {
@@ -522,3 +524,78 @@ body > footer a:hover { color: var(--accent); }
 .seclist h4:first-child { margin-top: 4px; }
 .seccheck { display: flex; align-items: baseline; gap: 8px; }
 .seccheck small { color: var(--muted); }
+
+/* license lookup */
+.licform {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px;
+  margin: 16px 0 4px;
+}
+.licform label {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 0.85rem; color: var(--muted);
+}
+.licform input, .licform select {
+  font: inherit; color: var(--text); background: var(--card);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+  min-width: 220px;
+}
+.licform input { min-width: 160px; }
+.licstatus { margin: 8px 0; font-size: 0.9rem; color: var(--muted); min-height: 1.2em; }
+.licstatus.error { color: var(--bad); font-weight: 600; }
+
+.liccard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-top: 12px;
+  box-shadow: var(--shadow);
+  max-width: 46em;
+}
+.lichead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.licname { font-size: 1.15rem; font-weight: 800; color: var(--text); }
+.licsub { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+.licbadge {
+  flex: none;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  border: 1px solid transparent; white-space: nowrap;
+}
+.licbadge.ok { background: var(--ok-bg); color: var(--ok); }
+.licbadge.warn { background: var(--accent2); color: var(--accent2-text); }
+.licbadge.danger { background: var(--bad-bg); color: var(--bad); }
+
+.licgrid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px 16px; margin: 16px 0 4px;
+}
+.licgrid dt { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.licgrid dd { margin: 2px 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.licgrid dd small { display: block; font-weight: 400; color: var(--muted); font-variant-numeric: normal; }
+
+.liccredits { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+.liccredits h3 { font-size: 0.95rem; margin: 0 0 8px; }
+.chiprow { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.chip {
+  padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg);
+  font-size: 0.82rem; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.chip.has { border-color: var(--accent); color: var(--text); }
+.chip b { font-weight: 800; }
+
+.liccourses { margin-top: 10px; }
+.liccourses summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+.liccourses ul { list-style: none; padding: 8px 0 0; margin: 0; }
+.liccourses li {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px;
+  padding: 6px 0; border-bottom: 1px solid var(--border);
+}
+.liccourses li:last-child { border-bottom: none; }
+.liccourses .cname { font-size: 0.9rem; }
+.liccourses .cmeta { color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
+
+.licfoot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 14px; }
+.licfoot .hint { margin-left: auto; }
+.liccard .disclaimer { margin-top: 16px; }

@@ -85,6 +85,11 @@ and import for backups or for moving between devices.
 - **Browse**: the whole bank by manual chapter, with each card's schedule and accuracy.
 - **Stats**: exam readiness, mastery counts, day streak, 7-day due forecast,
   per-chapter accuracy, and exam history.
+- **License**: look your actual NC pesticide license up by number and type. It queries
+  the [NC Department of Agriculture public license search](https://apps.ncagr.gov/AgRSysPortalV2/licensesearch)
+  and shows your status, expiration, recertification deadline, and the continuing-certification
+  credits on record. This is the one screen that contacts a server; the result is cached in the
+  browser so it loads instantly and only refreshes when you press Refresh.
 
 On a keyboard, 1 through 4 pick an answer, Enter continues after a wrong answer,
 and 1/2/3 (or Enter for Good) grade a correct one. A stray tap is not final: an
@@ -168,6 +173,7 @@ css/style.css            styling (light/dark follows the device; Settings can fo
 js/fsrs.js               FSRS-6 scheduler
 js/readiness.js          projected score and pass odds per exam
 js/storage.js            localStorage persistence, export/import
+js/license.js            NC license lookup (public NCDA&CS search) with an on-device cache
 js/app.js                UI and session logic
 data/questions.js        question bank (30 questions, tagged by chapter and manual page)
 data/manual-pages.js     printed page numbers to PDF page numbers, for the citation links
