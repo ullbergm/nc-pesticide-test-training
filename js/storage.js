@@ -11,7 +11,7 @@ const Store = (() => {
     cards: {},          // id -> {stability, difficulty, due, lastReview, reps, lapses, state, wrong, right, streak}
     settings: {
       newPerDay: 10,   // relaxed steady pace; auto-boosted when an exam date demands it
-      sections: [],     // empty = all sections enabled
+      tests: [],        // exam keys being studied for; empty = all of them
       examDate: '',     // 'YYYY-MM-DD'; drives retention ramp + final review
       theme: 'system',  // 'system' | 'light' | 'dark'
     },
@@ -23,6 +23,46 @@ const Store = (() => {
   const num = (v, d = 0) => (Number.isFinite(v) ? v : d);
   const STATES = ['new', 'learning', 'relearning', 'review'];
   const THEMES = ['system', 'light', 'dark'];
+
+  // The selection is stored as the exams being studied for, not as the
+  // sections they happen to cover today. A section list is a snapshot: add
+  // chapters to an exam, as a new manual or a body of law does, and everyone
+  // who narrowed their selection stays pinned to the old list, silently
+  // studying less than the exam now asks. Test keys keep meaning what the
+  // user chose, and the sections are derived on read.
+  //
+  // Which leaves the earlier shape to migrate. A saved `sections` list was
+  // the union of the chosen exams' sections, so ordinarily the exams it stood
+  // for are the ones whose sections it wholly contains. Bare numbers in it
+  // predate the second manual and were all the first one's chapters.
+  //
+  // Containment alone is not enough, because the lists most in need of
+  // migrating are exactly the stale ones: a list written before an exam
+  // gained a section can no longer contain that exam, and every exam would
+  // drop out at once, silently resetting the selection to everything. So a
+  // list that matches nothing falls back to the exams it overlaps, which is
+  // what it was a snapshot of.
+  const TESTS = (EXAM_CONFIG.tests || []).filter(t => (t.sections || []).length);
+  function chosenTests(st) {
+    const keys = Array.isArray(st.tests)
+      ? st.tests.filter(k => TESTS.some(t => t.key === k))
+      : fromSections(st.sections);
+    // Everything chosen is stored the same way as nothing chosen: empty,
+    // meaning "all of them", so a later exam is included by default rather
+    // than needing the picker touched again.
+    return keys.length === TESTS.length ? [] : [...new Set(keys)];
+  }
+  function fromSections(sections) {
+    if (!Array.isArray(sections) || !sections.length) return [];
+    const had = new Set(sections
+      .map(s => (Number.isInteger(s) ? `default:${s}` : s))
+      .filter(s => typeof s === 'string' && s.includes(':')));
+    if (!had.size) return [];
+    const covers = t => t.sections.every(sec => had.has(sec));
+    const touches = t => t.sections.some(sec => had.has(sec));
+    const contained = TESTS.filter(covers);
+    return (contained.length ? contained : TESTS.filter(touches)).map(t => t.key);
+  }
 
   // Anything read from outside the running app (a backup file, but also the
   // localStorage value itself, which extensions or an unrelated writer at the
@@ -55,15 +95,7 @@ const Store = (() => {
       cards,
       settings: {
         newPerDay: Math.max(0, num(st.newPerDay, base.settings.newPerDay)),
-        // Chapter keys, "<manual>:<number>". Saved progress and backups from
-        // before the bank had a second manual hold bare chapter numbers, which
-        // were all the first manual's, so they migrate to its keys rather than
-        // being dropped as junk and silently resetting the selection.
-        sections: Array.isArray(st.sections)
-          ? st.sections
-              .map(s => (Number.isInteger(s) ? `default:${s}` : s))
-              .filter(s => typeof s === 'string' && s.includes(':'))
-          : [],
+        tests: chosenTests(st),
         examDate: typeof st.examDate === 'string' ? st.examDate : '',
         theme: THEMES.includes(st.theme) ? st.theme : 'system',
       },
@@ -139,9 +171,11 @@ const Store = (() => {
 
   // version stamps the backup format, so a future importer can tell old
   // files apart and migrate them instead of guessing. sanitize copies
-  // fields explicitly, so the stamp never leaks into live state.
+  // fields explicitly, so the stamp never leaks into live state. Version 2
+  // stores the chosen exams rather than their sections; sanitize migrates a
+  // version 1 file by its shape, so the stamp is a label, not a branch.
   function exportJSON() {
-    return JSON.stringify({ version: 1, ...load() }, null, 2);
+    return JSON.stringify({ version: 2, ...load() }, null, 2);
   }
 
   function importJSON(text) {

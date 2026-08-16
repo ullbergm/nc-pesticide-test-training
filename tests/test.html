@@ -248,11 +248,9 @@ try {
       const cb = qa('input[data-test]').find(x => x.dataset.test === tst.key);
       return !!cb && cb.disabled === !tst.sections.length;
     }));
-  const keepTests = TESTS.filter(tst => tst.group === EXAM_CONFIG.testGroups[0][0]);
+  const keepTests = TESTS.filter(tst => tst.group === EXAM_CONFIG.testGroups[0][0]
+    && tst.sections.length);
   const keep = new Set(keepTests.map(tst => tst.key));
-  // Sorted, because the stored selection is in bank order while this list is
-  // in the order the kept tests happen to name their sections; two tests in a
-  // group need not draw on the same sections.
   const keepSecs = [...new Set(keepTests.flatMap(tst => tst.sections))].sort();
   qa('input[data-test]').forEach(cb => {
     if (cb.checked !== keep.has(cb.dataset.test)) {
@@ -260,9 +258,11 @@ try {
       cb.dispatchEvent(new Event('change'));
     }
   });
-  const secs = [...Store.load().settings.sections].sort();
-  t('picker maps to the kept tests\' sections', JSON.stringify(secs)
-    === JSON.stringify(keepSecs.length === SECTION_COUNT ? [] : keepSecs));
+  // The picker stores the exams themselves, not the sections they cover, so
+  // an exam that grows a section later grows for whoever picked it.
+  const stored = [...Store.load().settings.tests].sort();
+  t('picker stores the kept tests', JSON.stringify(stored)
+    === JSON.stringify(keepTests.length === STUDIABLE.length ? [] : [...keep].sort()));
   nav('settings');
   t('picker state survives re-render', qa('input[data-test]:checked').length === keepTests.length);
   nav('study');
@@ -278,7 +278,7 @@ try {
   qa('input[data-test]').forEach(cb => {
     if (!cb.checked) { cb.checked = true; cb.dispatchEvent(new Event('change')); }
   });
-  t('all checked stores empty (= everything)', Store.load().settings.sections.length === 0);
+  t('all checked stores empty (= everything)', Store.load().settings.tests.length === 0);
 
   // --- exam date features ---
   const d3 = new Date(Date.now() + 3 * 86400000);
@@ -368,7 +368,7 @@ try {
 
   // --- export/import round trip ---
   const dump = Store.exportJSON();
-  t('export stamps a schema version', JSON.parse(dump).version === 1);
+  t('export stamps a schema version', JSON.parse(dump).version === 2);
   Store.importJSON(dump);
   t('export/import round trip', Store.load().exams.length === 1);
   t('version stamp does not leak into live state', Store.load().version === undefined);
@@ -376,7 +376,7 @@ try {
   // --- corrupt import is sanitized, not applied verbatim ---
   Store.importJSON(JSON.stringify({
     cards: { 'x1': { stability: 'oops', due: null, state: 'bogus', lastWrong: 'yes' }, 'x2': 42 },
-    settings: { newPerDay: -3, sections: 'all', examDate: 7, theme: 'purple' },
+    settings: { newPerDay: -3, tests: 'all', examDate: 7, theme: 'purple' },
     daily: null, exams: { nope: true },
     log: [{ id: 5 }, 'x', { id: 's1-001', rating: 3, ts: 1 }],
   }));
@@ -385,13 +385,33 @@ try {
   t('corrupt card state falls back to new', bad.cards.x1.state === 'new');
   t('non-object card entries dropped', !bad.cards.x2);
   t('corrupt settings sanitized', bad.settings.newPerDay === 0
-    && Array.isArray(bad.settings.sections) && bad.settings.examDate === ''
+    && Array.isArray(bad.settings.tests) && bad.settings.examDate === ''
     && bad.settings.theme === 'system');
   t('corrupt daily/exams reset', Object.keys(bad.daily).length === 0 && bad.exams.length === 0);
   t('corrupt log filtered to valid entries', bad.log.length === 1 && bad.log[0].id === 's1-001');
   let rejected = false;
   try { Store.importJSON('{"nope":1}'); } catch { rejected = true; }
   t('backup without cards/settings rejected', rejected);
+
+  // --- a pre-v2 selection migrates to the exams it stood for ---
+  // Backups and saved progress from before v2 hold the sections an exam
+  // covered at the time, not the exam. Such a list goes stale the moment an
+  // exam gains a section, which is the whole reason the selection is stored
+  // as exams now, so the migration has to recover the choice and the views
+  // have to show the exam's sections as they are today, not as the backup
+  // listed them.
+  const secName = sec => QUESTION_BANK.find(x => secKey(x) === sec).sectionName;
+  const oldTest = STUDIABLE[0];
+  Store.importJSON(JSON.stringify({
+    cards: {}, settings: { sections: oldTest.sections.slice(0, 1) },
+  }));
+  t('a pre-v2 section list migrates to the exam it stood for',
+    Store.load().settings.tests.includes(oldTest.key));
+  nav('stats');
+  const statsText = q('.stats').textContent;
+  t('a migrated selection covers the exam\'s sections as they are now',
+    oldTest.sections.every(sec => statsText.includes(secName(sec))));
+
   Store.importJSON(dump); // restore real state for the remaining tests
 
   // --- the practice pool always empties ---
