@@ -193,13 +193,15 @@
   function readinessRows() {
     const exam = examInfo();
     const ts = exam ? exam.end : Date.now();
-    const secs = new Set(enabledSections());
     const cards = Store.load().cards;
-    return TESTS
-      .filter(tst => tst.sections.every(sec => secs.has(sec)))
-      // An exam the bank has no questions for yet has nothing to project, and
-      // scoring it would put a flat 0% beside the exams actually being studied.
-      .filter(tst => tst.sections.length)
+    // The tests picked in Settings, and only those. Asking instead which tests
+    // the studied sections happen to cover would volunteer any test whose
+    // material is a subset of another's: studying for Core covers everything
+    // the Pesticide Dealer exam draws on, and projecting a dealer score for
+    // someone who never asked for one is noise. `enabledTests` has already
+    // dropped the tests the bank has no questions for, which have nothing to
+    // project and would score a flat 0% beside the exams actually studied.
+    return enabledTests()
       .map(tst => {
         const meta = EXAMS.find(e => e.key === tst.key);
         const pool = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q)));
@@ -771,8 +773,12 @@
   function renderExamSetup() {
     const counts = {};
     QUESTION_BANK.forEach(q => { counts[secKey(q)] = (counts[secKey(q)] || 0) + 1; });
-    const active = new Set(enabledSections());
-    const available = EXAMS.filter(e => e.sections.every(sec => active.has(sec)));
+    // Offered: the exams picked in Settings, plus the ones the bank has
+    // nothing for yet, which are listed unselectable so the gap shows. Keyed
+    // by exam rather than by whether the studied sections happen to cover it,
+    // for the reason readinessRows gives.
+    const selected = new Set(enabledTests().map(tst => tst.key));
+    const available = EXAMS.filter(e => !e.sections.length || selected.has(e.key));
     const hidden = EXAMS.length - available.length;
     view.innerHTML = `
       <div class="examsetup">
@@ -1372,14 +1378,23 @@
   // by being told it sits on page 12, so a question from one carries a `ref`
   // and its citation reads as that reference. The page is still what opens the
   // PDF in the right place, which is why a question keeps both.
+  //
+  // A source the config marks `web` is a web publication rather than a PDF: it
+  // has no pages at all, so `page` names the heading the fact is printed
+  // under, the citation reads as that heading, and the link is the anchor on
+  // it rather than a "#page=" fragment. Either way the source's `pages` map
+  // turns what the question cites into what the link points at.
   const manualCite = q => {
     const m = CFG.manuals[q.manual || 'default'];
     if (!m || !q.page) return '';
-    const label = `${esc(m.cite || 'Manual')} ${q.ref ? esc(q.ref) : `p. ${esc(q.page)}`}`;
-    const pdfPage = q.pdfPage || (m.pages && m.pages[q.page]);
-    return m.url && pdfPage
-      ? `<a class="cite" href="${m.url}#page=${pdfPage}" target="_blank" rel="noopener"
-           title="Open the manual at page ${esc(q.page)}">${label}</a>`
+    const where = q.ref ? esc(q.ref) : m.web ? esc(q.page) : `p. ${esc(q.page)}`;
+    const label = `${esc(m.cite || 'Manual')} ${where}`;
+    const target = q.pdfPage || (m.pages && m.pages[q.page]);
+    return m.url && target
+      ? `<a class="cite" href="${m.url}#${m.web ? '' : 'page='}${encodeURIComponent(target)}"
+           target="_blank" rel="noopener"
+           title="${m.web ? `Open the source at ${esc(q.page)}`
+             : `Open the manual at page ${esc(q.page)}`}">${label}</a>`
       : `<span class="cite">${label}</span>`;
   };
 

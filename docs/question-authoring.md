@@ -75,7 +75,8 @@ as a statute or an administrative rule, adds a `ref`:
 ```
 
 - `id`: a per-source letter (`s` for the core manual, `a` for the aerial one,
-  `l` for the NC Pesticide Law, `r` for the NC pesticide rules)
+  `l` for the NC Pesticide Law, `r` for the NC pesticide rules, `n` for NC
+  State Extension's AG-714)
   + section number + `-` + a three-digit counter, unique in the bank.
 - `section`: the chapter number **within its own manual**, counting from 1, so
   the core manual's chapter 1 and the aerial manual's chapter 1 are both
@@ -87,7 +88,10 @@ as a statute or an administrative rule, adds a `ref`:
 - `page`: the page number printed on the manual page the fact came from. Add
   `pdfPage` when the same label is printed on more than one PDF page, and a
   `manual` key when the exam config lists more than one manual. An exam whose
-  config does not set `requireCitations` may omit citations entirely.
+  config does not set `requireCitations` may omit citations entirely. A source
+  the config marks `web` is a web publication with no pages, so its `page` is
+  the heading the fact is printed under; the citation reads as that heading and
+  the link is the anchor on it, which the source's map supplies.
 - `ref`: what the citation reads as, for a source that is cited by section
   rather than by page ("§ 143-452(a)", ".0503"). The `page` still decides
   which page the link opens, so both are needed. A manual whose config entry
@@ -160,6 +164,16 @@ the numbers exactly: fees, deadlines, setbacks, and credit counts are what
 these sources exist to fix, and they are what the exam asks about. Because
 they can be amended, cite the section rather than the page, so a reader who
 finds a question stale can see immediately which section to check.
+
+A source that explains a system the bank already covers from the law — AG-714
+is the one here — needs a subtraction before it needs coverage. Read it against
+what the rules already say and write only what it adds: the exam formats and
+procedures the rules leave to practice, and the parts of the system no rule
+states. Where it restates a rule, the rule's question already exists and a
+second one for the same fact would be scheduled separately and drill the same
+thing twice. Where it *contradicts* a rule, the rule wins and the question does
+not get written; note the conflict instead, since the reader who meets it on
+the real exam needs to know which source the Board is bound by.
 
 ## The loop
 

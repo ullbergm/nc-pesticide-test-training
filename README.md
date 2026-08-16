@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-test-training)](LICENSE)
 [![Live site](https://img.shields.io/website?url=https%3A%2F%2Fnc-pesticide.ullberg.io&label=nc-pesticide.ullberg.io)](https://nc-pesticide.ullberg.io)
 
-[![Questions](https://img.shields.io/badge/questions-1084-blue)](data/questions.js)
+[![Questions](https://img.shields.io/badge/questions-1133-blue)](data/questions.js)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-blue)](package.json)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-blue)](manifest.webmanifest)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue)](CONTRIBUTING.md)
@@ -13,10 +13,11 @@
 
 Practice questions with spaced repetition for the North Carolina pesticide
 applicator certification exams: the 100-question commercial Core exam, the
-50-question Private Applicator exam, and the Aerial Methods exam every aerial
-applicator adds on top, all passed at 70%. The bank has 1084 questions, written
+50-question Private Applicator exam, the Aerial Methods exam every aerial
+applicator adds on top, and the Pesticide Dealer exam, all passed at 70%. The
+bank has 1133 questions, written
 with the recipe in
-[docs/question-authoring.md](docs/question-authoring.md) and covering four
+[docs/question-authoring.md](docs/question-authoring.md) and covering five
 sources end to end: all eleven chapters of the
 [National Pesticide Applicator Certification Core Manual](https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf)
 (second edition, 2014) and all six of the
@@ -30,15 +31,26 @@ North Carolina's own pesticide law: the
 [rules under it](http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf)
 (02 NCAC 09L) — licensing and certification, recertification credits, storage,
 disposal, worker protection, chemigation, and the aerial and ground application
-rules. Every question cites where it came from, as a link that opens that PDF
-at the right page: manual questions cite a page, and law and rule questions
-cite their section number.
+rules. Fifth is NC State Extension's
+[Pesticide Applicator Certification and Licensing](https://content.ces.ncsu.edu/pesticide-applicator-certification-and-licensing)
+(AG-714), the free publication that describes the certification system to
+applicators themselves: what each exam looks like, how many recertification
+credits each category takes and by when, the training a noncertified applicator
+needs, and which states North Carolina has reciprocity with. Every question
+cites where it came from, as a link that opens the source at the right place:
+manual questions cite a page, law and rule questions cite their section number,
+and questions from AG-714 cite the heading they were written from.
 
 Core chapters and NC law feed the Core and Private exams; aerial chapters and
 the NC aerial rules feed Aerial Methods, so a mock exam never mixes the two.
 The rules written for one license go only to its exam: commercial licensing
 (.0500) to Core, private applicator certification (.1100) to Private, aerial
-application (.1000) to Aerial Methods. Settings picks which exams you are
+application (.1000) to Aerial Methods. The Pesticide Dealer exam is the one
+certification exam not built on Core, because a dealer sells restricted use
+pesticides rather than applying them: it draws on NC law, the rule Sections a
+dealer works under (licenses, disposal, arsenic trioxide, availability of
+restricted use pesticides, and storage), and AG-714's account of the licensing
+system. Settings picks which exams you are
 studying for, and About lists every NC license and the exams it takes. That
 choice is remembered as the exams themselves, so when a release adds material
 to an exam you picked, it joins what you are studying without your having to
@@ -57,7 +69,10 @@ NASDA Research Foundation, hosted by EPA, and free to read, which is what lets
 this bank cite them page by page and link each citation into the PDF. The same
 is true of NC pesticide law: the statute is published by the General Assembly
 and the rules by the Office of Administrative Hearings, both free, so the bank
-covers them and cites each question to its section. What is missing is North
+covers them and cites each question to its section. AG-714 is free as well,
+published by NC State Extension rather than sold, which is what lets the bank
+cover the certification and licensing system the way North Carolina explains it
+to applicators. What is missing is North
 Carolina's own study texts, the NC Pesticide Applicator Certification Core
 Manual and the category manuals, which are sold in print by the
 [NC State Pesticide Safety Education Program](https://go.ncsu.edu/psep). They
@@ -95,9 +110,9 @@ and import for backups or for moving between devices.
 - **Misses**: re-drills every question whose last answer was wrong, without touching
   the review schedule. Answering one correctly removes it from the pool.
 - **Exam**: mock exams in the real format. No feedback until the end, and 70% to
-  pass. The list mirrors the NC exam structure (commercial Core and Private
-  Applicator) and shows only the exams selected in Settings. Missed exam
-  questions feed the Misses pool.
+  pass. The list mirrors the NC exam structure (commercial Core, Private
+  Applicator, Aerial Methods, and Pesticide Dealer) and shows only the exams
+  selected in Settings. Missed exam questions feed the Misses pool.
 - **Browse**: the whole bank by manual chapter, with each card's schedule and accuracy.
 - **Stats**: exam readiness, mastery counts, day streak, 7-day due forecast,
   per-chapter accuracy, and exam history.
@@ -192,11 +207,12 @@ js/readiness.js          projected score and pass odds per exam
 js/storage.js            localStorage persistence, export/import
 js/license.js            NC license lookup (public NCDA&CS search) with an on-device cache
 js/app.js                UI and session logic
-data/questions.js        question bank (1084 questions, tagged by section and source page)
+data/questions.js        question bank (1133 questions, tagged by section and source page)
 data/manual-pages.js     printed page numbers to PDF page numbers, for the citation links
 data/aerial-pages.js     the same map for the aerial manual
 data/law-pages.js        the same map for the NC Pesticide Law
 data/rules-pages.js      the same map for the NC pesticide rules (identity: that PDF prints no page numbers)
+data/ncsu-anchors.js     the same map for AG-714, which is a web page: heading to anchor, written by hand
 data/exam-config.js      what exam this is: tests, pass mark, manual links, exam-specific prose
 tools/                   regenerates those maps from local copies of the PDFs, and the icons
 sw.js                    service worker (offline cache, only active on the hosted site)
@@ -208,6 +224,7 @@ tests/readiness-test.js  readiness projection tests, incl. a Monte Carlo check (
 tests/test.html          end-to-end tests driven through the real UI
 tests/run-browser.sh     headless-Chrome runner for test.html (local + CI)
 docs/question-authoring.md  the recipe the question bank is written with
+docs/math-drills.md      design for generated calibration and dosage drills (not built yet)
 docs/screenshots/        README images and the script that regenerates them
 ```
 
@@ -287,10 +304,11 @@ keep real study progress.
 ## Accuracy
 
 The questions were authored from each source's own text, section by section. Accuracy is
-not guaranteed. Each question carries where it came from and links there in the PDF, so
+not guaranteed. Each question carries where it came from and links there, so
 verify anything important against the source. Manual questions cite a printed page (like
 `14`); law and rule questions cite a section (like `§ 143-452(a)` or `.0503`) and the link
-opens the PDF at the page that section is printed on. The
+opens the PDF at the page that section is printed on; questions from AG-714 cite the heading
+they were written from (like `Reciprocity`) and the link opens that heading. The
 actual exam questions are not publicly available, and no claim is made that these
 questions match or resemble them. This is a study aid for the material, not
 a copy of the test. If a question reads wrong, check the citation and edit
@@ -299,7 +317,9 @@ a copy of the test. If a question reads wrong, check the citation and edit
 **Law changes.** The statute and rules are current as of the copies the bank was written
 from; NC law is amended from time to time, and a question can go stale in a way a manual
 question cannot. The citation is the check: if a rule has changed, the linked section will
-say so. Fees and deadlines are the parts most likely to move.
+say so. Fees and deadlines are the parts most likely to move. AG-714 goes stale the same
+way and faster, since it describes the system rather than fixing it: the copy the bank was
+written from is the November 6, 2025 revision.
 
 None of the four source PDFs is included in this repository. The two manuals are published
 by the NASDA Research Foundation and hosted by EPA; download them from the EPA links above.
@@ -309,6 +329,7 @@ the [statute](https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/ByArticle/Ch
 from the General Assembly and the
 [rules](http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf)
 from the Office of Administrative Hearings, which serves them over plain http.
+The fifth source is not a PDF at all: AG-714 is a web page, read where it is published.
 
 The citation links point into those hosted PDFs with a `#page=` fragment, which counts
 physical pages rather than the page numbers printed in the footers, so a page map
@@ -331,6 +352,16 @@ node tools/gen-manual-pages.js nc-pesticide-rules-09l.pdf \
 The rules PDF prints no page numbers at all, so `--identity` writes a 1:1 map
 whose only job is to record how far the document runs; the page a citation
 names there is the physical page it is on.
+
+`data/ncsu-anchors.js` is the same idea for a source that has no pages either:
+AG-714 is a web page, so its map is heading to the anchor the Extension
+publishing system puts on that heading, and its manual entry in
+`data/exam-config.js` sets `web: true`, which is what makes a citation read
+`NC State AG-714 Reciprocity` and link to `#section_heading_21033` rather than
+to `#page=`. There is no generator for it: the anchors are database ids with
+nothing local to derive them from, so the file is written by hand and should be
+rechecked whenever the publication is revised. A renamed or reordered heading
+still links, just to the wrong part of the page.
 
 ## License
 

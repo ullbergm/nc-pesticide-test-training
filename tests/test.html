@@ -20,6 +20,7 @@
   <script src="../data/aerial-pages.js"></script>
 <script src="../data/law-pages.js"></script>
 <script src="../data/rules-pages.js"></script>
+<script src="../data/ncsu-anchors.js"></script>
 <script src="../data/exam-config.js"></script>
 <script>
 // Runs before app.js boots: plant a mid-study session so the resume path
@@ -114,11 +115,13 @@ try {
     q('.explain a.report').href.includes('question-id=' + bank2.id));
   // Only a cited question with a publicly linkable manual renders a deep
   // link; anything else renders plain text or nothing, and the assertion is
-  // skipped.
+  // skipped. A PDF is linked by physical page, a web publication by the
+  // anchor on the heading its `page` names.
   const manual2 = EXAM_CONFIG.manuals[bank2.manual || 'default'];
-  t('feedback deep links into the manual PDF',
+  const target2 = manual2 && (bank2.pdfPage || (manual2.pages && manual2.pages[bank2.page]));
+  t('feedback deep links into the source',
     !manual2 || !manual2.url || !bank2.page
-    || q('.explain a.cite').href.endsWith('#page=' + (bank2.pdfPage || manual2.pages[bank2.page])));
+    || q('.explain a.cite').href.endsWith((manual2.web ? '#' : '#page=') + target2));
   t('continue button appears', !!q('#next'));
   // Enter with focus on a nav link must not be hijacked into Continue
   // (a synthetic keydown never triggers the native activation, so if the
@@ -269,9 +272,18 @@ try {
   const sq = QUESTION_BANK.find(x => x.question === q('.qtext').textContent);
   t('study draws from selected sections only', keepSecs.includes(secKey(sq)));
   nav('exam');
+  // Offered: the exams picked in Settings, plus the ones with no questions,
+  // which are listed unselectable so the gap shows. Keyed by exam and not by
+  // whether the kept sections happen to cover it, so an exam whose material is
+  // a subset of another's (Pesticide Dealer sits inside Core) is not
+  // volunteered to someone who never picked it.
   const availExams = EXAM_CONFIG.exams
-    .filter(e => e.sections.every(sec => keepSecs.includes(sec))).length;
+    .filter(e => !e.sections.length || keep.has(e.key)).length;
   t('exam list filtered to selected tests', qa('.examopt').length === availExams);
+  t('only picked exams with questions are offered', qa('.examopt').every(b => {
+    const e = EXAM_CONFIG.exams.find(x => x.key === b.dataset.key);
+    return !e.sections.length || keep.has(e.key);
+  }));
   t('hidden exams hint shows', availExams === EXAM_CONFIG.exams.length
     || /hidden/.test(q('.examsetup').textContent));
   nav('settings');
