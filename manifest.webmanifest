@@ -1,7 +1,7 @@
 {
-  "name": "NC CDL Trainer",
-  "short_name": "CDL Trainer",
-  "description": "Practice questions with spaced repetition for the North Carolina CDL knowledge tests.",
+  "name": "NC Pesticide Trainer",
+  "short_name": "Pesticide Trainer",
+  "description": "Practice questions with spaced repetition for the North Carolina pesticide applicator certification exams.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#131614",

@@ -1,38 +1,43 @@
-# NC CDL Trainer
+# NC Pesticide Trainer
 
-[![CI](https://github.com/ullbergm/nc-cdl-test-training/actions/workflows/ci.yml/badge.svg)](https://github.com/ullbergm/nc-cdl-test-training/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/ullbergm/nc-cdl-test-training)](https://github.com/ullbergm/nc-cdl-test-training/releases)
-[![License: MIT](https://img.shields.io/github/license/ullbergm/nc-cdl-test-training)](LICENSE)
-[![Live site](https://img.shields.io/website?url=https%3A%2F%2Fnc-cdl.ullberg.io&label=nc-cdl.ullberg.io)](https://nc-cdl.ullberg.io)
+[![CI](https://github.com/ullbergm/nc-pesticide-test-training/actions/workflows/ci.yml/badge.svg)](https://github.com/ullbergm/nc-pesticide-test-training/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/ullbergm/nc-pesticide-test-training)](https://github.com/ullbergm/nc-pesticide-test-training/releases)
+[![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-test-training)](LICENSE)
 
-[![Questions](https://img.shields.io/badge/questions-422-blue)](data/questions.js)
+[![Questions](https://img.shields.io/badge/questions-30-blue)](data/questions.js)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-blue)](package.json)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-blue)](manifest.webmanifest)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue)](CONTRIBUTING.md)
 [![Conventional Commits](https://img.shields.io/badge/conventional%20commits-1.0.0-blue)](https://www.conventionalcommits.org/en/v1.0.0/)
 
-Practice questions with spaced repetition for the North Carolina commercial driver
-license knowledge tests. The bank has 422 multiple-choice questions covering all 13
-sections of the [NC Commercial Driver Manual](https://www.ncdot.gov/dmv/license-id/driver-licenses/new-drivers/Documents/commercial-driver-manual.pdf),
-and every question cites the manual page it was drawn from, as a link that opens the
-PDF at that page.
+Practice questions with spaced repetition for the North Carolina pesticide
+applicator certification exams: the 100-question commercial Core exam and the
+50-question Private Applicator exam, both passed at 70%. The bank has 30
+multiple-choice questions so far, written from the
+[National Pesticide Applicator Certification Core Manual](https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf)
+(second edition, 2014), and every question cites the manual page it was drawn
+from, as a link that opens the PDF at that page.
 
-Live at [nc-cdl.ullberg.io](https://nc-cdl.ullberg.io), or run it yourself. There is
-no build step, no dependencies, and no server. Just open `index.html` in a browser.
-All progress is stored locally in the browser and never sent anywhere. Settings has
-export and import for backups or for moving between devices.
+**Status: early.** Coverage so far is chapter 1 (Pest Management) of the
+manual's eleven chapters. The remaining chapters are being written with the
+recipe in [docs/question-authoring.md](docs/question-authoring.md). North
+Carolina's official study text is the NC Pesticide Applicator Certification
+Core Manual, sold in print by the
+[NC State Pesticide Safety Education Program](https://go.ncsu.edu/psep); it is
+adapted from the national manual this bank cites and adds NC pesticide law and
+rules, which the bank does not yet cover.
 
-<p align="center">
-  <img src="docs/screenshots/home.png" width="500" alt="Home screen with due review, new card, and miss counts, an exam countdown banner, and a projected score for each test">
-</p>
-<p align="center">
-  <a href="docs/screenshots/README.md">More screenshots</a>
-</p>
+This project is a fork of
+[nc-cdl-test-training](https://github.com/ullbergm/nc-cdl-test-training): the
+same engine studying a different manual. There is no build step, no
+dependencies, and no server. Just open `index.html` in a browser. All progress
+is stored locally in the browser and never sent anywhere. Settings has export
+and import for backups or for moving between devices.
 
 ## Modes
 
 - **Study**: the spaced repetition queue. Due reviews plus a daily allotment of new
-  cards, drawn round-robin across the selected sections and interleaved with the
+  cards, drawn round-robin across the selected chapters and interleaved with the
   reviews. Wrong answers come back a few cards later in the same session. Correct
   answers are rated Hard, Good, or Easy, which tells the scheduler how the recall felt.
   Feel like doing more once the queue is empty? The home and session-complete screens
@@ -40,13 +45,13 @@ export and import for backups or for moving between devices.
   configured pace is untouched.
 - **Misses**: re-drills every question whose last answer was wrong, without touching
   the review schedule. Answering one correctly removes it from the pool.
-- **Exam**: mock knowledge tests in the real format. No feedback until the end, and
-  80% to pass. The list mirrors the actual NC test structure (General Knowledge, Air
-  Brakes, Combination Vehicles, and the endorsement tests) and shows only the tests
-  selected in Settings. Missed exam questions feed the Misses pool.
-- **Browse**: the whole bank by manual section, with each card's schedule and accuracy.
+- **Exam**: mock exams in the real format. No feedback until the end, and 70% to
+  pass. The list mirrors the NC exam structure (commercial Core and Private
+  Applicator) and shows only the exams selected in Settings. Missed exam
+  questions feed the Misses pool.
+- **Browse**: the whole bank by manual chapter, with each card's schedule and accuracy.
 - **Stats**: exam readiness, mastery counts, day streak, 7-day due forecast,
-  per-section accuracy, and exam history.
+  per-chapter accuracy, and exam history.
 
 On a keyboard, 1 through 4 pick an answer, Enter continues after a wrong answer,
 and 1/2/3 (or Enter for Good) grade a correct one. A stray tap is not final: an
@@ -54,11 +59,6 @@ Undo button (or the U key) on the feedback screen takes back the answer and asks
 the question again, as long as you have not yet continued or graded. The buttons
 show badges for their shortcut keys on devices with a mouse and keyboard; on
 touch screens the badges stay hidden.
-
-In Settings, under "Tests I'm studying for", check only the tests you are taking
-next, for example General Knowledge, Air Brakes, and Combination Vehicles for a
-first Class A attempt. Everything else stays out of the queue until you check it,
-and progress on unchecked sections is kept.
 
 ## Scheduling
 
@@ -106,7 +106,7 @@ same applies automatically once the date passes.
 
 ## Am I ready
 
-The home screen projects a score for each test you are studying for, and Stats
+The home screen projects a score for each exam you are studying for, and Stats
 breaks the same projection down with the odds and what is dragging it. Both come
 from the memory model the scheduler already maintains, so the number moves with
 your actual reviews rather than with a running average of past answers.
@@ -116,16 +116,16 @@ FSRS predicts for the moment of the test, or it is not and the guess still lands
 one time in four. A question you have never seen is a straight guess. The real
 test draws its questions from a much larger pool, so the projected score is the
 pool average, and the spread around it accounts for both the draw and the recall
-itself. The chance of passing is the probability that the draw clears 80%.
+itself. The chance of passing is the probability that the draw clears 70%.
 
 Two counts explain a low projection. Unseen questions are the ones the queue has
 not reached yet. Rusty ones have been studied but are predicted to fall below the
 90% recall the scheduler targets by test day, which is what the review queue is
 there to fix. Without an exam date the projection is for taking the test today.
 
-The projection assumes the bank is representative of the real test, which is a
-study aid's assumption, not a promise. Treat it as a direction, not a score
-report.
+The projection assumes the bank is representative of the real test, which a bank
+covering one chapter so far is not yet, and the real exams also draw on NC law
+the bank does not cover. Treat it as a direction, not a score report.
 
 ## Layout
 
@@ -133,11 +133,11 @@ report.
 index.html               app shell
 css/style.css            styling (light/dark follows the device; Settings can force either)
 js/fsrs.js               FSRS-6 scheduler
-js/readiness.js          projected score and pass odds per test
+js/readiness.js          projected score and pass odds per exam
 js/storage.js            localStorage persistence, export/import
 js/app.js                UI and session logic
-data/questions.js        question bank (422 questions, tagged by section and manual page)
-data/manual-pages.js     manual page labels to PDF page numbers, for the citation links
+data/questions.js        question bank (30 questions, tagged by chapter and manual page)
+data/manual-pages.js     printed page numbers to PDF page numbers, for the citation links
 data/exam-config.js      what exam this is: tests, pass mark, manual links, exam-specific prose
 tools/                   regenerates that map from a local copy of the manual PDF, and the icons
 sw.js                    service worker (offline cache, only active on the hosted site)
@@ -148,7 +148,7 @@ tests/fsrs-test.js       FSRS scheduler property tests (node)
 tests/readiness-test.js  readiness projection tests, incl. a Monte Carlo check (node)
 tests/test.html          end-to-end tests driven through the real UI
 tests/run-browser.sh     headless-Chrome runner for test.html (local + CI)
-docs/question-authoring.md  the recipe the question bank was written with
+docs/question-authoring.md  the recipe the question bank is written with
 docs/screenshots/        README images and the script that regenerates them
 ```
 
@@ -161,10 +161,12 @@ on the next load.
 
 ## Building a trainer for another exam
 
-The engine under `js/` knows nothing about the CDL, and the test suites derive
-their assertions from the config and the bank, so a trainer for a different
-manual-based exam is a matter of replacing data and identity files. Create a
-new repository from this one and touch:
+The engine under `js/` knows nothing about pesticides, and the test suites
+derive their assertions from the config and the bank, so a trainer for a
+different manual-based exam is a matter of replacing data and identity files;
+this repository is itself that recipe applied to
+[nc-cdl-test-training](https://github.com/ullbergm/nc-cdl-test-training).
+Create a new repository from this one and touch:
 
 - `data/questions.js`: the new question bank, tagged by section and manual page;
   [docs/question-authoring.md](docs/question-authoring.md) is the recipe, written
@@ -172,8 +174,8 @@ new repository from this one and touch:
 - `data/exam-config.js`: the tests and exams, pass mark, manual links, storage
   keys, and every piece of prose that names the exam
 - `data/manual-pages.js`: regenerate with `node tools/gen-manual-pages.js`; the
-  footer-label parsing in that script is written for the CDL manual, so adjust
-  it to the new manual's page numbering
+  footer-label parsing in that script is written for this manual's page
+  numbering, so adjust it to the new manual's
 - `css/style.css`: the token blocks at the top set all colors and the
   progress-bar texture; the rules below them are exam-neutral
 - `index.html`: title, meta description, canonical URL, brand text, favicon,
@@ -225,21 +227,21 @@ keep real study progress.
 
 ## Accuracy
 
-The questions were authored from the manual's text, section by section. Accuracy is
-not guaranteed. Each question carries the manual page it came from (like `5-3`) and
-links to that page in the PDF, so verify anything important against the source. The actual DMV exam questions are not
-publicly available, and no claim is made that these questions match or resemble
-them. This is a study aid for the manual's content, not a copy of the test. If a
-question reads wrong, check the cited page and edit `data/questions.js`, which is a
-plain JSON array.
+The questions were authored from the manual's text, chapter by chapter. Accuracy is
+not guaranteed. Each question carries the manual page it came from (like `14`) and
+links to that page in the PDF, so verify anything important against the source. The
+actual exam questions are not publicly available, and no claim is made that these
+questions match or resemble them. This is a study aid for the manual's content, not
+a copy of the test. If a question reads wrong, check the cited page and edit
+`data/questions.js`, which is a plain JSON array.
 
-The manual PDF is copyright AAMVA and is not included in this repository. Download
-it from NCDMV at the link above.
+The manual PDF is published by the NASDA Research Foundation and hosted by EPA;
+it is not included in this repository. Download it from the EPA link above.
 
 The citation links point into that hosted PDF with a `#page=` fragment, which counts
-physical pages rather than the section-relative labels printed in the footers, so
-`data/manual-pages.js` maps between the two. The map is built from the July 2014
-revision; if NCDMV publishes a new one, download it and re-run
+physical pages rather than the page numbers printed in the footers, so
+`data/manual-pages.js` maps between the two. The map is built from the 2014 second
+edition; if a new edition is published, download it and re-run
 `node tools/gen-manual-pages.js` (needs `pdftotext`) so the links keep landing on the
 right pages.
 

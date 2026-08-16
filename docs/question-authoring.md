@@ -26,14 +26,14 @@ Knowing where each field surfaces explains most of the rules below:
 
 ```json
 {
-  "id": "s5-012",
-  "section": 5,
-  "sectionName": "Air Brakes",
+  "id": "s1-012",
+  "section": 1,
+  "sectionName": "Pest Management",
   "question": "...",
   "choices": ["...", "...", "...", "..."],
   "answer": 1,
   "explanation": "...",
-  "page": "5-3"
+  "page": "7"
 }
 ```
 
@@ -42,7 +42,7 @@ Knowing where each field surfaces explains most of the rules below:
   `sectionName`.
 - `choices`: exactly four, all distinct.
 - `answer`: 0-based index into `choices`.
-- `page`: the label printed on the manual page the fact came from. Add
+- `page`: the page number printed on the manual page the fact came from. Add
   `pdfPage` when the same label is printed on more than one PDF page, and a
   `manual` key when the exam config lists more than one manual. An exam whose
   config does not set `requireCitations` may omit citations entirely.
@@ -64,7 +64,7 @@ These are the lessons this bank was rebalanced and deduplicated to learn.
    the validator prints the actual rate and warns above 35%.
 2. **Make distractors plausible.** Same units, same order of magnitude,
    believable policy. Wrong numbers should be neighboring values from the
-   same context (5,000 / 10,000 / 15,000 pounds), not absurd ones. An
+   same context (24 / 48 / 72 hours), not absurd ones. An
    obviously wrong distractor turns a four-choice question into a
    three-choice question.
 3. **One fact per question, one question per fact.** The manual repeats
@@ -77,7 +77,7 @@ These are the lessons this bank was rebalanced and deduplicated to learn.
    a choice from being right merely because it sounds like the book.
 5. **The explanation states the rule, not a pointer.** Write what the cited
    page says, in your own words and with the specifics: never "see page
-   5-3", and never general knowledge the page does not support. A reader who
+   7", and never general knowledge the page does not support. A reader who
    answered wrong should come away knowing the rule.
 6. **Use "All of the above" sparingly and exactly.** When used, start the
    choice with all/none/any/both "of the above" or "of these" so the

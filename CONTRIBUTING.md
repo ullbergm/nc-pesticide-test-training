@@ -10,10 +10,10 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Fix a question.** The bank was authored from the manual section by section,
   and some of it is certainly wrong. If an answer or explanation does not match
   the cited manual page, open a
-  [question correction](https://github.com/ullbergm/nc-cdl-test-training/issues/new?template=question-correction.yml)
+  [question correction](https://github.com/ullbergm/nc-pesticide-test-training/issues/new?template=question-correction.yml)
   or send the edit directly as a pull request.
 - **Report a bug.** Use the
-  [bug report template](https://github.com/ullbergm/nc-cdl-test-training/issues/new?template=bug-report.yml).
+  [bug report template](https://github.com/ullbergm/nc-pesticide-test-training/issues/new?template=bug-report.yml).
   Browser and device help a lot, since most of the tricky bugs are touch or
   layout related.
 - **Report a vulnerability.** Do not open a public issue. Follow
@@ -25,8 +25,8 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 ## Getting set up
 
 ```
-git clone https://github.com/ullbergm/nc-cdl-test-training.git
-cd nc-cdl-test-training
+git clone https://github.com/ullbergm/nc-pesticide-test-training.git
+cd nc-pesticide-test-training
 npm install          # dev tooling only; the app itself has no dependencies
 npm run serve        # http://localhost:8080
 ```
@@ -77,14 +77,14 @@ like this:
 
 ```json
 {
-  "id": "s5-012",
-  "section": 5,
-  "sectionName": "Air Brakes",
+  "id": "s1-012",
+  "section": 1,
+  "sectionName": "Pest Management",
   "question": "...",
   "choices": ["...", "...", "...", "..."],
   "answer": 1,
   "explanation": "...",
-  "page": "5-3"
+  "page": "7"
 }
 ```
 
@@ -92,19 +92,19 @@ like this:
 distinct choices, `answer` as a 0-based index into them, and, because this
 exam's config sets `requireCitations`, a `page` on every question that resolves
 through `data/manual-pages.js` (or an explicit `pdfPage`). The explanation
-should say what the cited page says rather than general trucking knowledge. If
+should say what the cited page says rather than general pesticide knowledge. If
 you add or remove questions, update the count in the README, which the
 validator also checks.
 
 Corrections should point at the cited page. If the page does not support the
 current answer, say so in the pull request and the fix is easy to confirm.
 
-The citation in the app links into the manual PDF, which numbers its pages
-straight through while the manual prints section-relative labels in its footers.
-`data/manual-pages.js` maps between the two, and the validator fails on a `page`
-that is missing from it. A handful of labels are printed on more than one page,
-so a question drawn from the second one needs an explicit `"pdfPage": 20` next to
-its `"page"` to point the link at the right place.
+The citation in the app links into the manual PDF with a `#page=` fragment,
+which counts physical PDF pages, while the questions cite the page numbers the
+manual prints in its footers; the front matter shifts the two apart.
+`data/manual-pages.js` maps between them, and the validator fails on a `page`
+that is missing from it. If a cited label ever resolves to the wrong physical
+page, an explicit `"pdfPage": 20` next to the `"page"` overrides the map.
 
 ## Commits and releases
 
@@ -165,8 +165,9 @@ tone of the README.
 
 ## A note on the manual
 
-The NC Commercial Driver Manual is copyright AAMVA and is not included in this
-repository. Download it from
-[NCDMV](https://www.ncdot.gov/dmv/license-id/driver-licenses/new-drivers/Documents/commercial-driver-manual.pdf)
+The National Pesticide Applicator Certification Core Manual is published by
+the NASDA Research Foundation and is not included in this repository. Download
+it from
+[EPA](https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf)
 if you are working on the question bank. Do not paste long verbatim passages
 into questions or explanations; write them in your own words and cite the page.

@@ -1,7 +1,7 @@
 {
-  "name": "nc-cdl-test-training",
+  "name": "nc-pesticide-test-training",
   "private": true,
-  "description": "Practice questions with spaced repetition for the North Carolina CDL knowledge tests",
+  "description": "Practice questions with spaced repetition for the North Carolina pesticide applicator certification exams",
   "license": "MIT",
   "scripts": {
     "lint": "eslint",
