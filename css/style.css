@@ -372,6 +372,7 @@ a.report:hover { color: var(--accent); }
 .qdetail { padding: 6px 0 4px 12px; color: var(--muted); }
 .qdetail strong { color: var(--ok); }
 
+
 /* stats */
 table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 8px 0 16px; box-shadow: var(--shadow); }
 th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }

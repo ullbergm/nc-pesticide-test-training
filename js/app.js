@@ -8,9 +8,75 @@
   const esc = s => String(s).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+  // Each manual numbers its chapters from 1, so a chapter is the pair
+  // (manual, number) and "<manual>:<number>" is how that pair is keyed
+  // wherever one chapter has to be told from another: the exam config's
+  // section lists, the saved chapter selection, and every grouping below.
+  // A question without a `manual` belongs to `default`, so a single-manual
+  // bank needs no manual field at all.
+  const secKey = q => `${q.manual || 'default'}:${q.section}`;
   const SECTION_NAMES = {};
-  QUESTION_BANK.forEach(q => { SECTION_NAMES[q.section] = q.sectionName; });
-  const SECTION_IDS = Object.keys(SECTION_NAMES).map(Number).sort((a, b) => a - b);
+  // How a section names itself: chapters count from 1 and need nothing, while
+  // back matter sets `sectionLabel` ("app. C") because its own designation is
+  // not its position in the book.
+  const SECTION_REFS = {};
+  QUESTION_BANK.forEach(q => {
+    SECTION_NAMES[secKey(q)] = q.sectionName;
+    SECTION_REFS[secKey(q)] = q.sectionLabel || `ch. ${q.section}`;
+  });
+  // Bank order, which is each manual's chapters and then its back matter, in
+  // printed order.
+  const SECTION_IDS = Object.keys(SECTION_NAMES);
+  const SECTION_ORDER = new Map(SECTION_IDS.map((k, i) => [k, i]));
+  // What a section calls itself, with no manual attached: "ch. 3", "app. C".
+  // Use this under a heading that already names the manual, which is most
+  // places, since repeating it on every row says nothing.
+  const secRef = key => SECTION_REFS[key] || `ch. ${key.slice(key.indexOf(':') + 1)}`;
+  // The same with the manual in front, for the few places a section appears
+  // with no surrounding context to say which book it is from. Falls back to
+  // the bare reference when the bank has only one manual.
+  const secLabel = key => {
+    const manual = key.slice(0, key.indexOf(':'));
+    const m = CFG.manuals && CFG.manuals[manual];
+    const many = CFG.manuals && Object.keys(CFG.manuals).length > 1;
+    return `${many && m ? `${m.short || m.cite || manual} ` : ''}${secRef(key)}`;
+  };
+  // A test's section list as one short phrase: "Core ch. 1-11, app. C/D". Runs
+  // of consecutive numbers collapse to a range; anything else is listed, so
+  // lettered back matter stays readable and no section is implied that the
+  // test does not actually draw on.
+  const secRange = keys => {
+    const byManual = new Map();
+    keys.forEach(k => {
+      const manual = k.slice(0, k.indexOf(':'));
+      if (!byManual.has(manual)) byManual.set(manual, []);
+      byManual.get(manual).push(SECTION_REFS[k] || `ch. ${k.slice(k.indexOf(':') + 1)}`);
+    });
+    const many = CFG.manuals && Object.keys(CFG.manuals).length > 1;
+    return [...byManual].map(([manual, refs]) => {
+      const kinds = new Map(); // "ch." -> ["1", "2", ...]
+      refs.forEach(ref => {
+        const at = ref.lastIndexOf(' ');
+        const kind = at === -1 ? '' : ref.slice(0, at);
+        const val = at === -1 ? ref : ref.slice(at + 1);
+        if (!kinds.has(kind)) kinds.set(kind, []);
+        kinds.get(kind).push(val);
+      });
+      const parts = [...kinds].map(([kind, vals]) => {
+        const nums = vals.map(Number);
+        const run = nums.every(Number.isFinite)
+          && nums.every((n, i) => i === 0 || n === nums[i - 1] + 1);
+        const body = vals.length === 1 ? vals[0]
+          : run ? `${vals[0]}-${vals[vals.length - 1]}`
+          : vals.join('/');
+        return kind ? `${kind} ${body}` : body;
+      });
+      const m = CFG.manuals && CFG.manuals[manual];
+      const prefix = many && m ? `${m.short || m.cite || manual} ` : '';
+      return prefix + parts.join(', ');
+    }).join('; ');
+  };
+
   const BY_ID = {};
   QUESTION_BANK.forEach(q => { BY_ID[q.id] = q; });
 
@@ -84,13 +150,13 @@
       .filter(tst => tst.sections.every(sec => secs.has(sec)))
       .map(tst => {
         const meta = EXAMS.find(e => e.key === tst.key);
-        const pool = QUESTION_BANK.filter(q => tst.sections.includes(q.section));
+        const pool = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q)));
         // Per-section projections score the whole section, so they compare
         // like for like regardless of how many questions the test draws.
         const sections = tst.sections
           .map(sec => ({
             sec,
-            proj: Readiness.project(pool.filter(q => q.section === sec), cards, ts, Infinity),
+            proj: Readiness.project(pool.filter(q => secKey(q) === sec), cards, ts, Infinity),
           }))
           .sort((a, b) => a.proj.expected - b.proj.expected);
         return {
@@ -159,7 +225,7 @@
             r.proj.rusty ? `${r.proj.rusty}&nbsp;rusty` : '',
           ].filter(Boolean).join(' · ') || 'none';
           const drag = r.test.sections.length > 1
-            ? `<br><small>weakest: §${r.weakest.sec} ${esc(SECTION_NAMES[r.weakest.sec])}
+            ? `<br><small>weakest: ${esc(secRef(r.weakest.sec))} ${esc(SECTION_NAMES[r.weakest.sec])}
                at ${pct(r.weakest.proj.expected)}%</small>`
             : '';
           return `<tr>
@@ -179,7 +245,7 @@
     const secs = new Set(enabledSections());
     const cutoff = endOfToday();
     return QUESTION_BANK
-      .filter(q => secs.has(q.section))
+      .filter(q => secs.has(secKey(q)))
       .filter(q => {
         const c = Store.load().cards[q.id];
         return c && c.state !== 'new' && c.lastReview && c.due <= cutoff;
@@ -191,7 +257,7 @@
     if (limit <= 0) return [];
     const secs = new Set(enabledSections());
     const unseen = QUESTION_BANK
-      .filter(q => secs.has(q.section))
+      .filter(q => secs.has(secKey(q)))
       .filter(q => {
         const c = Store.load().cards[q.id];
         return !c || !c.lastReview;
@@ -200,8 +266,8 @@
     // exhaustion before later ones are ever seen.
     const bySection = new Map();
     unseen.forEach(q => {
-      if (!bySection.has(q.section)) bySection.set(q.section, []);
-      bySection.get(q.section).push(q.id);
+      if (!bySection.has(secKey(q))) bySection.set(secKey(q), []);
+      bySection.get(secKey(q)).push(q.id);
     });
     const lists = [...bySection.values()];
     const take = Math.min(limit, unseen.length);
@@ -439,7 +505,7 @@
   function missIds() {
     const secs = new Set(enabledSections());
     return QUESTION_BANK
-      .filter(q => secs.has(q.section))
+      .filter(q => secs.has(secKey(q)))
       .filter(q => {
         const c = Store.load().cards[q.id];
         return c && c.wrong > 0 && c.streak < Store.MISS_CLEARED;
@@ -465,7 +531,7 @@
   function startFinal() {
     const secs = new Set(enabledSections());
     const s = Store.load();
-    const pool = QUESTION_BANK.filter(q => secs.has(q.section));
+    const pool = QUESTION_BANK.filter(q => secs.has(secKey(q)));
     const studied = pool.filter(q => s.cards[q.id] && s.cards[q.id].lastReview)
       .sort((a, b) => s.cards[a.id].stability - s.cards[b.id].stability);
     const unseen = pool.filter(q => !s.cards[q.id] || !s.cards[q.id].lastReview);
@@ -496,7 +562,7 @@
         <div class="meta">
           <span>${session.pos + 1} / ${total}</span>
           ${badge}
-          <span class="section">§${q.section} ${esc(q.sectionName)}</span>
+          <span class="section">${esc(secLabel(secKey(q)))} ${esc(q.sectionName)}</span>
         </div>
         <div class="progress" role="progressbar" aria-label="Session progress"
           aria-valuemin="0" aria-valuemax="${expected}" aria-valuenow="${answered}">
@@ -648,7 +714,7 @@
   // ---------- mock exam ----------
   function renderExamSetup() {
     const counts = {};
-    QUESTION_BANK.forEach(q => { counts[q.section] = (counts[q.section] || 0) + 1; });
+    QUESTION_BANK.forEach(q => { counts[secKey(q)] = (counts[secKey(q)] || 0) + 1; });
     const active = new Set(enabledSections());
     const available = EXAMS.filter(e => e.sections.every(sec => active.has(sec)));
     const hidden = EXAMS.length - available.length;
@@ -673,7 +739,7 @@
   function startExam(key) {
     const exam = EXAMS.find(e => e.key === key);
     const secs = new Set(exam.sections);
-    const pool = shuffle(QUESTION_BANK.filter(q => secs.has(q.section)).map(q => q.id));
+    const pool = shuffle(QUESTION_BANK.filter(q => secs.has(secKey(q))).map(q => q.id));
     const queue = pool.slice(0, exam.count);
     session = { mode: 'exam', exam, queue, pos: 0, answers: [] };
     renderExamQuestion();
@@ -752,8 +818,8 @@
       <div class="browse">
         <h2>Question bank</h2>
         ${SECTION_IDS.map(sec => {
-          const qs = QUESTION_BANK.filter(q => q.section === sec);
-          return `<details><summary>§${sec} ${esc(SECTION_NAMES[sec])} <small>(${qs.length})</small></summary>
+          const qs = QUESTION_BANK.filter(q => secKey(q) === sec);
+          return `<details class="chapter"><summary>${esc(secRef(sec))} ${esc(SECTION_NAMES[sec])} <small>(${qs.length})</small></summary>
             ${qs.map(q => {
               const c = s.cards[q.id];
               const status = !c || !c.lastReview ? 'new'
@@ -858,7 +924,7 @@
         <table>
           <tr><th>Section</th><th>Studied</th><th>Accuracy</th></tr>
           ${SECTION_IDS.map(sec => {
-            const qs = QUESTION_BANK.filter(q => q.section === sec);
+            const qs = QUESTION_BANK.filter(q => secKey(q) === sec);
             let st = 0, r = 0, w = 0;
             qs.forEach(q => {
               const c = s.cards[q.id];
@@ -866,7 +932,7 @@
               if (c) { r += c.right; w += c.wrong; }
             });
             const acc = r + w ? Math.round((r / (r + w)) * 100) + '%' : '-';
-            return `<tr><td>§${sec} ${esc(SECTION_NAMES[sec])}</td>
+            return `<tr><td>${esc(secRef(sec))} ${esc(SECTION_NAMES[sec])}</td>
               <td>${st}/${qs.length}</td><td>${acc}</td></tr>`;
           }).join('')}
         </table>
@@ -934,11 +1000,11 @@
           ${TEST_GROUPS.map(([group, label]) => `
             <h4>${label}</h4>
             ${TESTS.filter(tst => tst.group === group).map(tst => {
-              const count = QUESTION_BANK.filter(q => tst.sections.includes(q.section)).length;
+              const count = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q))).length;
               const checked = tst.sections.every(sec => active.has(sec));
               return `<label class="seccheck">
                 <input type="checkbox" data-test="${tst.key}" ${checked ? 'checked' : ''}>
-                <span>${esc(tst.name)} <small>§${tst.sections.join(', ')} · ${count} q${
+                <span>${esc(tst.name)} <small>${esc(secRange(tst.sections))} · ${count} q${
                   tst.note ? ' · ' + esc(tst.note) : ''}</small></span></label>`;
             }).join('')}`).join('')}
         </div>
@@ -976,13 +1042,13 @@
     });
     view.querySelectorAll('input[data-test]').forEach(cb =>
       cb.addEventListener('change', () => {
-        // Deduplicated: two tests may cover the same sections, and without
-        // this a section repeats once per test that claims it, so the
-        // "everything is selected" check below never matches and the stored
-        // list is junk.
+        // Deduplicated: two tests may cover the same chapters (Core and
+        // Private both draw on the whole core manual), and without this a
+        // section repeats once per test that claims it, so the "everything is
+        // selected" check below never matches and the stored list is junk.
         const chosen = [...new Set([...view.querySelectorAll('input[data-test]:checked')]
           .flatMap(x => TESTS.find(tst => tst.key === x.dataset.test).sections))]
-          .sort((a, b) => a - b);
+          .sort((a, b) => SECTION_ORDER.get(a) - SECTION_ORDER.get(b));
         // empty or complete selection both mean "study everything"
         s.settings.sections =
           chosen.length === 0 || chosen.length === SECTION_IDS.length ? [] : chosen;

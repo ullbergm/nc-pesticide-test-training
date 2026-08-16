@@ -37,9 +37,31 @@ Knowing where each field surfaces explains most of the rules below:
 }
 ```
 
-- `id`: `s` + section number + `-` + a three-digit counter, unique in the bank.
-- `section`: positive integer; every entry in a section uses the same
-  `sectionName`.
+The same entry from the aerial manual's chapter 1 carries a `manual`, which
+picks the manual its `page` is printed in and separates its chapter 1 from the
+core manual's:
+
+```json
+{
+  "id": "a1-004",
+  "section": 1,
+  "sectionName": "Laws and Regulations for the Aerial Applicator Pilot",
+  "question": "...",
+  "choices": ["...", "...", "...", "..."],
+  "answer": 2,
+  "explanation": "...",
+  "page": "10",
+  "manual": "aerial"
+}
+```
+
+- `id`: a per-manual letter (`s` for the core manual, `a` for the aerial one)
+  + chapter number + `-` + a three-digit counter, unique in the bank.
+- `section`: the chapter number **within its own manual**, counting from 1, so
+  the core manual's chapter 1 and the aerial manual's chapter 1 are both
+  `"section": 1` and the `manual` field is what tells them apart. Every entry
+  in a chapter uses the same `sectionName`. A chapter is keyed
+  `"<manual>:<section>"` in the exam config and in saved settings.
 - `choices`: exactly four, all distinct.
 - `answer`: 0-based index into `choices`.
 - `page`: the page number printed on the manual page the fact came from. Add
