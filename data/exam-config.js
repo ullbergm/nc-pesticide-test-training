@@ -29,6 +29,40 @@ const sectionsOf = manual => [...new Set(
 const CORE_SECTIONS = sectionsOf('default');   // chapters 1-11 and appendices
 const AERIAL_SECTIONS = sectionsOf('aerial');  // chapters 1-6 and appendices
 
+// The category exams. Core licenses nobody on its own: a commercial applicator
+// passes Core and then one of these per category they want to work in, and an
+// aerial applicator adds Aerial Methods on top. Each is written from its own
+// North Carolina category manual, which is sold in print and has no public PDF
+// to cite, so none of them has questions yet.
+//
+// They are listed anyway, with the manual key their questions will carry, so
+// the app can show what the bank does not cover yet and the gap is visible
+// instead of implied. `sectionsOf` gives an empty list until the first question
+// arrives, and the exam then fills in by itself. Add a `manuals` entry beside
+// the key when authoring one, so its citations can name the book.
+const CATEGORIES = [
+  ['cat-a', 'A', 'Aquatic Pest Control'],
+  ['cat-b', 'B', 'Public Health'],
+  ['cat-g', 'G', 'Forestry'],
+  ['cat-h', 'H', 'Right-of-Way'],
+  ['cat-i', 'I', 'Regulatory'],
+  ['cat-k', 'K', 'Agricultural Pest Animal - Livestock'],
+  ['cat-kpu', 'K(PU)', 'Agricultural Pest Animal - Poultry'],
+  ['cat-ksa', 'K(SA)', 'Agricultural Pest Animal - Small Animal'],
+  ['cat-l', 'L', 'Ornamental & Turf'],
+  ['cat-m', 'M', 'Seed Treatment'],
+  ['cat-n', 'N', 'Demonstration & Research'],
+  ['cat-o', 'O', 'Agricultural Pest Plant'],
+  ['cat-s', 'S', 'Commercial Soil Fumigation'],
+  ['cat-t', 'T', 'Wood Treatment'],
+];
+const CATEGORY_EXAMS = CATEGORIES.map(([key, code, name]) => ({
+  key,
+  name: `${name} (${code})`,
+  sections: sectionsOf(key),
+  count: 50, // every NC category exam is 50 questions at 70%
+}));
+
 const EXAM_CONFIG = {
   storageKey: 'nc-pesticide-trainer-v1',      // localStorage; changing it orphans saved progress
   sessionKey: 'nc-pesticide-trainer-session', // sessionStorage mirror of the active session
@@ -71,6 +105,7 @@ const EXAM_CONFIG = {
     { key: 'core', name: 'Commercial Core', sections: CORE_SECTIONS, count: 100 },
     { key: 'private', name: 'Private Applicator', sections: CORE_SECTIONS, count: 50 },
     { key: 'aerial', name: 'Aerial Methods', sections: AERIAL_SECTIONS, count: 50 },
+    ...CATEGORY_EXAMS,
   ],
 
   // Exams -> the manual sections that cover them. The Settings picker offers
@@ -79,10 +114,18 @@ const EXAM_CONFIG = {
     { key: 'core', group: 'cert', name: 'Commercial Core', note: 'the 100-question first exam for every commercial applicator license', sections: CORE_SECTIONS },
     { key: 'private', group: 'cert', name: 'Private Applicator', note: 'the 50-question exam for producing an agricultural commodity on your own land', sections: CORE_SECTIONS },
     { key: 'aerial', group: 'methods', name: 'Aerial Methods', note: 'the extra exam every aerial applicator takes on top of Core and a category', sections: AERIAL_SECTIONS },
+    ...CATEGORY_EXAMS.map(e => ({
+      key: e.key,
+      group: 'category',
+      name: e.name,
+      note: 'one 50-question category exam on top of Core',
+      sections: e.sections,
+    })),
   ],
   testGroups: [
     ['cert', 'Certification exams'],
     ['methods', 'Methods exams'],
+    ['category', 'Category exams'],
   ],
 
   // The licenses these exams lead to, shown as a reference table in About.

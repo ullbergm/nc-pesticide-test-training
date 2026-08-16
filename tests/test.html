@@ -53,6 +53,10 @@ try {
   // Everything the suite expects is derived from the exam config and the
   // bank, so swapping data/ for another exam does not break the assertions.
   const TESTS = EXAM_CONFIG.tests;
+  // An exam the bank has no questions for is listed in the config and shown in
+  // the app, but there is nothing to schedule or project for it, so the
+  // readiness views cover only the ones that have sections.
+  const STUDIABLE = TESTS.filter(tst => tst.sections.length);
   const PASS_PCT = Math.round(Readiness.PASS_MARK * 100);
   const GUESS_PCT = Math.round(Readiness.GUESS * 100);
   // Each manual numbers its chapters from 1, so the app keys a chapter by
@@ -175,7 +179,8 @@ try {
 
   // --- exam readiness projection ---
   nav('home');
-  t('home projects a score per test', qa('.home .readiness .rrow').length === TESTS.length);
+  t('home projects a score per studiable test',
+    qa('.home .readiness .rrow').length === STUDIABLE.length);
   t('projection reads as a percentage', /^\d{1,3}%$/.test(q('.home .rpct').textContent.trim()));
   // The first studied question of the run belongs to some test; that test's
   // projection must have moved off the guess-rate floor an untouched one sits at.
@@ -195,7 +200,7 @@ try {
   t('stats renders table', !!q('.stats table'));
   t('stats details the readiness projection', !!q('.stats .readiness table'));
   t('readiness table has a row per test',
-    qa('.stats .readiness tr').length === TESTS.length + 1); // + the header row
+    qa('.stats .readiness tr').length === STUDIABLE.length + 1); // + the header row
   t('readiness reports odds of passing',
     /(<1%|>99%|\d{1,3}%)/.test(qa('.stats .readiness td')[2].textContent));
   t('multi-section tests name their weakest section',
@@ -222,6 +227,13 @@ try {
   // --- test/endorsement picker: keep only the tests in the first group ---
   // (for the pesticide config that is the commercial core exam)
   t('test picker renders every configured test', qa('input[data-test]').length === TESTS.length);
+  // An exam with no questions is listed so the gap is visible, but there is
+  // nothing to study for it, so it must not be selectable.
+  t('an exam with no questions is listed but not selectable',
+    TESTS.every(tst => {
+      const cb = qa('input[data-test]').find(x => x.dataset.test === tst.key);
+      return !!cb && cb.disabled === !tst.sections.length;
+    }));
   const keepTests = TESTS.filter(tst => tst.group === EXAM_CONFIG.testGroups[0][0]);
   const keep = new Set(keepTests.map(tst => tst.key));
   const keepSecs = [...new Set(keepTests.flatMap(tst => tst.sections))].sort((a, b) => a - b);

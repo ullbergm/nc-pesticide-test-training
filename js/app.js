@@ -188,6 +188,9 @@
     const cards = Store.load().cards;
     return TESTS
       .filter(tst => tst.sections.every(sec => secs.has(sec)))
+      // An exam the bank has no questions for yet has nothing to project, and
+      // scoring it would put a flat 0% beside the exams actually being studied.
+      .filter(tst => tst.sections.length)
       .map(tst => {
         const meta = EXAMS.find(e => e.key === tst.key);
         const pool = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q)));
@@ -766,8 +769,12 @@
           ${available.map(e => {
             const avail = e.sections.reduce((n, s) => n + (counts[s] || 0), 0);
             const n = Math.min(e.count, avail);
-            return `<button class="examopt" data-key="${e.key}" ${n < 5 ? 'disabled' : ''}>
-              <strong>${esc(e.name)}</strong><span>${n} questions</span></button>`;
+            // An exam with nothing written for it yet says so, rather than
+            // offering a button that reads "0 questions".
+            const label = e.sections.length ? `${n} questions` : 'not written yet';
+            return `<button class="examopt${e.sections.length ? '' : ' empty'}"
+              data-key="${e.key}" ${n < 5 ? 'disabled' : ''}>
+              <strong>${esc(e.name)}</strong><span>${label}</span></button>`;
           }).join('')}
         </div>
         ${hidden ? `<p class="hint">${hidden} more hidden. Enable their tests in Settings.</p>` : ''}
@@ -1058,6 +1065,15 @@
             ${TESTS.filter(tst => tst.group === group).map(tst => {
               const count = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q))).length;
               const checked = tst.sections.every(sec => active.has(sec));
+              // Nothing to select for an exam the bank does not cover yet, so
+              // it is shown but disabled rather than offering an empty study
+              // queue. It becomes selectable as soon as it has questions.
+              if (!tst.sections.length) {
+                return `<label class="seccheck empty">
+                  <input type="checkbox" data-test="${tst.key}" disabled>
+                  <span>${esc(tst.name)} <small>no questions yet${
+                    tst.note ? ' · ' + esc(tst.note) : ''}</small></span></label>`;
+              }
               return `<label class="seccheck">
                 <input type="checkbox" data-test="${tst.key}" ${checked ? 'checked' : ''}>
                 <span>${esc(tst.name)} <small>${esc(secRange(tst.sections))} · ${count} q${
@@ -1214,6 +1230,38 @@
     return rows ? `<h3>Sources</h3><ul class="sources">${rows}</ul>` : '';
   }
 
+  // What the bank covers, exam by exam, including the ones with nothing
+  // written for them. NC licenses on Core plus a category, so a bank that
+  // stops at Core covers only the first half of the requirement; listing the
+  // empty exams is what makes that visible rather than implied.
+  function coverageHTML() {
+    if (!EXAMS.length) return '';
+    const counts = {};
+    QUESTION_BANK.forEach(q => { counts[secKey(q)] = (counts[secKey(q)] || 0) + 1; });
+    const rows = EXAMS.map(e => {
+      const n = e.sections.reduce((sum, sec) => sum + (counts[sec] || 0), 0);
+      return `<tr class="${n ? '' : 'empty'}">
+        <td>${esc(e.name)}</td>
+        <td>${n || '—'}</td>
+        <td>${n ? 'covered' : 'not written yet'}</td>
+      </tr>`;
+    }).join('');
+    const done = EXAMS.filter(e => e.sections.length).length;
+    return `
+      <h3>Coverage <small>${done} of ${EXAMS.length} exams</small></h3>
+      <p>North Carolina licenses on the Core exam plus a category exam for each
+        kind of work, and aerial applicators add Aerial Methods. The category
+        exams are written from North Carolina's own category manuals, which are
+        sold in print, so they are listed here with what the bank has for them
+        rather than left out.</p>
+      <div class="table-scroll">
+        <table class="coverage">
+          <thead><tr><th>Exam</th><th>Questions</th><th>Status</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }
+
   // Optional reference table of the licenses the exams lead to. Config-driven
   // and skipped entirely when an exam config lists none.
   function licensesHTML() {
@@ -1258,6 +1306,7 @@
         <p>All progress is stored locally in your browser and never sent to a server.
           Use Export in Settings to move it to another device.</p>
         ${sourcesHTML()}
+        ${coverageHTML()}
         ${CFG.aboutCaveatHTML}
         ${licensesHTML()}
         <h3>Links</h3>

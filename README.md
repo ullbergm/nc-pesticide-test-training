@@ -31,6 +31,13 @@ Core chapters feed the Core and Private exams; aerial chapters feed Aerial
 Methods only, so a mock exam never mixes the two. Settings picks which exams
 you are studying for, and About lists every NC license and the exams it takes.
 
+North Carolina licenses on the Core exam plus a **category** exam for each kind
+of work you do, and aerial applicators add Aerial Methods on top. All fourteen
+categories are listed in the app with what the bank has for them, which so far
+is nothing: they are written from North Carolina's own category manuals, which
+are sold in print. About has a coverage table, and an exam with no questions is
+shown but not selectable, so the gap is visible rather than implied.
+
 **Every question so far comes from a national manual, not a North Carolina
 one.** The national manuals are published by the NASDA Research Foundation,
 hosted by EPA, and free to read, which is what lets this bank cite them page by
