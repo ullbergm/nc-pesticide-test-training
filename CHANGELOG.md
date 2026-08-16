@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.1.0...v1.2.0) (2026-08-16)
+
+
+### Features
+
+* add the pesticide dealer exam ([dc2db5f](https://github.com/ullbergm/nc-pesticide-test-training/commit/dc2db5f12a52133fe85678cc2f24c53df59be617))
+* cover North Carolina pesticide law and the Board's rules ([3a28fcb](https://github.com/ullbergm/nc-pesticide-test-training/commit/3a28fcb2e201c108419feff8abfd2e72bd152667))
+* cover the certification system North Carolina publishes ([94a9fec](https://github.com/ullbergm/nc-pesticide-test-training/commit/94a9fec5ec7f47e830756db15e4c7f8336599253))
+* drill the calculations rather than their answers ([5f40a27](https://github.com/ullbergm/nc-pesticide-test-training/commit/5f40a270721a5dc79f449a932130e73a15047305))
+* look up NC license status, expiration, and recert credits ([34729b7](https://github.com/ullbergm/nc-pesticide-test-training/commit/34729b7cc0de8bf92fc43fddadc46ce880760354))
+
+
+### Bug Fixes
+
+* remember which exams are being studied, not their sections ([a838bee](https://github.com/ullbergm/nc-pesticide-test-training/commit/a838bee870c757765353fe3f32fdf5adc19ed62b))
+
 ## [1.1.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.0.0...v1.1.0) (2026-08-16)
 
 
