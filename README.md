@@ -37,6 +37,13 @@ yourself. There is no build step, no dependencies, and no server. Just open
 is stored locally in the browser and never sent anywhere. Settings has export
 and import for backups or for moving between devices.
 
+<p align="center">
+  <img src="docs/screenshots/home.png" width="500" alt="Home screen with due review, new card, and miss counts, an exam countdown banner, and a projected score for each exam">
+</p>
+<p align="center">
+  <a href="docs/screenshots/README.md">More screenshots</a>
+</p>
+
 ## Modes
 
 - **Study**: the spaced repetition queue. Due reviews plus a daily allotment of new
