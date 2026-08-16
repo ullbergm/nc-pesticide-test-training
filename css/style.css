@@ -372,6 +372,19 @@ a.report:hover { color: var(--accent); }
 .qdetail { padding: 6px 0 4px 12px; color: var(--muted); }
 .qdetail strong { color: var(--ok); }
 
+/* An exam's sections, with the totals on the summary line so they read
+   without expanding. The group is the frame; the sections nest flat inside
+   it so the two levels do not stack borders and shadows. */
+.group > summary { font-size: 1.02rem; }
+.group > summary small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.browse .group { padding: 10px 14px; }
+.browse .group > .chapter { background: transparent; border: none; border-top: 1px solid var(--border);
+  border-radius: 0; box-shadow: none; margin: 0; padding: 8px 0 8px 10px; }
+.browse .group > .chapter:first-of-type { margin-top: 6px; }
+.stats .group { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 12px; margin: 6px 0; box-shadow: var(--shadow); }
+.stats .group > summary { cursor: pointer; font-weight: 600; }
+.stats .group table { box-shadow: none; margin-bottom: 4px; }
 
 /* stats */
 table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 8px 0 16px; box-shadow: var(--shadow); }

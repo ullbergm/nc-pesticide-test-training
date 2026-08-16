@@ -77,6 +77,46 @@
     }).join('; ');
   };
 
+  // Chapters divided the way the exams divide them: every chapter drawn on by
+  // the same set of exams lands in one group, so the core manual's chapters
+  // group under "Commercial Core · Private Applicator" and the aerial manual's
+  // under "Aerial Methods" without either being listed twice. Bank order is
+  // preserved, so groups come out in each manual's printed order.
+  // Pass a narrower list to group only part of the bank; Stats passes the
+  // sections actually being studied, Browse passes all of them.
+  const sectionGroups = (sections = SECTION_IDS) => {
+    const groups = new Map();
+    sections.forEach(sec => {
+      const label = EXAMS.filter(e => (e.sections || []).includes(sec))
+        .map(e => e.name).join(' · ') || 'Not on any exam';
+      if (!groups.has(label)) groups.set(label, { label, sections: [] });
+      groups.get(label).sections.push(sec);
+    });
+    return [...groups.values()];
+  };
+
+  // Totals for a set of chapters: how much of it has been studied and how
+  // often it has been answered right. Shown on a group's summary line so the
+  // number is there before the group is expanded.
+  const chapterStats = (sections, cards) => {
+    const secs = new Set(sections);
+    let total = 0, studied = 0, right = 0, wrong = 0;
+    QUESTION_BANK.forEach(q => {
+      if (!secs.has(secKey(q))) return;
+      total++;
+      const c = cards[q.id];
+      if (c && c.lastReview) studied++;
+      if (c) { right += c.right; wrong += c.wrong; }
+    });
+    return {
+      total, studied, right, wrong,
+      acc: right + wrong ? Math.round((right / (right + wrong)) * 100) + '%' : '-',
+    };
+  };
+
+  const groupSummary = st =>
+    `<small>${st.studied}/${st.total} studied${st.right + st.wrong ? ` · ${st.acc} right` : ''}</small>`;
+
   const BY_ID = {};
   QUESTION_BANK.forEach(q => { BY_ID[q.id] = q; });
 
@@ -817,7 +857,13 @@
     view.innerHTML = `
       <div class="browse">
         <h2>Question bank</h2>
-        ${SECTION_IDS.map(sec => {
+        ${sectionGroups().map((g, i) => {
+          const gs = chapterStats(g.sections, s.cards);
+          // The first group is the one most readers came for; the rest stay
+          // folded so the whole bank is a short list to start from.
+          return `<details class="group"${i === 0 ? ' open' : ''}>
+          <summary>${esc(g.label)} ${groupSummary(gs)}</summary>
+        ${g.sections.map(sec => {
           const qs = QUESTION_BANK.filter(q => secKey(q) === sec);
           return `<details class="chapter"><summary>${esc(secRef(sec))} ${esc(SECTION_NAMES[sec])} <small>(${qs.length})</small></summary>
             ${qs.map(q => {
@@ -832,6 +878,8 @@
               </details>`;
             }).join('')}
           </details>`;
+        }).join('')}
+        </details>`;
         }).join('')}
       </div>`;
   }
@@ -921,9 +969,15 @@
           </div>`).join('')}
         </div>
         <h3>By section</h3>
-        <table>
+        ${sectionGroups(enabledSections()).map(g => {
+          // Progress is about the exams being studied for, so this follows the
+          // Settings selection rather than listing the whole bank, and stays
+          // expanded because the per-section numbers are the point of it.
+          const gs = chapterStats(g.sections, s.cards);
+          return `<details class="group" open><summary>${esc(g.label)} ${groupSummary(gs)}</summary>
+        <div class="table-scroll"><table>
           <tr><th>Section</th><th>Studied</th><th>Accuracy</th></tr>
-          ${SECTION_IDS.map(sec => {
+          ${g.sections.map(sec => {
             const qs = QUESTION_BANK.filter(q => secKey(q) === sec);
             let st = 0, r = 0, w = 0;
             qs.forEach(q => {
@@ -935,7 +989,9 @@
             return `<tr><td>${esc(secRef(sec))} ${esc(SECTION_NAMES[sec])}</td>
               <td>${st}/${qs.length}</td><td>${acc}</td></tr>`;
           }).join('')}
-        </table>
+        </table></div>
+        </details>`;
+        }).join('')}
         ${s.exams.length ? `<h3>Exam history</h3>
         <table>
           <tr><th>Date</th><th>Exam</th><th>Score</th><th></th></tr>
