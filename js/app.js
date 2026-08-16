@@ -1354,10 +1354,16 @@
   // manual has no public URL, since a wrong #page= is worse than none. The
   // whole citation is optional: a question without a page, or an exam whose
   // config lists no manuals, simply renders none.
+  //
+  // Not every document is cited by page. A statute or an administrative rule
+  // is cited by its number, and a reader sent to "§ 143-452(a)" is not helped
+  // by being told it sits on page 12, so a question from one carries a `ref`
+  // and its citation reads as that reference. The page is still what opens the
+  // PDF in the right place, which is why a question keeps both.
   const manualCite = q => {
     const m = CFG.manuals[q.manual || 'default'];
     if (!m || !q.page) return '';
-    const label = `${esc(m.cite || 'Manual')} p. ${esc(q.page)}`;
+    const label = `${esc(m.cite || 'Manual')} ${q.ref ? esc(q.ref) : `p. ${esc(q.page)}`}`;
     const pdfPage = q.pdfPage || (m.pages && m.pages[q.page]);
     return m.url && pdfPage
       ? `<a class="cite" href="${m.url}#page=${pdfPage}" target="_blank" rel="noopener"

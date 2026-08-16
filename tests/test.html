@@ -18,6 +18,8 @@
 <script src="../data/questions.js"></script>
 <script src="../data/manual-pages.js"></script>
   <script src="../data/aerial-pages.js"></script>
+<script src="../data/law-pages.js"></script>
+<script src="../data/rules-pages.js"></script>
 <script src="../data/exam-config.js"></script>
 <script>
 // Runs before app.js boots: plant a mid-study session so the resume path
@@ -185,12 +187,22 @@ try {
     qa('.home .readiness .rrow').length === STUDIABLE.length);
   t('projection reads as a percentage', /^\d{1,3}%$/.test(q('.home .rpct').textContent.trim()));
   // The first studied question of the run belongs to some test; that test's
-  // projection must have moved off the guess-rate floor an untouched one sits at.
+  // projection must have moved off the guess-rate floor an untouched one sits
+  // at. A handful of cards moves the pool mean by a fraction of a point once
+  // the pool is large, which the rendered whole number rounds away, so the
+  // lift is asserted on the projection itself and the rendered number is
+  // checked against the same projection.
   const liftedTest = TESTS.find(tst => tst.sections.includes(secKey(bank1)));
   const liftedRow = qa('.home .rrow')
     .find(r => r.querySelector('.rname').textContent === liftedTest.name);
+  const liftedProj = Readiness.project(
+    QUESTION_BANK.filter(x => liftedTest.sections.includes(secKey(x))),
+    Store.load().cards, Date.now(), Infinity);
   t('studied cards lift the projection off the guess rate',
-    parseInt(liftedRow.querySelector('.rpct').textContent, 10) > GUESS_PCT);
+    liftedProj.expected > Readiness.GUESS);
+  t('the rendered projection is the one the memory model computes',
+    parseInt(liftedRow.querySelector('.rpct').textContent, 10)
+    === Math.round(liftedProj.expected * 100));
   t('home sorts the weakest test first', (() => {
     const p = qa('.home .rpct').map(e => parseInt(e.textContent, 10));
     return p.every((v, i) => i === 0 || p[i - 1] <= v);
@@ -238,14 +250,17 @@ try {
     }));
   const keepTests = TESTS.filter(tst => tst.group === EXAM_CONFIG.testGroups[0][0]);
   const keep = new Set(keepTests.map(tst => tst.key));
-  const keepSecs = [...new Set(keepTests.flatMap(tst => tst.sections))].sort((a, b) => a - b);
+  // Sorted, because the stored selection is in bank order while this list is
+  // in the order the kept tests happen to name their sections; two tests in a
+  // group need not draw on the same sections.
+  const keepSecs = [...new Set(keepTests.flatMap(tst => tst.sections))].sort();
   qa('input[data-test]').forEach(cb => {
     if (cb.checked !== keep.has(cb.dataset.test)) {
       cb.checked = keep.has(cb.dataset.test);
       cb.dispatchEvent(new Event('change'));
     }
   });
-  const secs = Store.load().settings.sections;
+  const secs = [...Store.load().settings.sections].sort();
   t('picker maps to the kept tests\' sections', JSON.stringify(secs)
     === JSON.stringify(keepSecs.length === SECTION_COUNT ? [] : keepSecs));
   nav('settings');

@@ -10,6 +10,10 @@ const pagesSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'manual-page
 eval(pagesSrc.replace('const MANUAL_PAGES', 'globalThis.MANUAL_PAGES'));
 const aerialSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'aerial-pages.js'), 'utf8');
 eval(aerialSrc.replace('const AERIAL_PAGES', 'globalThis.AERIAL_PAGES'));
+const lawSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'law-pages.js'), 'utf8');
+eval(lawSrc.replace('const LAW_PAGES', 'globalThis.LAW_PAGES'));
+const rulesSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'rules-pages.js'), 'utf8');
+eval(rulesSrc.replace('const RULES_PAGES', 'globalThis.RULES_PAGES'));
 const cfgSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'exam-config.js'), 'utf8');
 eval(cfgSrc.replace('const EXAM_CONFIG', 'globalThis.EXAM_CONFIG')
   .replace(/const (sectionsOf|CORE_SECTIONS|AERIAL_SECTIONS)\b/g, 'globalThis.$1'));
@@ -56,6 +60,16 @@ for (const q of QUESTION_BANK) {
     else if (manual.url && manual.pages && !manual.pages[q.page] && q.pdfPage === undefined) {
       errors.push(`${label}: page "${q.page}" is not in the "${mkey}" manual's pages map`);
     }
+  }
+  // A statute or a rule is cited by its number rather than by a page, which
+  // the question carries as `ref`. Manuals cited that way say so, because a
+  // law question that forgets its ref renders as "NC Pesticide Law p. 12" —
+  // right about the PDF, useless to a reader looking for the section.
+  if (q.ref !== undefined && (typeof q.ref !== 'string' || !q.ref.trim())) {
+    errors.push(`${label}: bad ref "${q.ref}"`);
+  }
+  if (manual && manual.citeByRef && q.ref === undefined) {
+    errors.push(`${label}: the "${mkey}" manual is cited by reference, so the question needs a ref`);
   }
   if (q.pdfPage !== undefined && (!Number.isInteger(q.pdfPage) || q.pdfPage < 1
       || (lastPage[mkey] && q.pdfPage > lastPage[mkey]))) {
