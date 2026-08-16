@@ -15,7 +15,7 @@ the live site through the normal release process.
 ## Supported versions
 
 Only the latest release is supported. It is what runs at
-[ullbergm.github.io/nc-pesticide-test-training](https://ullbergm.github.io/nc-pesticide-test-training/), and the service worker
+[nc-pesticide.ullberg.io](https://nc-pesticide.ullberg.io), and the service worker
 prompts open tabs to reload onto it after each deploy. There are no
 maintained older branches.
 
