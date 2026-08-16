@@ -29,6 +29,7 @@ const CORE = [
   'data/law-pages.js',
   'data/rules-pages.js',
   'data/ncsu-anchors.js',
+  'data/recert-credits.js',
   'data/exam-config.js',
   'manifest.webmanifest',
   'icons/icon-192.png',

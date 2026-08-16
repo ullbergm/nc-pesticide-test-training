@@ -1191,14 +1191,60 @@
   const titleCase = s =>
     String(s || '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 
-  // "H [9.0] E [0] A [9.0]" -> [{code:'H',value:'9.0'}, ...]. Each letter is
-  // an NC recertification category; the number is credits earned this cycle.
-  function creditChips(totals) {
-    const out = [];
-    const re = /([A-Za-z()_/]+)\s*\[\s*([\d.]+)\s*\]/g;
-    let m;
-    while ((m = re.exec(String(totals || '')))) out.push({ code: m[1], value: m[2] });
-    return out;
+  // Credits earned against credits owed. The record counts only what was
+  // earned; data/recert-credits.js supplies what each letter asks of this
+  // licence, which depends on the other letters beside it, so the two are
+  // zipped here into one meter per category.
+  const fmtHours = n => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+
+  function creditPlan(record) {
+    const earned = RECERT.parseTotals(record.creditTotals);
+    const kind = License.kindOf(record.licenseTypeId);
+    const required = RECERT.plan(earned.map(e => e.code), kind);
+    const byCode = new Map(required.map(r => [r.code, r]));
+    const rows = earned.map(e => ({ ...e, ...(byCode.get(e.code) || {}) }));
+    // Only the categories with a requirement can be totalled; Core and any
+    // letter the table does not know sit outside the sum rather than
+    // dragging it silently off.
+    const scored = rows.filter(r => typeof r.required === 'number');
+    const need = scored.reduce((n, r) => n + r.required, 0);
+    const met = scored.reduce((n, r) => n + Math.min(r.earned, r.required), 0);
+    return { rows, need, met, kind, short: Math.max(0, need - met) };
+  }
+
+  function creditsHTML(record) {
+    const { rows, need, met, kind, short } = creditPlan(record);
+    if (!rows.length) return '<p class="hint">No credits on record for this cycle.</p>';
+    const cycle = RECERT.CYCLES[kind];
+    const summary = need === 0
+      ? ''
+      : short === 0
+        ? `<p class="crsum met">All ${fmtHours(need)} hours earned for this cycle.</p>`
+        : `<p class="crsum">${fmtHours(met)} of ${fmtHours(need)} hours earned —
+             <b>${fmtHours(short)} short</b>${
+               cycle ? `, due by ${esc(cycle.due)}` : ''}.</p>`;
+    return `
+      <ul class="creditlist">
+        ${rows.map(r => {
+          const has = typeof r.required === 'number';
+          const pct = has && r.required > 0
+            ? Math.min(100, Math.round((r.earned / r.required) * 100)) : 0;
+          const met = has && r.earned >= r.required;
+          return `
+            <li class="credit${has ? (met ? ' met' : ' short') : ' untargeted'}">
+              <div class="crhead">
+                <span class="crname"><b>${esc(r.code)}</b>${
+                  r.name ? ` ${esc(r.name)}` : ''}</span>
+                <span class="crnum">${fmtHours(r.earned)}${
+                  has ? ` <span class="crof">of ${fmtHours(r.required)}</span>` : ''}</span>
+              </div>
+              ${has
+                ? `<div class="crbar"><span style="width:${pct}%"></span></div>` : ''}
+              ${r.rule ? `<div class="crrule">${esc(r.rule)}</div>` : ''}
+            </li>`;
+        }).join('')}
+      </ul>
+      ${summary}`;
   }
 
   function licenseCard(entry) {
@@ -1210,9 +1256,9 @@
     const expired = exp && exp < today;
     const expSoon = exp && !expired && exp - today <= 60 * DAY;
     const badge = expired ? 'danger' : expSoon ? 'warn' : 'ok';
-    const chips = creditChips(r.creditTotals);
+    const key = License.keyOf(entry.input);
     return `
-      <div class="liccard">
+      <div class="liccard" data-lic="${esc(key)}">
         <div class="lichead">
           <div>
             <div class="licname">${esc(r.name || '—')}</div>
@@ -1234,14 +1280,7 @@
         </dl>
         <div class="liccredits">
           <h3>Continuing-certification credits</h3>
-          ${chips.length
-            ? `<div class="chiprow">${chips.map(c =>
-                `<span class="chip${Number(c.value) > 0 ? ' has' : ''}">${esc(c.code)} <b>${esc(c.value)}</b></span>`).join('')}</div>`
-            : '<p class="hint">No credits on record for this cycle.</p>'}
-          <p class="hint">Letters are NC recertification categories; the number is credits earned
-            this cycle. How many you need depends on your category — the
-            <a href="https://www.ncagr.gov/divisions/structural-pest-control-and-pesticides"
-              target="_blank" rel="noopener">NCDA&amp;CS Pesticide Section</a> has the requirement.</p>
+          ${creditsHTML(r)}
         </div>
         ${r.courses.length ? `
           <details class="liccourses">
@@ -1253,79 +1292,106 @@
             </ul>
           </details>` : ''}
         <div class="licfoot">
-          <button class="primary" id="licrefresh">Refresh</button>
-          <button id="licclear">Forget this license</button>
+          <button class="primary" data-licrefresh="${esc(key)}">Refresh</button>
+          <button data-licforget="${esc(key)}">Forget this license</button>
           <span class="hint">Last checked ${esc(relTime(entry.fetchedAt))}</span>
         </div>
-        <p class="disclaimer">Mirrors the NC Department of Agriculture public record and can lag their
-          system. The official <a href="https://apps.ncagr.gov/AgRSysPortalV2/licensesearch"
-          target="_blank" rel="noopener">license search</a> is authoritative.</p>
       </div>`;
   }
 
   function renderLicense() {
-    const entry = License.cached();
-    const input = (entry && entry.input) || { number: '', typeId: '' };
+    const saved = License.saved();
+    const full = saved.length >= License.MAX_SAVED;
     view.innerHTML = `
       <div class="license">
-        <h2>My license</h2>
-        <p class="hint">Look up a North Carolina pesticide license by number and type. This is the
+        <h2>My licenses</h2>
+        <p class="hint">Look a North Carolina pesticide license up by number and type. This is the
           only screen that reaches a server — the
           <a href="https://apps.ncagr.gov/AgRSysPortalV2/licensesearch" target="_blank" rel="noopener">NC
-          Department of Agriculture public license search</a>. The result is cached in this browser, so
-          it shows instantly and only refreshes when you ask.</p>
+          Department of Agriculture public license search</a>. Results are cached in this browser, so
+          they show instantly and only refresh when you ask. Keep as many as you hold: a pilot's own
+          license and the contractor they fly under are two separate records.</p>
         <div class="licform">
           <label>License number
             <input type="text" id="licnum" inputmode="numeric" autocomplete="off"
-              value="${esc(input.number)}" placeholder="e.g. 87690">
+              value="" placeholder="e.g. 87690" ${full ? 'disabled' : ''}>
           </label>
           <label>License type
-            <select id="lictype">
+            <select id="lictype" ${full ? 'disabled' : ''}>
               <option value="">Select type…</option>
               ${License.TYPES.map(t =>
-                `<option value="${t.id}" ${t.id === input.typeId ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}
+                `<option value="${t.id}">${esc(t.label)}</option>`).join('')}
             </select>
           </label>
-          <button class="primary" id="liclookup">Look up</button>
+          <button class="primary" id="liclookup" ${full ? 'disabled' : ''}>
+            ${saved.length ? 'Add license' : 'Look up'}</button>
         </div>
-        <p id="licstatus" class="licstatus" role="status" aria-live="polite"></p>
-        <div id="liccard">${entry ? licenseCard(entry) : ''}</div>
+        <p id="licstatus" class="licstatus" role="status" aria-live="polite">${
+          full ? `Forget one to add another; ${License.MAX_SAVED} is the most this keeps.` : ''}</p>
+        <div id="liclist">${saved.map(licenseCard).join('')}</div>
+        ${saved.length ? `
+          <p class="hint">Letters are NC recertification categories and the first number is what this
+            cycle has earned. What each one asks is worked out from
+            <a href="${esc(CFG.manuals.ncsu.url)}" target="_blank" rel="noopener">AG-714</a>: the
+            highest category held is earned in full and each additional one takes three, except
+            demonstration and research, which always takes ten. Aerial certification splits its
+            hours differently and runs two years rather than five.</p>
+          <p class="disclaimer">These mirror the NC Department of Agriculture public record and can lag
+            their system, and the credits each category is shown as owing are worked out here from
+            AG-714 rather than read off the record. The official
+            <a href="https://apps.ncagr.gov/AgRSysPortalV2/licensesearch"
+            target="_blank" rel="noopener">license search</a> and the
+            <a href="https://www.ncagr.gov/divisions/structural-pest-control-and-pesticides"
+            target="_blank" rel="noopener">NCDA&amp;CS Pesticide Section</a> are authoritative.</p>` : ''}
       </div>`;
 
     const statusEl = $('#licstatus');
-
-    async function run() {
-      const lookupBtn = $('#liclookup');
-      const refreshBtn = $('#licrefresh');
+    const busy = (on, msg) => {
       statusEl.className = 'licstatus';
-      statusEl.textContent = 'Checking with the NC license search…';
-      if (lookupBtn) lookupBtn.disabled = true;
-      if (refreshBtn) refreshBtn.disabled = true;
+      statusEl.textContent = on ? msg : '';
+      view.querySelectorAll('#liclist button').forEach(b => { b.disabled = on; });
+      // Add stays disabled at the cap however the lookup that was running
+      // turned out; only a Forget makes room, and that re-renders.
+      $('#liclookup').disabled = on || full;
+    };
+
+    // Add and Refresh are the same call — a lookup of a (number, type) pair,
+    // which stores in place — so the difference is only where the pair comes
+    // from and whether the form is cleared afterwards.
+    async function run(number, typeId, fromForm) {
+      busy(true, 'Checking with the NC license search…');
       try {
-        const fresh = await License.lookup($('#licnum').value, $('#lictype').value);
-        $('#liccard').innerHTML = licenseCard(fresh);
-        statusEl.textContent = '';
-        wireCard();
+        await License.lookup(number, typeId);
+        if (fromForm) {
+          $('#licnum').value = '';
+          $('#lictype').value = '';
+        }
+        renderLicense();
       } catch (err) {
+        busy(false);
         statusEl.className = 'licstatus error';
         statusEl.textContent = err.message;
-        if (refreshBtn) refreshBtn.disabled = false;
-      } finally {
-        const b = $('#liclookup');
-        if (b) b.disabled = false;
       }
     }
 
-    function wireCard() {
-      const r = $('#licrefresh');
-      if (r) r.addEventListener('click', run);
-      const c = $('#licclear');
-      if (c) c.addEventListener('click', () => { License.clearCache(); renderLicense(); });
-    }
+    const fromForm = () => run($('#licnum').value, $('#lictype').value, true);
+    $('#liclookup').addEventListener('click', fromForm);
+    $('#licnum').addEventListener('keydown', e => { if (e.key === 'Enter') fromForm(); });
 
-    $('#liclookup').addEventListener('click', run);
-    $('#licnum').addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
-    wireCard();
+    // Delegated, because the cards are re-rendered wholesale on every change.
+    $('#liclist').addEventListener('click', e => {
+      const refresh = e.target.closest('[data-licrefresh]');
+      if (refresh) {
+        const entry = saved.find(x => License.keyOf(x.input) === refresh.dataset.licrefresh);
+        if (entry) run(entry.input.number, entry.input.typeId, false);
+        return;
+      }
+      const forget = e.target.closest('[data-licforget]');
+      if (forget) {
+        License.remove(forget.dataset.licforget);
+        renderLicense();
+      }
+    });
   }
 
   function renderSettings() {
