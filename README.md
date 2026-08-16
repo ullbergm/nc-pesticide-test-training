@@ -112,7 +112,11 @@ and import for backups or for moving between devices.
   <img src="docs/screenshots/home.png" width="500" alt="Home screen with due review, new card, and miss counts, an exam countdown banner, and a projected score for each exam">
 </p>
 <p align="center">
-  <a href="docs/screenshots/README.md">More screenshots</a>
+  <img src="docs/screenshots/answer.png" width="500" alt="A correctly answered question showing the explanation, a link to the manual page it came from, and Hard, Good, and Easy buttons with the interval each would schedule">
+</p>
+<p align="center">
+  <a href="docs/screenshots/README.md">More screenshots</a>: the study queue,
+  calculation drills, mock exams, the bank browser, stats, license lookup, and settings
 </p>
 
 ## Modes
