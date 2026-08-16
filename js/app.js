@@ -976,8 +976,12 @@
     });
     view.querySelectorAll('input[data-test]').forEach(cb =>
       cb.addEventListener('change', () => {
-        const chosen = [...view.querySelectorAll('input[data-test]:checked')]
-          .flatMap(x => TESTS.find(tst => tst.key === x.dataset.test).sections)
+        // Deduplicated: two tests may cover the same sections, and without
+        // this a section repeats once per test that claims it, so the
+        // "everything is selected" check below never matches and the stored
+        // list is junk.
+        const chosen = [...new Set([...view.querySelectorAll('input[data-test]:checked')]
+          .flatMap(x => TESTS.find(tst => tst.key === x.dataset.test).sections))]
           .sort((a, b) => a - b);
         // empty or complete selection both mean "study everything"
         s.settings.sections =
