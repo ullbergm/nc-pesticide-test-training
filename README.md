@@ -5,28 +5,51 @@
 [![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-test-training)](LICENSE)
 [![Live site](https://img.shields.io/website?url=https%3A%2F%2Fnc-pesticide.ullberg.io&label=nc-pesticide.ullberg.io)](https://nc-pesticide.ullberg.io)
 
-[![Questions](https://img.shields.io/badge/questions-30-blue)](data/questions.js)
+[![Questions](https://img.shields.io/badge/questions-738-blue)](data/questions.js)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-blue)](package.json)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-blue)](manifest.webmanifest)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue)](CONTRIBUTING.md)
 [![Conventional Commits](https://img.shields.io/badge/conventional%20commits-1.0.0-blue)](https://www.conventionalcommits.org/en/v1.0.0/)
 
 Practice questions with spaced repetition for the North Carolina pesticide
-applicator certification exams: the 100-question commercial Core exam and the
-50-question Private Applicator exam, both passed at 70%. The bank has 30
-multiple-choice questions so far, written from the
+applicator certification exams: the 100-question commercial Core exam, the
+50-question Private Applicator exam, and the Aerial Methods exam every aerial
+applicator adds on top, all passed at 70%. The bank has 738 questions, written
+with the recipe in
+[docs/question-authoring.md](docs/question-authoring.md) and covering both
+manuals end to end: all eleven chapters of the
 [National Pesticide Applicator Certification Core Manual](https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf)
-(second edition, 2014), and every question cites the manual page it was drawn
-from, as a link that opens the PDF at that page.
+(second edition, 2014) and all six of the
+[National Aerial Applicator's Manual](https://www.epa.gov/system/files/documents/2023-11/national-aerial-applicator-manual-2014.pdf)
+(2014), plus the appendices of each that teach something a test could ask:
+conversions and calibration math, Safety Data Sheets, FAA requirements for
+agricultural aircraft, heat stress, spill cleanup, and GPS. Every question
+cites the manual page it was drawn from, as a link that opens that PDF at that
+page.
 
-**Status: early.** Coverage so far is chapter 1 (Pest Management) of the
-manual's eleven chapters. The remaining chapters are being written with the
-recipe in [docs/question-authoring.md](docs/question-authoring.md). North
-Carolina's official study text is the NC Pesticide Applicator Certification
-Core Manual, sold in print by the
-[NC State Pesticide Safety Education Program](https://go.ncsu.edu/psep); it is
-adapted from the national manual this bank cites and adds NC pesticide law and
-rules, which the bank does not yet cover.
+Core chapters feed the Core and Private exams; aerial chapters feed Aerial
+Methods only, so a mock exam never mixes the two. Settings picks which exams
+you are studying for, and About lists every NC license and the exams it takes.
+
+North Carolina licenses on the Core exam plus a **category** exam for each kind
+of work you do, and aerial applicators add Aerial Methods on top. All fourteen
+categories are listed in the app with what the bank has for them, which so far
+is nothing: they are written from North Carolina's own category manuals, which
+are sold in print. About has a coverage table, and an exam with no questions is
+shown but not selectable, so the gap is visible rather than implied.
+
+**Every question so far comes from a national manual, not a North Carolina
+one.** The national manuals are published by the NASDA Research Foundation,
+hosted by EPA, and free to read, which is what lets this bank cite them page by
+page and link each citation into the PDF. North Carolina's own study texts, the
+NC Pesticide Applicator Certification Core Manual and the category manuals, are
+sold in print by the
+[NC State Pesticide Safety Education Program](https://go.ncsu.edu/psep). They
+are adapted from these national manuals and add NC pesticide law and rules,
+which the bank does not cover yet. Questions from the NC manuals are planned;
+each manual is a separate entry in `data/exam-config.js` with its own citation
+prefix and page map, and questions pick theirs with a `manual` field, so
+adding one does not disturb what is already there.
 
 This project is a fork of
 [nc-cdl-test-training](https://github.com/ullbergm/nc-cdl-test-training): the
@@ -245,15 +268,21 @@ questions match or resemble them. This is a study aid for the manual's content, 
 a copy of the test. If a question reads wrong, check the cited page and edit
 `data/questions.js`, which is a plain JSON array.
 
-The manual PDF is published by the NASDA Research Foundation and hosted by EPA;
-it is not included in this repository. Download it from the EPA link above.
+Both manual PDFs are published by the NASDA Research Foundation and hosted by EPA;
+neither is included in this repository. Download them from the EPA links above.
 
-The citation links point into that hosted PDF with a `#page=` fragment, which counts
-physical pages rather than the page numbers printed in the footers, so
-`data/manual-pages.js` maps between the two. The map is built from the 2014 second
-edition; if a new edition is published, download it and re-run
-`node tools/gen-manual-pages.js` (needs `pdftotext`) so the links keep landing on the
-right pages.
+The citation links point into those hosted PDFs with a `#page=` fragment, which counts
+physical pages rather than the page numbers printed in the footers, so a page map
+translates between the two: `data/manual-pages.js` for the core manual and
+`data/aerial-pages.js` for the aerial one. The maps are built from the 2014 editions;
+if a new edition is published, download it and re-run the generator (needs
+`pdftotext`) so the links keep landing on the right pages:
+
+```sh
+node tools/gen-manual-pages.js                       # core manual
+node tools/gen-manual-pages.js aerial-applicator-manual.pdf \
+  --out data/aerial-pages.js --var AERIAL_PAGES      # aerial manual
+```
 
 ## License
 

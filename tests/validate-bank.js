@@ -8,8 +8,11 @@ const src = fs.readFileSync(path.join(__dirname, '..', 'data', 'questions.js'), 
 eval(src.replace('const QUESTION_BANK', 'globalThis.QUESTION_BANK'));
 const pagesSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'manual-pages.js'), 'utf8');
 eval(pagesSrc.replace('const MANUAL_PAGES', 'globalThis.MANUAL_PAGES'));
+const aerialSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'aerial-pages.js'), 'utf8');
+eval(aerialSrc.replace('const AERIAL_PAGES', 'globalThis.AERIAL_PAGES'));
 const cfgSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'exam-config.js'), 'utf8');
-eval(cfgSrc.replace('const EXAM_CONFIG', 'globalThis.EXAM_CONFIG'));
+eval(cfgSrc.replace('const EXAM_CONFIG', 'globalThis.EXAM_CONFIG')
+  .replace(/const (sectionsOf|CORE_SECTIONS|AERIAL_SECTIONS)\b/g, 'globalThis.$1'));
 
 // A PDF ends a few pages past the last labelled one (back matter), so allow
 // a little slack above the highest mapped page when bounding pdfPage.
@@ -59,6 +62,52 @@ for (const q of QUESTION_BANK) {
     errors.push(`${label}: bad pdfPage "${q.pdfPage}"`);
   }
   if (Number.isInteger(q.answer) && q.answer >= 0 && q.answer <= 3) positions[q.answer]++;
+}
+
+// Each manual numbers its chapters from 1, so a chapter is the pair
+// (manual, number), keyed "<manual>:<number>" here and in the app. Two ways
+// that goes wrong: a chapter's questions disagree about its name, which means
+// a question landed in the wrong chapter or a manual's key was forgotten and
+// its questions merged into the other manual's chapter of the same number;
+// and a newly authored chapter is never added to an exam, so nothing can draw
+// it. Both are silent in the app, so they fail the build here.
+const chapterNames = new Map();
+const chapterRefs = new Map();
+for (const q of QUESTION_BANK) {
+  const key = `${q.manual || 'default'}:${q.section}`;
+  if (!chapterNames.has(key)) chapterNames.set(key, new Set());
+  chapterNames.get(key).add(q.sectionName);
+  // Optional; back matter sets it ("app. C") because its designation is not
+  // its position in the book. Chapters leave it off and render as "ch. N".
+  if (!chapterRefs.has(key)) chapterRefs.set(key, new Set());
+  chapterRefs.get(key).add(q.sectionLabel === undefined ? '' : q.sectionLabel);
+}
+for (const [key, names] of chapterNames) {
+  if (names.size > 1) {
+    errors.push(`chapter ${key} has more than one name [${[...names].sort().join(' | ')}]; `
+      + 'every question in a chapter shares its sectionName');
+  }
+}
+for (const [key, refs] of chapterRefs) {
+  if (refs.size > 1) {
+    errors.push(`chapter ${key} disagrees on sectionLabel [${[...refs].sort().join(' | ')}]; `
+      + 'set it on every question in the section or on none');
+  }
+}
+const examined = new Set((EXAM_CONFIG.exams || []).flatMap(e => e.sections || []));
+for (const key of chapterNames.keys()) {
+  if (!examined.has(key)) {
+    errors.push(`chapter ${key} has questions but no exam draws on it; `
+      + 'add it to an exam in data/exam-config.js');
+  }
+}
+for (const key of examined) {
+  const manual = String(key).slice(0, String(key).indexOf(':'));
+  if (!String(key).includes(':')) {
+    errors.push(`exam section "${key}" is not a "<manual>:<chapter>" key`);
+  } else if (!EXAM_CONFIG.manuals[manual]) {
+    errors.push(`exam section "${key}" names manual "${manual}", which the config does not list`);
+  }
 }
 
 // tests/test.html duplicates the app shell's nav markup; the e2e suite drives

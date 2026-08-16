@@ -8,13 +8,14 @@ export default [
     // Browser scripts loaded via <script> tags. These files define one shared
     // global each (QUESTION_BANK, FSRS, Store), consumed by js/app.js;
     // storage.js reads its localStorage key out of EXAM_CONFIG.
-    files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/manual-pages.js'],
+    files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/manual-pages.js',
+      'data/aerial-pages.js'],
     languageOptions: {
       sourceType: 'script',
       globals: { ...globals.browser, EXAM_CONFIG: 'readonly' },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES)$' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES)$' }],
     },
   },
   {
@@ -30,11 +31,17 @@ export default [
     },
   },
   {
-    // The exam config loads after the two data files and may read both.
+    // The exam config loads after the bank and the page maps, and reads all
+    // of them: one map per manual it lists.
     files: ['data/exam-config.js'],
     languageOptions: {
       sourceType: 'script',
-      globals: { ...globals.browser, QUESTION_BANK: 'readonly', MANUAL_PAGES: 'readonly' },
+      globals: {
+        ...globals.browser,
+        QUESTION_BANK: 'readonly',
+        MANUAL_PAGES: 'readonly',
+        AERIAL_PAGES: 'readonly',
+      },
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^EXAM_CONFIG$' }],
@@ -82,7 +89,8 @@ export default [
       globals: {
         ...globals.node,
         QUESTION_BANK: 'readonly', MANUAL_PAGES: 'readonly',
-        EXAM_CONFIG: 'readonly', FSRS: 'readonly', Readiness: 'readonly',
+        AERIAL_PAGES: 'readonly', EXAM_CONFIG: 'readonly',
+        FSRS: 'readonly', Readiness: 'readonly',
       },
     },
   },

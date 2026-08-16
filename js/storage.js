@@ -55,7 +55,15 @@ const Store = (() => {
       cards,
       settings: {
         newPerDay: Math.max(0, num(st.newPerDay, base.settings.newPerDay)),
-        sections: Array.isArray(st.sections) ? st.sections.filter(Number.isInteger) : [],
+        // Chapter keys, "<manual>:<number>". Saved progress and backups from
+        // before the bank had a second manual hold bare chapter numbers, which
+        // were all the first manual's, so they migrate to its keys rather than
+        // being dropped as junk and silently resetting the selection.
+        sections: Array.isArray(st.sections)
+          ? st.sections
+              .map(s => (Number.isInteger(s) ? `default:${s}` : s))
+              .filter(s => typeof s === 'string' && s.includes(':'))
+          : [],
         examDate: typeof st.examDate === 'string' ? st.examDate : '',
         theme: THEMES.includes(st.theme) ? st.theme : 'system',
       },
