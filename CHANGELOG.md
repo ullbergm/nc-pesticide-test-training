@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.2.0...v1.3.0) (2026-08-16)
+
+
+### Features
+
+* keep every license you hold and score its credits against AG-714 ([071e320](https://github.com/ullbergm/nc-pesticide-test-training/commit/071e3204570353e48a9ee364c0bcdceb5321e4ec))
+
 ## [1.2.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.1.0...v1.2.0) (2026-08-16)
 
 
