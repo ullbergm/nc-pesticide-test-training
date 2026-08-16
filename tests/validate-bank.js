@@ -64,6 +64,26 @@ for (const q of QUESTION_BANK) {
   if (!Array.isArray(q.choices) || q.choices.length !== 4) errors.push(`${label}: needs exactly 4 choices`);
   else if (new Set(q.choices.map(norm)).size !== 4) errors.push(`${label}: duplicate choices`);
   if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer > 3) errors.push(`${label}: answer out of range`);
+  // Optional: the mistake behind each wrong choice, parallel to `choices` and
+  // null at the correct one, which the feedback screen shows for the choice
+  // actually picked. Each entry completes the sentence "You ...", so it is a
+  // verb phrase rather than a sentence of its own.
+  if (q.whyWrong !== undefined) {
+    if (!Array.isArray(q.whyWrong) || q.whyWrong.length !== (q.choices || []).length) {
+      errors.push(`${label}: whyWrong needs one entry per choice`);
+    } else {
+      q.whyWrong.forEach((why, i) => {
+        if (i === q.answer) {
+          if (why !== null) errors.push(`${label}: whyWrong names a mistake for the correct choice`);
+        } else if (typeof why !== 'string' || !why.trim()) {
+          errors.push(`${label}: whyWrong[${i}] is not a named mistake`);
+        } else if (/[.!?]$/.test(why.trim()) || /^[A-Z][a-z]/.test(why)) {
+          errors.push(`${label}: whyWrong[${i}] should complete "You ...", `
+            + 'so it starts lowercase and ends without a full stop');
+        }
+      });
+    }
+  }
   if (!Number.isInteger(q.section) || q.section < 1) errors.push(`${label}: bad section`);
   // Citations are optional (an exam may have nothing citable) unless the
   // config demands them, but a question that carries one must resolve

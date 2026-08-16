@@ -76,7 +76,9 @@ as a statute or an administrative rule, adds a `ref`:
 
 - `id`: a per-source letter (`s` for the core manual, `a` for the aerial one,
   `l` for the NC Pesticide Law, `r` for the NC pesticide rules, `n` for NC
-  State Extension's AG-714)
+  State Extension's AG-714, and `m` for a calculation drill, which is written
+  as a method in `data/problems.js` rather than as a question here — see
+  [math-drills.md](math-drills.md))
   + section number + `-` + a three-digit counter, unique in the bank.
 - `section`: the chapter number **within its own manual**, counting from 1, so
   the core manual's chapter 1 and the aerial manual's chapter 1 are both
@@ -92,6 +94,14 @@ as a statute or an administrative rule, adds a `ref`:
   the config marks `web` is a web publication with no pages, so its `page` is
   the heading the fact is printed under; the citation reads as that heading and
   the link is the anchor on it, which the source's map supplies.
+- `whyWrong`: optional, one entry per choice, naming the mistake behind each
+  wrong one and `null` at the correct one. The feedback screen shows the entry
+  for the choice actually picked, ahead of the explanation, so a reader is told
+  what they did and not only what is right. Each entry completes the sentence
+  "You ___", so write a past-tense verb phrase with no capital and no full
+  stop: `"read the signal word as the toxicity category"`. Every calculation
+  drill emits these; a written question is worth the effort wherever its
+  distractors are particular mistakes rather than merely wrong facts.
 - `ref`: what the citation reads as, for a source that is cited by section
   rather than by page ("§ 143-452(a)", ".0503"). The `page` still decides
   which page the link opens, so both are needed. A manual whose config entry
@@ -138,7 +148,10 @@ These are the lessons this bank was rebalanced and deduplicated to learn.
    all true (or all false).
 7. **Keep numbers, units and thresholds exactly as the manual states them.**
    Do not round, convert, or update them to current regulations; the exam
-   tests the manual.
+   tests the manual. A question that asks the reader to *work* a calculation
+   rather than recall a figure belongs in `data/problems.js` instead: written
+   with fixed numbers it stops testing the method the third time it is
+   answered, since what gets easy is the answer.
 8. **Ask about the material, not the document.** Nothing like "what does
    section 5 cover" or "how many steps does the manual list"; test what the
    license holder has to know and do.

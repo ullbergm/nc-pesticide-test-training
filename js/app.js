@@ -390,9 +390,9 @@
 
   function saveSession() {
     try {
-      const { mode, queue, pos, done, correct, answers } = session;
+      const { mode, queue, pos, done, correct, answers, draws } = session;
       sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-        mode, queue, pos, done, correct, answers,
+        mode, queue, pos, done, correct, answers, draws,
         examKey: session.exam && session.exam.key,
       }));
     } catch { /* storage unavailable: a reload just loses the session */ }
@@ -409,6 +409,9 @@
       const s = JSON.parse(raw);
       if (!Array.isArray(s.queue) || !s.queue.every(id => BY_ID[id])
           || !(s.pos < s.queue.length)) return false;
+      // The drawn numbers of any drill in the queue, so the resumed card is
+      // the problem that was on screen and not a new one.
+      if (!s.draws || typeof s.draws !== 'object') s.draws = {};
       if (s.mode === 'exam') {
         s.exam = EXAMS.find(e => e.key === s.examKey);
         // a malformed answers list would only throw later, on the next answer
@@ -442,8 +445,8 @@
   // then call something that is not a view.
   const ROUTES = new Map([
     ['home', renderHome], ['study', startStudy], ['misses', startMisses],
-    ['exam', renderExamSetup], ['final', startFinal], ['browse', renderBrowse],
-    ['stats', renderStats], ['license', renderLicense],
+    ['exam', renderExamSetup], ['final', startFinal], ['drill', startDrills],
+    ['browse', renderBrowse], ['stats', renderStats], ['license', renderLicense],
     ['settings', renderSettings], ['about', renderAbout],
   ]);
   // No portal credential means no lookup, so drop the route (a stray #license
@@ -584,6 +587,31 @@
     renderQuestion();
   }
 
+  // ---------- calculation drills on demand (#drill) ----------
+  // Deliberately a route and not a nav tab. A drill belongs in the ordinary
+  // Study queue, scheduled by the same FSRS as everything else; a "Math" tab
+  // would be practised by the people who already like arithmetic and skipped
+  // by the ones who need it. This is the linkable way to drill the
+  // calculations on purpose — the night before an exam, or to look at a
+  // template — and like the misses drill it leaves the schedule alone, so
+  // using it cannot pull a card forward or push it back.
+  function startDrills() {
+    const secs = new Set(enabledSections());
+    const queue = shuffle(QUESTION_BANK
+      .filter(q => q.drill && secs.has(secKey(q)))
+      .map(q => q.id));
+    if (!queue.length) {
+      view.innerHTML = `<div class="done"><h2 tabindex="-1">No calculation drills</h2>
+        <p>The exams you are studying for do not ask calibration or dosage arithmetic.</p>
+        <button class="primary" id="back">Home</button></div>`;
+      $('#back').addEventListener('click', () => go('home'));
+      focusEl(view.querySelector('h2'));
+      return;
+    }
+    session = { mode: 'drill', queue, pos: 0, done: 0, correct: 0, draws: {} };
+    renderQuestion();
+  }
+
   // ---------- final review sweep (last days before the exam) ----------
   // Ignores due dates: every studied card, weakest memory first, then unseen cards.
   function startFinal() {
@@ -599,9 +627,43 @@
     renderQuestion();
   }
 
+  // ---------- calculation drills ----------
+  // A drill is an ordinary bank question whose numbers are drawn fresh; see
+  // js/problems.js. The numbers are drawn the first time the card is about to
+  // be shown and kept with the session, so Undo re-asks the same problem, a
+  // reload mid-session resumes the one that was on screen, and a mock exam
+  // grades against the problem it actually asked. Nothing is stored with the
+  // card: one that comes due tomorrow should be a new problem.
+  function drawFor(id) {
+    if (!Problems.isDrill(id)) return;
+    if (!session.draws) session.draws = {};
+    if (session.draws[id] === undefined) session.draws[id] = Problems.newSeed();
+    Problems.reroll(id, session.draws[id]);
+  }
+
+  // A question that asks for arithmetic gets a calculator, because the exam
+  // site allows a nonprogrammable one and doing the sums in your head is not
+  // what is being tested. Every card starts with a cleared calculator, the way
+  // picking one up off the desk does; whether it starts open is remembered,
+  // since opening it is a preference rather than a per-card choice.
+  function calculatorFor(q) {
+    if (!q.drill) return '';
+    Calculator.reset();
+    return Calculator.html(Store.load().settings.calcOpen === true);
+  }
+
+  function wireCalculator() {
+    if (!view.querySelector('#calc')) return;
+    Calculator.wire(view, open => {
+      Store.load().settings.calcOpen = open;
+      Store.save();
+    });
+  }
+
   // ---------- shared question renderer (study + misses + final) ----------
   function renderQuestion() {
     if (session.pos >= session.queue.length) return renderSessionDone();
+    drawFor(session.queue[session.pos]); // before the mirror, so the seed is in it
     saveSession();
     const q = BY_ID[session.queue[session.pos]];
     const order = choiceOrder(q);
@@ -629,10 +691,12 @@
         <div class="choices">
           ${order.map((i, k) => `<button class="choice" data-i="${i}"><kbd>${k + 1}</kbd>${esc(q.choices[i])}</button>`).join('')}
         </div>
+        ${calculatorFor(q)}
         <div id="feedback" aria-live="polite"></div>
       </div>`;
     view.querySelectorAll('.choice').forEach(btn =>
       btn.addEventListener('click', () => answer(q, Number(btn.dataset.i), btn)));
+    wireCalculator();
     focusEl(view.querySelector('.qtext'));
   }
 
@@ -649,6 +713,9 @@
       daily: s.daily[today] ? { ...s.daily[today] } : null,
       logLen: s.log.length,
       pos: session.pos, done: session.done, correct: session.correct,
+      // A requeued drill is redrawn, so undo has to put the seeds back before
+      // the question is re-rendered from them.
+      draws: session.draws ? { ...session.draws } : null,
     };
   }
 
@@ -662,6 +729,7 @@
     if (u.daily) s.daily[Store.todayKey()] = u.daily; else delete s.daily[Store.todayKey()];
     s.log.length = Math.min(s.log.length, u.logLen);
     session.pos = u.pos; session.done = u.done; session.correct = u.correct;
+    if (u.draws) session.draws = u.draws;
     if (u.requeuedAt !== undefined) session.queue.splice(u.requeuedAt, 1);
     session.undo = null;
     session.pendingGrade = false;
@@ -675,6 +743,19 @@
   }
 
   const undoButton = '<button id="undo">Undo<kbd class="after">U</kbd></button>';
+
+  // What the reader actually did, for the choice they actually picked. A
+  // question may carry `whyWrong[]` parallel to `choices`, naming the mistake
+  // each wrong choice comes from and holding null at the correct one; a
+  // question without it simply says nothing here. Each entry completes the
+  // sentence "You ...", so the diagnosis reads before the explanation teaches:
+  // "You left the 100-gallon divisor out. Multiply the gallons the tank
+  // holds..." Every calculation drill emits these (js/problems.js builds them
+  // from the named slip behind each distractor) and a written question may.
+  const slipText = (q, picked) => {
+    const why = Array.isArray(q.whyWrong) && q.whyWrong[picked];
+    return why ? `<em class="slip">You ${esc(why)}.</em> ` : '';
+  };
 
   function answer(q, picked, btn) {
     const correct = picked === q.answer;
@@ -709,8 +790,13 @@
         const at = Math.min(session.pos + 4, session.queue.length);
         session.queue.splice(at, 0, q.id);
         session.undo.requeuedAt = at;
+        // A missed drill comes back with new numbers. The explanation just
+        // worked these ones through, so re-asking them would test nothing but
+        // whether the reader remembers the figure it ended on.
+        if (session.draws && Problems.isDrill(q.id)) session.draws[q.id] = Problems.newSeed();
       }
-      fb.innerHTML = `<div class="explain wrongbg"><strong>Incorrect.</strong> ${esc(q.explanation)} ${cite}</div>
+      fb.innerHTML = `<div class="explain wrongbg"><strong>Incorrect.</strong> ${
+        slipText(q, picked)}${esc(q.explanation)} ${cite}</div>
         <button class="primary" id="next">Continue<kbd class="after">Enter</kbd></button>${undoButton}`;
       $('#next').addEventListener('click', () => { session.pos++; renderQuestion(); });
       focusEl($('#next'));
@@ -813,6 +899,7 @@
 
   function renderExamQuestion() {
     if (session.pos >= session.queue.length) return renderExamResult();
+    drawFor(session.queue[session.pos]); // before the mirror, so the seed is in it
     saveSession();
     const q = BY_ID[session.queue[session.pos]];
     const order = choiceOrder(q);
@@ -828,6 +915,7 @@
         <div class="choices">
           ${order.map((i, k) => `<button class="choice" data-i="${i}"><kbd>${k + 1}</kbd>${esc(q.choices[i])}</button>`).join('')}
         </div>
+        ${calculatorFor(q)}
       </div>`;
     view.querySelectorAll('.choice').forEach(btn =>
       btn.addEventListener('click', () => {
@@ -835,6 +923,7 @@
         session.pos++;
         renderExamQuestion();
       }));
+    wireCalculator();
     focusEl(view.querySelector('.qtext'));
   }
 
@@ -867,7 +956,7 @@
               <div class="q">${esc(q.question)}</div>
               <div class="you">Your answer: ${esc(q.choices[a.picked])}</div>
               <div class="ans">Correct: ${esc(q.choices[q.answer])}</div>
-              <div class="ex">${esc(q.explanation)} ${manualCite(q)} ${reportLink(q)}</div>
+              <div class="ex">${slipText(q, a.picked)}${esc(q.explanation)} ${manualCite(q)} ${reportLink(q)}</div>
             </div>`;
           }).join('')}</div>` : '<p>Perfect score.</p>'}
         <button class="primary" id="home">Home</button>
@@ -880,6 +969,10 @@
   // ---------- browse ----------
   function renderBrowse() {
     const s = Store.load();
+    // Browse lists the bank as it stands, and a drill's numbers are whatever
+    // was last drawn for it. Draw again, so what is listed is a new problem
+    // rather than the one the last session happened to leave behind.
+    Problems.templates.forEach(t => Problems.reroll(t.id, Problems.newSeed()));
     view.innerHTML = `
       <div class="browse">
         <h2>Question bank</h2>
@@ -1436,7 +1529,11 @@
     const rows = Object.entries(manuals).map(([key, m]) => {
       const mine = SECTION_IDS.filter(id => id.startsWith(`${key}:`));
       if (!mine.length) return '';
-      const count = QUESTION_BANK.filter(q => (q.manual || 'default') === key).length;
+      // Written questions only: a calculation drill is generated from the
+      // method rather than extracted from a page, and one drill is
+      // unboundedly many questions, so counting it here would state a number
+      // that is neither right nor checkable.
+      const count = QUESTION_BANK.filter(q => (q.manual || 'default') === key && !q.drill).length;
       const nums = mine.map(id => id.slice(id.indexOf(':') + 1));
       const span = nums.length > 1 ? `chapters ${nums[0]}-${nums[nums.length - 1]}` : `chapter ${nums[0]}`;
       const title = m.url
@@ -1555,6 +1652,10 @@
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const tag = document.activeElement && document.activeElement.tagName;
     if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+    // A digit typed at the calculator is a digit, not answer number 3. The
+    // calculator handles its own keys and the shortcuts below stand aside
+    // while the focus is inside it.
+    if (Calculator.owns(e.target) || Calculator.owns(document.activeElement)) return;
     // Enter on a focused button or link activates it (the browser handles
     // it); intercepting would redirect it to Continue or Good instead.
     if (e.key === 'Enter' && (tag === 'BUTTON' || tag === 'A')) return;

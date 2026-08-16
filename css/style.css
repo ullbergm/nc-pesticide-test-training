@@ -267,6 +267,68 @@ button.danger { border-color: var(--bad); color: var(--bad); background: transpa
 .choice.wrong { border-color: var(--bad); background: var(--bad-bg); box-shadow: inset 3px 0 0 var(--bad); }
 .choice:disabled { cursor: default; }
 
+/* On-screen calculator, offered on the calculation drills. Sized to be
+   thumb-usable on a phone and to sit beside the choices without competing
+   with them: the keypad is plainer than a choice button, since it is a tool on
+   the desk rather than part of the question. */
+.calcwrap { margin: 14px 0; }
+.calctoggle {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+}
+.calctoggle:hover { border-color: var(--accent); color: var(--accent); }
+.calc {
+  margin-top: 10px;
+  max-width: 320px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.calc .hint { margin: 8px 0 0; font-size: 0.75rem; }
+.calcdisplay {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.calcmem { color: var(--accent); font-size: 0.75rem; font-weight: 700; }
+#calcout {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.calckeys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
+.calckey {
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 12px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.calckey:hover { border-color: var(--accent); color: var(--accent); }
+.calckey.k-op, .calckey.k-equals { background: var(--card); font-weight: 700; }
+.calckey.k-equals { grid-column: span 2; background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.calckey.k-equals:hover { background: var(--accent-hi); color: var(--accent-text); }
+.calckey.k-mem, .calckey.k-clear, .calckey.k-back { font-size: 0.85rem; color: var(--muted); }
+
 /* keyboard hints: signage chips; only on fine-pointer devices */
 kbd {
   display: none;
@@ -297,6 +359,11 @@ kbd.after { margin: 0 0 0 9px; }
 .explain { margin: 14px 0; padding: 12px 14px; border-radius: 10px; border: 1px solid transparent; }
 .explain.okbg { background: var(--ok-bg); border-color: color-mix(in srgb, var(--ok) 25%, transparent); }
 .explain.wrongbg { background: var(--bad-bg); border-color: color-mix(in srgb, var(--bad) 25%, transparent); }
+/* The mistake behind the choice actually picked, ahead of the explanation
+   that teaches the rule. Coloured like the wrong answer it names, so the eye
+   lands on the diagnosis first. */
+.slip { color: var(--bad); font-style: normal; font-weight: 600; }
+.missitem .slip { font-weight: 500; }
 .cite { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
 a.cite:hover { color: var(--accent); }
 a.report { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }

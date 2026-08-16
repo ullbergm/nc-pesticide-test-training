@@ -122,6 +122,16 @@ const CATEGORY_EXAMS = CATEGORIES.map(([key, code, name]) => ({
   count: 50, // every NC category exam is 50 questions at 70%
 }));
 
+// Written questions and generated calculation drills are counted separately
+// wherever the app states a size. A drill is one card but unboundedly many
+// questions — it draws new numbers every time it comes up — so folding it into
+// the question count would state a number that is both wrong and impossible to
+// check against anything.
+const WRITTEN_COUNT = QUESTION_BANK.filter(q => !q.drill).length;
+const DRILL_COUNT = QUESTION_BANK.length - WRITTEN_COUNT;
+const BANK_SIZE = `${WRITTEN_COUNT} questions${
+  DRILL_COUNT ? ` and ${DRILL_COUNT} calculation drills` : ''}`;
+
 const EXAM_CONFIG = {
   storageKey: 'nc-pesticide-trainer-v1',      // localStorage; changing it orphans saved progress
   sessionKey: 'nc-pesticide-trainer-session', // sessionStorage mirror of the active session
@@ -307,7 +317,7 @@ const EXAM_CONFIG = {
   },
 
   // Prose that names the exam, injected as HTML into the matching views.
-  homeSubtitle: `${QUESTION_BANK.length} questions from the national applicator manuals, North Carolina pesticide law, and NC State Extension`,
+  homeSubtitle: `${BANK_SIZE} from the national applicator manuals, North Carolina pesticide law, and NC State Extension`,
   disclaimerHTML: `Questions were extracted from the national
     <a href="https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf"
        target="_blank" rel="noopener">core</a> and
@@ -326,7 +336,7 @@ const EXAM_CONFIG = {
     and the actual exam questions are not public; no claim is made that these match or
     resemble them. All progress is stored locally in your browser and never sent to a server.`,
   aboutIntroHTML: `<p>NC Pesticide Trainer is a free, open-source study tool for the North Carolina
-    pesticide applicator certification exams. Its ${QUESTION_BANK.length} questions were written from the
+    pesticide applicator certification exams. Its ${WRITTEN_COUNT} questions were written from the
     <a href="https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf"
        target="_blank" rel="noopener">National Pesticide Applicator Certification
     Core Manual</a>, which covers the Core exam, the
@@ -345,7 +355,16 @@ const EXAM_CONFIG = {
     and reciprocity.
     Every question cites where it came from, by page for the manuals, by section for
     the law, and by heading for AG-714. The citation is a link, so it opens the source in
-    the right place and you can check anything important against it.</p>`,
+    the right place and you can check anything important against it.</p>
+    <p>${DRILL_COUNT} of the cards are calculation drills rather than written questions. A
+    drill is one of the methods the manuals teach — the dosage formulas in the core
+    manual's appendix C, the area and calibration-test arithmetic in its chapter 11, and
+    the aerial manual's whole sequence from a timed catch to the gallons that go in the
+    tank — with new numbers drawn every time it comes up. What gets easy is doing the
+    conversion rather than recalling the answer it had last time, and each wrong choice is
+    a particular mistake — a conversion left out, a ratio inverted, a decimal misplaced —
+    rather than a number near the right one. A nonprogrammable calculator is allowed at
+    the exam site, so the arithmetic is fair game.</p>`,
   aboutCaveatHTML: `<p><strong>The subject matter here comes from the national manuals, not from a North
     Carolina one.</strong> The national manuals are published by the NASDA Research Foundation,
     hosted by EPA, and free to read, which is why this bank can cite them page by page. NC

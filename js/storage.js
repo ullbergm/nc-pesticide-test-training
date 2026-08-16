@@ -14,6 +14,9 @@ const Store = (() => {
       tests: [],        // exam keys being studied for; empty = all of them
       examDate: '',     // 'YYYY-MM-DD'; drives retention ramp + final review
       theme: 'system',  // 'system' | 'light' | 'dark'
+      // Whether the on-screen calculator starts open on a question that
+      // offers one. Opening it once is a preference, not a per-card choice.
+      calcOpen: false,
     },
     daily: {},          // 'YYYY-MM-DD' -> {new: n, reviews: n, correct: n, extra?: n}
     exams: [],          // {date, type, total, correct, passed}
@@ -98,6 +101,7 @@ const Store = (() => {
         tests: chosenTests(st),
         examDate: typeof st.examDate === 'string' ? st.examDate : '',
         theme: THEMES.includes(st.theme) ? st.theme : 'system',
+        calcOpen: st.calcOpen === true,
       },
       daily: parsed.daily && typeof parsed.daily === 'object' && !Array.isArray(parsed.daily)
         ? parsed.daily : {},
