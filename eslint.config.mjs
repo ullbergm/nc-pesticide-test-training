@@ -48,6 +48,18 @@ export default [
     },
   },
   {
+    // The license lookup is self-contained: it defines one global and reads
+    // only the DOM and localStorage.
+    files: ['js/license.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^License$' }],
+    },
+  },
+  {
     files: ['js/app.js'],
     languageOptions: {
       sourceType: 'script',
@@ -58,6 +70,7 @@ export default [
         FSRS: 'readonly',
         Readiness: 'readonly',
         Store: 'readonly',
+        License: 'readonly',
       },
     },
   },

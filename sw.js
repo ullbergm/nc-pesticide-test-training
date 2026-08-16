@@ -18,6 +18,7 @@ const CORE = [
   'js/fsrs.js',
   'js/readiness.js',
   'js/storage.js',
+  'js/license.js',
   'js/app.js',
   'data/questions.js',
   'data/manual-pages.js',

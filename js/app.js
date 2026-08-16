@@ -432,8 +432,12 @@
   const ROUTES = new Map([
     ['home', renderHome], ['study', startStudy], ['misses', startMisses],
     ['exam', renderExamSetup], ['final', startFinal], ['browse', renderBrowse],
-    ['stats', renderStats], ['settings', renderSettings], ['about', renderAbout],
+    ['stats', renderStats], ['license', renderLicense],
+    ['settings', renderSettings], ['about', renderAbout],
   ]);
+  // No portal credential means no lookup, so drop the route (a stray #license
+  // then falls through to home) and the nav tab is removed at boot.
+  if (!License.enabled) ROUTES.delete('license');
   let currentView = null;
 
   function render(name) {
@@ -1036,6 +1040,186 @@
       `${Math.round(targetRetention() * 100)}%. ${boost}`;
   }
 
+  // ---------- license lookup ----------
+  // The NC search prints dates as M/D/YYYY. Parse to a local Date, or null
+  // when the string is empty or not a date, so callers can fall back to
+  // showing the raw text.
+  function parseUSDate(s) {
+    const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(String(s || '').trim());
+    if (!m) return null;
+    const d = new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2]));
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  const fmtDate = d =>
+    d ? d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+
+  // "in 3 months" / "5 days ago", rounded to whatever unit reads cleanly at
+  // that distance. Used for the expiration and recertification deadlines.
+  function relDays(d) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const days = Math.round((d - today) / DAY);
+    if (days === 0) return 'today';
+    const n = Math.abs(days);
+    let phrase;
+    if (n < 60) phrase = `${n} day${n === 1 ? '' : 's'}`;
+    else if (n < 550) { const mo = Math.round(n / 30); phrase = `${mo} month${mo === 1 ? '' : 's'}`; }
+    else { const yr = Math.round(n / 36.5) / 10; phrase = `${yr} year${yr === 1 ? '' : 's'}`; }
+    return days > 0 ? `in ${phrase}` : `${phrase} ago`;
+  }
+
+  // How long ago the cached lookup was fetched, for the "last checked" line.
+  function relTime(ts) {
+    const mins = Math.round((Date.now() - ts) / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins} min ago`;
+    const hrs = Math.round(mins / 60);
+    if (hrs < 24) return `${hrs} hour${hrs === 1 ? '' : 's'} ago`;
+    const days = Math.round(hrs / 24);
+    if (days < 30) return `${days} day${days === 1 ? '' : 's'} ago`;
+    return `on ${new Date(ts).toLocaleDateString()}`;
+  }
+
+  const titleCase = s =>
+    String(s || '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+
+  // "H [9.0] E [0] A [9.0]" -> [{code:'H',value:'9.0'}, ...]. Each letter is
+  // an NC recertification category; the number is credits earned this cycle.
+  function creditChips(totals) {
+    const out = [];
+    const re = /([A-Za-z()_/]+)\s*\[\s*([\d.]+)\s*\]/g;
+    let m;
+    while ((m = re.exec(String(totals || '')))) out.push({ code: m[1], value: m[2] });
+    return out;
+  }
+
+  function licenseCard(entry) {
+    const r = entry.record;
+    const exp = parseUSDate(r.expire);
+    const recert = parseUSDate(r.recertBy);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const expired = exp && exp < today;
+    const expSoon = exp && !expired && exp - today <= 60 * DAY;
+    const badge = expired ? 'danger' : expSoon ? 'warn' : 'ok';
+    const chips = creditChips(r.creditTotals);
+    return `
+      <div class="liccard">
+        <div class="lichead">
+          <div>
+            <div class="licname">${esc(r.name || '—')}</div>
+            <div class="licsub">${esc(r.licenseType || '')}${
+              r.county ? ` · ${esc(titleCase(r.county))} County` : ''}</div>
+          </div>
+          <span class="licbadge ${badge}">${esc(r.status || 'Unknown')}</span>
+        </div>
+        <dl class="licgrid">
+          <div><dt>License number</dt><dd>${esc(String(r.number))}</dd></div>
+          <div><dt>Expires</dt><dd>${exp
+            ? `${esc(fmtDate(exp))} <small>${esc(relDays(exp))}${expired ? ' — expired' : ''}</small>`
+            : esc(r.expire || '—')}</dd></div>
+          <div><dt>Recertify by</dt><dd>${recert
+            ? `${esc(fmtDate(recert))} <small>${esc(relDays(recert))}</small>`
+            : esc(r.recertBy || '—')}</dd></div>
+          ${r.originalIssue
+            ? `<div><dt>First licensed</dt><dd>${esc(r.originalIssue)}</dd></div>` : ''}
+        </dl>
+        <div class="liccredits">
+          <h3>Continuing-certification credits</h3>
+          ${chips.length
+            ? `<div class="chiprow">${chips.map(c =>
+                `<span class="chip${Number(c.value) > 0 ? ' has' : ''}">${esc(c.code)} <b>${esc(c.value)}</b></span>`).join('')}</div>`
+            : '<p class="hint">No credits on record for this cycle.</p>'}
+          <p class="hint">Letters are NC recertification categories; the number is credits earned
+            this cycle. How many you need depends on your category — the
+            <a href="https://www.ncagr.gov/divisions/structural-pest-control-and-pesticides"
+              target="_blank" rel="noopener">NCDA&amp;CS Pesticide Section</a> has the requirement.</p>
+        </div>
+        ${r.courses.length ? `
+          <details class="liccourses">
+            <summary>${r.courses.length} course${r.courses.length === 1 ? '' : 's'} on record</summary>
+            <ul>
+              ${r.courses.map(c =>
+                `<li><span class="cname">${esc(c.name || 'Course')}</span>
+                   <span class="cmeta">${esc(c.date)}${c.credits ? ` · ${esc(c.credits)}` : ''}</span></li>`).join('')}
+            </ul>
+          </details>` : ''}
+        <div class="licfoot">
+          <button class="primary" id="licrefresh">Refresh</button>
+          <button id="licclear">Forget this license</button>
+          <span class="hint">Last checked ${esc(relTime(entry.fetchedAt))}</span>
+        </div>
+        <p class="disclaimer">Mirrors the NC Department of Agriculture public record and can lag their
+          system. The official <a href="https://apps.ncagr.gov/AgRSysPortalV2/licensesearch"
+          target="_blank" rel="noopener">license search</a> is authoritative.</p>
+      </div>`;
+  }
+
+  function renderLicense() {
+    const entry = License.cached();
+    const input = (entry && entry.input) || { number: '', typeId: '' };
+    view.innerHTML = `
+      <div class="license">
+        <h2>My license</h2>
+        <p class="hint">Look up a North Carolina pesticide license by number and type. This is the
+          only screen that reaches a server — the
+          <a href="https://apps.ncagr.gov/AgRSysPortalV2/licensesearch" target="_blank" rel="noopener">NC
+          Department of Agriculture public license search</a>. The result is cached in this browser, so
+          it shows instantly and only refreshes when you ask.</p>
+        <div class="licform">
+          <label>License number
+            <input type="text" id="licnum" inputmode="numeric" autocomplete="off"
+              value="${esc(input.number)}" placeholder="e.g. 87690">
+          </label>
+          <label>License type
+            <select id="lictype">
+              <option value="">Select type…</option>
+              ${License.TYPES.map(t =>
+                `<option value="${t.id}" ${t.id === input.typeId ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}
+            </select>
+          </label>
+          <button class="primary" id="liclookup">Look up</button>
+        </div>
+        <p id="licstatus" class="licstatus" role="status" aria-live="polite"></p>
+        <div id="liccard">${entry ? licenseCard(entry) : ''}</div>
+      </div>`;
+
+    const statusEl = $('#licstatus');
+
+    async function run() {
+      const lookupBtn = $('#liclookup');
+      const refreshBtn = $('#licrefresh');
+      statusEl.className = 'licstatus';
+      statusEl.textContent = 'Checking with the NC license search…';
+      if (lookupBtn) lookupBtn.disabled = true;
+      if (refreshBtn) refreshBtn.disabled = true;
+      try {
+        const fresh = await License.lookup($('#licnum').value, $('#lictype').value);
+        $('#liccard').innerHTML = licenseCard(fresh);
+        statusEl.textContent = '';
+        wireCard();
+      } catch (err) {
+        statusEl.className = 'licstatus error';
+        statusEl.textContent = err.message;
+        if (refreshBtn) refreshBtn.disabled = false;
+      } finally {
+        const b = $('#liclookup');
+        if (b) b.disabled = false;
+      }
+    }
+
+    function wireCard() {
+      const r = $('#licrefresh');
+      if (r) r.addEventListener('click', run);
+      const c = $('#licclear');
+      if (c) c.addEventListener('click', () => { License.clearCache(); renderLicense(); });
+    }
+
+    $('#liclookup').addEventListener('click', run);
+    $('#licnum').addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
+    wireCard();
+  }
+
   function renderSettings() {
     const s = Store.load();
     const active = new Set(enabledSections());
@@ -1369,8 +1553,12 @@
   // Nav entries are real links (middle-click and open-in-new-tab work); the
   // click handler only makes the render immediate instead of waiting for the
   // async hashchange. The default action then sets the same hash, a no-op.
-  document.querySelectorAll('nav a').forEach(a =>
-    a.addEventListener('click', () => go(a.dataset.view)));
+  // Drop any nav tab whose route was withheld (the License tab when no portal
+  // credential is configured), so nothing links to a view that is not there.
+  document.querySelectorAll('nav a').forEach(a => {
+    if (!ROUTES.has(a.dataset.view)) { a.remove(); return; }
+    a.addEventListener('click', () => go(a.dataset.view));
+  });
   if (!restoreSession()) render(location.hash.slice(1) || 'home');
 
   // The service worker serves everything cache-first, so after a deploy the

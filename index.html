@@ -8,7 +8,10 @@
        script or phoning out. 'unsafe-inline' for styles only: the progress
        bar and forecast set style attributes (style-src-attr would be
        cleaner, but older Safari ignores it and would break the bars). -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <!-- connect-src also allows apps.ncagr.gov: the License tab looks a license
+       up against the NC Dept. of Agriculture public search there. It is the
+       only host the app ever contacts. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://apps.ncagr.gov; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="description" content="Practice questions and spaced-repetition study tool for the North Carolina pesticide applicator certification exams.">
   <link rel="canonical" href="https://nc-pesticide.ullberg.io/">
   <title>NC Pesticide Trainer</title>
@@ -27,6 +30,7 @@
     <a href="#exam" data-view="exam">Exam</a>
     <a href="#browse" data-view="browse">Browse</a>
     <a href="#stats" data-view="stats">Stats</a>
+    <a href="#license" data-view="license">License</a>
     <a href="#settings" data-view="settings">Settings</a>
     <a href="#about" data-view="about">About</a>
   </nav>
@@ -43,6 +47,7 @@
   <script src="js/fsrs.js"></script>
   <script src="js/readiness.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/license.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
