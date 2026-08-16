@@ -10,13 +10,13 @@ export default [
     // storage.js reads its localStorage key out of EXAM_CONFIG.
     files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/manual-pages.js',
       'data/aerial-pages.js', 'data/law-pages.js', 'data/rules-pages.js',
-      'data/ncsu-anchors.js', 'data/problems.js'],
+      'data/ncsu-anchors.js', 'data/problems.js', 'data/recert-credits.js'],
     languageOptions: {
       sourceType: 'script',
       globals: { ...globals.browser, EXAM_CONFIG: 'readonly' },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES|NCSU_ANCHORS|PROBLEM_TEMPLATES)$' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES|NCSU_ANCHORS|PROBLEM_TEMPLATES|RECERT)$' }],
     },
   },
   {
@@ -105,6 +105,7 @@ export default [
         Readiness: 'readonly',
         Store: 'readonly',
         License: 'readonly',
+        RECERT: 'readonly',
       },
     },
   },
@@ -140,6 +141,7 @@ export default [
         RULES_PAGES: 'readonly', NCSU_ANCHORS: 'readonly', EXAM_CONFIG: 'readonly',
         FSRS: 'readonly', Readiness: 'readonly',
         PROBLEM_TEMPLATES: 'readonly', Problems: 'readonly',
+        RECERT: 'readonly', License: 'readonly',
       },
     },
   },

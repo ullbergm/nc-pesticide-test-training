@@ -133,11 +133,27 @@ and import for backups or for moving between devices.
 - **Browse**: the whole bank by manual chapter, with each card's schedule and accuracy.
 - **Stats**: exam readiness, mastery counts, day streak, 7-day due forecast,
   per-chapter accuracy, and exam history.
-- **License**: look your actual NC pesticide license up by number and type. It queries
+- **License**: look your actual NC pesticide licenses up by number and type. It queries
   the [NC Department of Agriculture public license search](https://apps.ncagr.gov/AgRSysPortalV2/licensesearch)
-  and shows your status, expiration, recertification deadline, and the continuing-certification
-  credits on record. This is the one screen that contacts a server; the result is cached in the
-  browser so it loads instantly and only refreshes when you press Refresh.
+  and shows status, expiration, recertification deadline, and the continuing-certification
+  credits on record. Keep as many licenses as you hold, each refreshed on its own: a pilot's
+  own license and the contractor they fly under are two separate records, and so is a spouse's
+  private certification. This is the one screen that contacts a server; results are cached in
+  the browser so they load instantly and only refresh when you press Refresh.
+
+  The credits are shown **against what they owe**, not just as what has been earned. The NC
+  search reports one bucket per category — `L [4.0] A [1.0]` — and counts only hours earned;
+  what each category *asks* is worked out here from Table 2 of AG-714 and the rules printed
+  around it, in [data/recert-credits.js](data/recert-credits.js): the highest category held is
+  earned in full and each additional one takes three, except demonstration and research, which
+  always takes ten however many others are held. Aerial certification splits its hours
+  differently — one for aerial methods, three for the first category, one for each additional —
+  and runs two years rather than five, so the card scores an aerial license by aerial rules and
+  a ground one by ground rules, off the license type. Each category gets a meter, a note saying
+  why it asks what it asks, and the card totals the shortfall for the cycle. A letter the table
+  sets no requirement for, like `E` for Core, is shown as earned hours with no target rather
+  than as a zero. That arithmetic is this app's, not NCDA&CS's: it is computed from a
+  publication that goes stale, so the card says so and links the official search.
 
 A **calculation drill** turns up in whichever of those modes the card is due
 in, with a calculator beside it: North Carolina allows a nonprogrammable one at
@@ -239,7 +255,7 @@ js/calculator.js         the on-screen calculator a drill offers (four functions
 js/fsrs.js               FSRS-6 scheduler
 js/readiness.js          projected score and pass odds per exam
 js/storage.js            localStorage persistence, export/import
-js/license.js            NC license lookup (public NCDA&CS search) with an on-device cache
+js/license.js            NC license lookup (public NCDA&CS search), caching the licenses you keep
 js/app.js                UI and session logic
 data/questions.js        question bank (1104 questions, tagged by section and source page)
 data/problems.js         28 calculation drills, as methods with the numbers left open
@@ -248,6 +264,7 @@ data/aerial-pages.js     the same map for the aerial manual
 data/law-pages.js        the same map for the NC Pesticide Law
 data/rules-pages.js      the same map for the NC pesticide rules (identity: that PDF prints no page numbers)
 data/ncsu-anchors.js     the same map for AG-714, which is a web page: heading to anchor, written by hand
+data/recert-credits.js   what each recertification category owes per cycle (AG-714 table 2), and the solver for it
 data/exam-config.js      what exam this is: tests, pass mark, manual links, exam-specific prose
 tools/                   regenerates those maps from local copies of the PDFs, and the icons
 sw.js                    service worker (offline cache, only active on the hosted site)
@@ -331,7 +348,8 @@ To run the checks locally:
 ```
 npm install          # one time, dev tooling only (the app itself has no dependencies)
 npm run lint
-npm test             # question bank validation, FSRS scheduler, readiness projection
+npm test             # question bank validation, FSRS scheduler, readiness projection,
+                     # recertification credit solver and the saved-license cache
 npm run test:browser # end-to-end suite in headless Chrome or Chromium
 ```
 
@@ -358,7 +376,9 @@ from; NC law is amended from time to time, and a question can go stale in a way 
 question cannot. The citation is the check: if a rule has changed, the linked section will
 say so. Fees and deadlines are the parts most likely to move. AG-714 goes stale the same
 way and faster, since it describes the system rather than fixing it: the copy the bank was
-written from is the November 6, 2025 revision.
+written from is the November 6, 2025 revision. `data/recert-credits.js` is written from that
+same revision and is the one place the app states a requirement in its own voice rather than
+quoting a source, so recheck its hours against Table 2 whenever AG-714 is revised.
 
 None of the four source PDFs is included in this repository. The two manuals are published
 by the NASDA Research Foundation and hosted by EPA; download them from the EPA links above.

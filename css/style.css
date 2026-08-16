@@ -643,14 +643,29 @@ body > footer a:hover { color: var(--accent); }
 
 .liccredits { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
 .liccredits h3 { font-size: 0.95rem; margin: 0 0 8px; }
-.chiprow { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-.chip {
-  padding: 3px 10px; border-radius: 999px;
-  border: 1px solid var(--border); background: var(--bg);
-  font-size: 0.82rem; color: var(--muted); font-variant-numeric: tabular-nums;
+
+/* One meter per recertification category: what the record says was earned,
+   over what AG-714 asks of that category given the others held. A category
+   with no requirement in the table (Core) gets the row without the bar. */
+.creditlist { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 10px; }
+.credit { display: grid; gap: 4px; }
+.crhead {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: baseline; gap: 2px 12px;
 }
-.chip.has { border-color: var(--accent); color: var(--text); }
-.chip b { font-weight: 800; }
+.crname { font-size: 0.9rem; }
+.crname b { font-weight: 800; }
+.crnum { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.crof { font-weight: 400; color: var(--muted); }
+.crbar { height: 7px; border-radius: 999px; background: var(--surface-dark); overflow: hidden; }
+.crbar span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+/* "met" rather than "done": .done is the session-complete screen's class,
+   which centers its text and pads it out by 48px. */
+.credit.met .crbar span { background: var(--ok); }
+.credit.met .crnum { color: var(--ok); }
+.crrule { color: var(--muted); font-size: 0.78rem; }
+.crsum { margin: 0; font-size: 0.9rem; color: var(--warn); font-weight: 600; }
+.crsum.met { color: var(--ok); }
 
 .liccourses { margin-top: 10px; }
 .liccourses summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; }

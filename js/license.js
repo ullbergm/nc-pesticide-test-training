@@ -3,6 +3,11 @@
    apps.ncagr.gov/AgRSysPortalV2/licensesearch — and caches the result so the
    card shows instantly and only touches the network when the user asks it to.
 
+   More than one license can be kept, because more than one is the normal
+   case: an aerial applicator holds a pilot license and a commercial ground
+   one, and the business they fly for holds a contractor license on top. Each
+   is saved under its own (number, type) pair and refreshed on its own.
+
    This is the one place the app talks to a server. The cache lives under its
    own localStorage key and is never folded into the study state that Export
    writes, so a progress backup stays a progress backup. */
@@ -18,28 +23,42 @@ const License = (() => {
   // do, so the whole feature (its nav tab and its view) is hidden rather than
   // shown broken. Blank either constant above to turn it off.
   const enabled = Boolean(PORTAL_USER.trim() && PORTAL_PASS.trim());
-  const TOKEN_KEY = 'ncagr-token';    // {token, exp} — cached bearer token
-  const CACHE_KEY = 'ncagr-license';  // {input, record, fetchedAt}
+  const TOKEN_KEY = 'ncagr-token';       // {token, exp} — cached bearer token
+  const CACHE_KEY = 'ncagr-licenses';    // {v, list:[{input, record, fetchedAt}]}
+  const LEGACY_KEY = 'ncagr-license';    // the single {input, record, fetchedAt} this replaced
   const TIMEOUT = 15000;
+  // Enough for a pilot's own licenses plus the contractor they fly under and
+  // a spouse or two, and low enough that the cache stays a cache. Adding past
+  // it drops the least recently refreshed.
+  const MAX_SAVED = 8;
 
   // Pesticide license types, from the portal's own ownerlicensetypes list
   // (the two pesticide owners, FDPE and FDPR). The owner scopes the search, so
   // it travels with each type rather than being a second thing to pick.
+  //
+  // `kind` is which set of recertification rules the license renews under
+  // (see data/recert-credits.js). The letter buckets on a record cannot say:
+  // an aerial applicator and a ground one both hold work categories, and only
+  // the license type tells them apart.
   const TYPES = [
-    { id: '026', owner: 'FDPE', label: 'Commercial Pesticide Applicator (026)' },
-    { id: '038', owner: 'FDPR', label: 'Private Pesticide Applicator (038)' },
-    { id: '027', owner: 'FDPE', label: 'Aerial Pesticide Applicator (Pilot) (027)' },
-    { id: '028', owner: 'FDPE', label: 'Aerial Pesticide Applicator (Contractor) (028)' },
-    { id: '029', owner: 'FDPE', label: 'Aerial Pesticide Applicator (Apprentice) (029)' },
-    { id: '030', owner: 'FDPE', label: 'Pesticide Consultant (030)' },
-    { id: '031', owner: 'FDPE', label: 'Public Pesticide Operator (Fed-State)-Ground (031)' },
-    { id: '032', owner: 'FDPE', label: 'Public Pesticide Operator (County-Municipal)-Ground (032)' },
-    { id: '033', owner: 'FDPE', label: 'Public Pesticide Operator (Public Utility)-Ground (033)' },
-    { id: '034', owner: 'FDPE', label: 'Public Aerial Pesticide (Fed-State)-Pilot (034)' },
-    { id: '035', owner: 'FDPE', label: 'Public Aerial Pesticide (County-Municipal)-Pilot (035)' },
-    { id: '037', owner: 'FDPE', label: 'Pesticide Dealer (037)' },
+    { id: '026', owner: 'FDPE', kind: 'commercial', label: 'Commercial Pesticide Applicator (026)' },
+    { id: '038', owner: 'FDPR', kind: 'private', label: 'Private Pesticide Applicator (038)' },
+    { id: '027', owner: 'FDPE', kind: 'aerial', label: 'Aerial Pesticide Applicator (Pilot) (027)' },
+    { id: '028', owner: 'FDPE', kind: 'aerial', label: 'Aerial Pesticide Applicator (Contractor) (028)' },
+    { id: '029', owner: 'FDPE', kind: 'aerial', label: 'Aerial Pesticide Applicator (Apprentice) (029)' },
+    { id: '030', owner: 'FDPE', kind: 'commercial', label: 'Pesticide Consultant (030)' },
+    { id: '031', owner: 'FDPE', kind: 'commercial', label: 'Public Pesticide Operator (Fed-State)-Ground (031)' },
+    { id: '032', owner: 'FDPE', kind: 'commercial', label: 'Public Pesticide Operator (County-Municipal)-Ground (032)' },
+    { id: '033', owner: 'FDPE', kind: 'commercial', label: 'Public Pesticide Operator (Public Utility)-Ground (033)' },
+    { id: '034', owner: 'FDPE', kind: 'aerial', label: 'Public Aerial Pesticide (Fed-State)-Pilot (034)' },
+    { id: '035', owner: 'FDPE', kind: 'aerial', label: 'Public Aerial Pesticide (County-Municipal)-Pilot (035)' },
+    { id: '037', owner: 'FDPE', kind: 'commercial', label: 'Pesticide Dealer (037)' },
   ];
   const typeById = id => TYPES.find(t => t.id === id);
+  // Commercial is the fallback because it is the rule set every license but
+  // the private and aerial ones renews under, so an id the list has not heard
+  // of still gets the right answer more often than not.
+  const kindOf = id => (typeById(id) || {}).kind || 'commercial';
 
   const readJSON = key => {
     try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
@@ -139,6 +158,44 @@ const License = (() => {
     };
   }
 
+  // A saved license is identified by what was typed to find it, not by
+  // anything the record carries: the same number exists under more than one
+  // type, and the record's own fields are what a refresh replaces.
+  const keyOf = input => `${input.typeId}:${input.number}`;
+
+  // The saved list, newest refresh first, migrating the single-entry key this
+  // replaced on the way. An entry is only kept if it still has the input that
+  // would refresh it, since an entry that cannot be refreshed is a card that
+  // can only ever go stale.
+  function saved() {
+    const stored = readJSON(CACHE_KEY);
+    const list = stored && Array.isArray(stored.list) ? stored.list : migrate();
+    return list.filter(e =>
+      e && e.record && e.input && e.input.number && e.input.typeId);
+  }
+
+  // The pre-multi-license cache held one entry under its own key. Lift it
+  // into the list and drop the old key, so an upgrade keeps the card the user
+  // already had rather than presenting them an empty page.
+  function migrate() {
+    const old = readJSON(LEGACY_KEY);
+    if (!old || !old.record || !old.input) return [];
+    const list = [old];
+    writeJSON(CACHE_KEY, { v: 1, list });
+    try { localStorage.removeItem(LEGACY_KEY); } catch { /* non-fatal */ }
+    return list;
+  }
+
+  // Save an entry, replacing any earlier lookup of the same license so a
+  // refresh updates in place rather than stacking a second copy of the same
+  // card. Newest first, capped: the list is a convenience, not a record.
+  function store(entry) {
+    const list = [entry, ...saved().filter(e => keyOf(e.input) !== keyOf(entry.input))]
+      .slice(0, MAX_SAVED);
+    writeJSON(CACHE_KEY, { v: 1, list });
+    return list;
+  }
+
   // Look a license up fresh and cache it. number is the printed license
   // number; typeId is one of TYPES[].id. Throws a user-facing Error on any
   // failure so the view can show its message verbatim.
@@ -166,14 +223,23 @@ const License = (() => {
     const detail = await authedGet(`publiclicensesearch/publiclicensedetail/${match.LID}`);
     const record = normalize(detail);
     const entry = { input: { number: num, typeId }, record, fetchedAt: Date.now() };
-    writeJSON(CACHE_KEY, entry);
+    store(entry);
     return entry;
   }
 
-  const cached = () => readJSON(CACHE_KEY);
-  function clearCache() {
-    try { localStorage.removeItem(CACHE_KEY); } catch { /* non-fatal */ }
+  // Forget one saved license, returning what is left.
+  function remove(key) {
+    const list = saved().filter(e => keyOf(e.input) !== key);
+    writeJSON(CACHE_KEY, { v: 1, list });
+    return list;
   }
 
-  return { enabled, TYPES, lookup, cached, clearCache };
+  function clearCache() {
+    try {
+      localStorage.removeItem(CACHE_KEY);
+      localStorage.removeItem(LEGACY_KEY);
+    } catch { /* non-fatal */ }
+  }
+
+  return { enabled, TYPES, MAX_SAVED, kindOf, keyOf, lookup, saved, remove, clearCache };
 })();
