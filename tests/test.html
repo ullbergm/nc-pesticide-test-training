@@ -216,7 +216,7 @@ try {
   t('system theme clears the override', !('theme' in document.documentElement.dataset));
 
   // --- test/endorsement picker: keep only the tests in the first group ---
-  // (for the CDL config that is the first-attempt scenario: GK + Air + Combination)
+  // (for the pesticide config that is the commercial core exam)
   t('test picker renders every configured test', qa('input[data-test]').length === TESTS.length);
   const keepTests = TESTS.filter(tst => tst.group === EXAM_CONFIG.testGroups[0][0]);
   const keep = new Set(keepTests.map(tst => tst.key));
@@ -255,6 +255,11 @@ try {
   ed.value = iso;
   ed.dispatchEvent(new Event('change'));
   t('exam date saved', Store.load().settings.examDate === iso);
+  // Pin the pace low so the auto-boost scenario holds for any bank size: a
+  // pace of 1 can never cover the remaining unseen cards before the date.
+  const npd0 = q('#newperday');
+  npd0.value = 1;
+  npd0.dispatchEvent(new Event('change'));
 
   nav('home');
   t('exam banner shows', !!q('.exambanner'));
@@ -283,10 +288,16 @@ try {
     qa('.seclist h4').length === EXAM_CONFIG.testGroups.length);
   t('pace info mentions boost', /boost/i.test(q('#paceinfo').textContent));
   const paceBefore = q('#paceinfo').textContent;
+  // Unchecking the last test only narrows the studied sections when the other
+  // tests do not already cover them; an exam config can make this a no-op.
+  const otherSecs = TESTS.slice(0, -1).flatMap(tst => tst.sections);
+  const narrows = !TESTS.at(-1).sections.every(sec => otherSecs.includes(sec));
   const tog = qa('input[data-test]').find(cb => cb.dataset.test === TESTS.at(-1).key);
   tog.checked = false;
   tog.dispatchEvent(new Event('change'));
-  t('pace info updates on section toggle', q('#paceinfo').textContent !== paceBefore);
+  t('pace info updates on section toggle', narrows
+    ? q('#paceinfo').textContent !== paceBefore
+    : q('#paceinfo').textContent === paceBefore);
   tog.checked = true;
   tog.dispatchEvent(new Event('change'));
   q('#cleardate').click();
