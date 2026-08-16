@@ -14,18 +14,38 @@ const lawSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'law-pages.js'
 eval(lawSrc.replace('const LAW_PAGES', 'globalThis.LAW_PAGES'));
 const rulesSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'rules-pages.js'), 'utf8');
 eval(rulesSrc.replace('const RULES_PAGES', 'globalThis.RULES_PAGES'));
+const ncsuSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'ncsu-anchors.js'), 'utf8');
+eval(ncsuSrc.replace('const NCSU_ANCHORS', 'globalThis.NCSU_ANCHORS'));
 const cfgSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'exam-config.js'), 'utf8');
 eval(cfgSrc.replace('const EXAM_CONFIG', 'globalThis.EXAM_CONFIG')
   .replace(/const (sectionsOf|CORE_SECTIONS|AERIAL_SECTIONS)\b/g, 'globalThis.$1'));
 
 // A PDF ends a few pages past the last labelled one (back matter), so allow
-// a little slack above the highest mapped page when bounding pdfPage.
+// a little slack above the highest mapped page when bounding pdfPage. A `web`
+// source maps headings to anchors rather than to page numbers, so there is no
+// last page to bound and nothing here to compute.
 const lastPage = {};
 for (const [key, m] of Object.entries(EXAM_CONFIG.manuals)) {
-  if (m.pages) lastPage[key] = Math.max(...Object.values(m.pages)) + 5;
+  const numbered = m.pages ? Object.values(m.pages).filter(v => typeof v === 'number') : [];
+  if (numbered.length) lastPage[key] = Math.max(...numbered) + 5;
 }
 
 const errors = [];
+
+// What a manual's page map is allowed to hold follows from how its links are
+// built: "#page=N" wants numbers, and a `web` source's "#anchor" wants
+// strings. Mixing them produces a link that resolves to nothing, silently.
+for (const [key, m] of Object.entries(EXAM_CONFIG.manuals)) {
+  if (!m.pages) continue;
+  const want = m.web ? 'string' : 'number';
+  const wrong = Object.entries(m.pages).filter(([, v]) => typeof v !== want);
+  if (wrong.length) {
+    errors.push(`manual "${key}" is ${m.web ? 'a web publication, so its map must hold anchors'
+      : 'a PDF, so its map must hold page numbers'}; ${wrong.length} entries do not `
+      + `(first: ${JSON.stringify(wrong[0])})`);
+  }
+}
+
 const ids = new Set();
 const questionTexts = new Map();
 const positions = [0, 0, 0, 0];

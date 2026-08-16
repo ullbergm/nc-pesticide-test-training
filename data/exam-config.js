@@ -36,6 +36,12 @@ const AERIAL_SECTIONS = sectionsOf('aerial');  // chapters 1-6 and appendices
 // the other.
 const LAW_SECTIONS = sectionsOf('law');
 const RULE_SECTIONS = sectionsOf('rules');
+// NC State Extension's AG-714, which describes the certification and
+// licensing system to applicators: exam formats, credit requirements, and
+// reciprocity. Its headings are numbered in printed order (see
+// data/questions.js), and which exam each one belongs to depends on the
+// licence it describes, so they are split the same way the rules are.
+const NCSU_SECTIONS = sectionsOf('ncsu');
 // Most of the rules bind every applicator, but three Sections are written for
 // one license and belong only to the exam that leads to it: .0500 licenses
 // commercial applicators, dealers and consultants, .1100 certifies private
@@ -47,11 +53,19 @@ const RULES_PRIVATE_ONLY = ['rules:11'];  // .1100 Private Pesticide Applicator 
 const RULES_AERIAL_ONLY = ['rules:10'];   // .1000 Aerial Application of Pesticides
 const RULES_EXAM_SPECIFIC = [...RULES_CORE_ONLY, ...RULES_PRIVATE_ONLY, ...RULES_AERIAL_ONLY];
 const RULES_SHARED = RULE_SECTIONS.filter(s => !RULES_EXAM_SPECIFIC.includes(s));
+// AG-714 by license: everyone sits an exam and earns credits (sec. 1, 7, 8),
+// and the rest follow the license each was written for.
+const ncsu = keys => keys.filter(s => NCSU_SECTIONS.includes(s));
+const NCSU_CORE = ncsu(['ncsu:1', 'ncsu:3', 'ncsu:4', 'ncsu:6', 'ncsu:7', 'ncsu:8']);
+const NCSU_PRIVATE = ncsu(['ncsu:1', 'ncsu:2', 'ncsu:6', 'ncsu:7', 'ncsu:8']);
+const NCSU_AERIAL = ncsu(['ncsu:5']);
 // What the two core-material exams draw on: the national core manual plus NC
 // law, minus the rules meant for the other license.
-const CORE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED, ...RULES_CORE_ONLY];
-const PRIVATE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED, ...RULES_PRIVATE_ONLY];
-const AERIAL_EXAM_SECTIONS = [...AERIAL_SECTIONS, ...RULES_AERIAL_ONLY];
+const CORE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED,
+  ...RULES_CORE_ONLY, ...NCSU_CORE];
+const PRIVATE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED,
+  ...RULES_PRIVATE_ONLY, ...NCSU_PRIVATE];
+const AERIAL_EXAM_SECTIONS = [...AERIAL_SECTIONS, ...RULES_AERIAL_ONLY, ...NCSU_AERIAL];
 
 // The category exams. Core licenses nobody on its own: a commercial applicator
 // passes Core and then one of these per category they want to work in, and an
@@ -145,6 +159,25 @@ const EXAM_CONFIG = {
       url: 'http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf',
       pages: RULES_PAGES,
       citeByRef: true,
+    },
+    // NC State Extension AG-714, the free publication that describes the
+    // certification and licensing system itself: what each exam looks like,
+    // what recertification takes, and who North Carolina has reciprocity
+    // with. It is the one North Carolina source on the subject that is not
+    // sold in print, which is why the bank can cover this material at all.
+    //
+    // `web` marks it as a web publication rather than a PDF: it has no pages,
+    // so a question's `page` carries the heading its fact is printed under,
+    // the citation reads as that heading instead of "p. 12", and the link is
+    // the anchor on the heading instead of "#page=N". `pages` still does the
+    // translating, from heading to anchor.
+    ncsu: {
+      title: 'Pesticide Applicator Certification and Licensing (NC State Extension AG-714)',
+      cite: 'NC State AG-714', // citations read "NC State AG-714 Reciprocity"
+      short: 'AG-714',         // section labels: "AG-714 sec. 7 Reciprocity"
+      url: 'https://content.ces.ncsu.edu/pesticide-applicator-certification-and-licensing',
+      pages: NCSU_ANCHORS,
+      web: true,
     },
   },
 
@@ -246,7 +279,7 @@ const EXAM_CONFIG = {
   },
 
   // Prose that names the exam, injected as HTML into the matching views.
-  homeSubtitle: `${QUESTION_BANK.length} questions from the national applicator manuals and North Carolina pesticide law`,
+  homeSubtitle: `${QUESTION_BANK.length} questions from the national applicator manuals, North Carolina pesticide law, and NC State Extension`,
   disclaimerHTML: `Questions were extracted from the national
     <a href="https://www.epa.gov/system/files/documents/2022-09/national-pesticide-applicator-cert-core-manual-2014.pdf"
        target="_blank" rel="noopener">core</a> and
@@ -255,8 +288,10 @@ const EXAM_CONFIG = {
     <a href="https://www.ncleg.gov/EnactedLegislation/Statutes/PDF/ByArticle/Chapter_143/Article_52.pdf"
        target="_blank" rel="noopener">pesticide law</a> and
     <a href="http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf"
-       target="_blank" rel="noopener">rules</a>;
-    accuracy is not guaranteed. Each question links to the page it came from, so verify
+       target="_blank" rel="noopener">rules</a>, and from NC State Extension's
+    <a href="https://content.ces.ncsu.edu/pesticide-applicator-certification-and-licensing"
+       target="_blank" rel="noopener">AG-714</a> on certification and licensing;
+    accuracy is not guaranteed. Each question links to where it came from, so verify
     anything important against the source, and check the law questions against the current
     section: statutes and rules are amended, and fees and deadlines move first.
     North Carolina's exams are written from the NC manuals, which cover the same material,
@@ -274,14 +309,22 @@ const EXAM_CONFIG = {
        target="_blank" rel="noopener">Pesticide Law of 1971</a> and the Pesticide Board's
     <a href="http://reports.oah.state.nc.us/ncac/title%2002%20-%20agriculture%20and%20consumer%20services/chapter%2009%20-%20food%20and%20drug%20protection/subchapter%20l/subchapter%20l%20rules.pdf"
        target="_blank" rel="noopener">rules</a> under it, which every NC exam asks about.
-    Every question cites where it came from, by page for the manuals and by section for
-    the law. The citation is a link, so it opens the PDF in the right place and you can
-    check anything important against the source.</p>`,
+    A fifth source covers the certification system itself, which no manual describes:
+    NC State Extension's
+    <a href="https://content.ces.ncsu.edu/pesticide-applicator-certification-and-licensing"
+       target="_blank" rel="noopener">Pesticide Applicator Certification and Licensing</a>
+    (AG-714), on exam formats, recertification credits, noncertified applicator training,
+    and reciprocity.
+    Every question cites where it came from, by page for the manuals, by section for
+    the law, and by heading for AG-714. The citation is a link, so it opens the source in
+    the right place and you can check anything important against it.</p>`,
   aboutCaveatHTML: `<p><strong>The subject matter here comes from the national manuals, not from a North
     Carolina one.</strong> The national manuals are published by the NASDA Research Foundation,
     hosted by EPA, and free to read, which is why this bank can cite them page by page. NC
     pesticide law is free to read too, from the General Assembly and the Office of
-    Administrative Hearings, so this bank covers it. North Carolina's own study texts, the
+    Administrative Hearings, so this bank covers it. So is AG-714, published rather than
+    sold by NC State Extension, which is what lets the bank cover the certification and
+    licensing system the way North Carolina explains it. North Carolina's own study texts, the
     NC Pesticide Applicator Certification Core Manual and the category manuals, are sold in
     print by the
     <a href="https://go.ncsu.edu/psep" target="_blank" rel="noopener">NC State Pesticide Safety

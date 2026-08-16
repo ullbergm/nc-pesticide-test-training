@@ -1,12 +1,17 @@
-/* Question bank written from four sources. Two are the national applicator
-   manuals published by the NASDA Research Foundation and hosted by EPA: the
-   National Pesticide Applicator Certification Core Manual (second edition,
-   2014), chapters 1-11 and appendices C-D, and the National Aerial
-   Applicator's Manual (2014), chapters 1-6 and appendices 2-5. The other two
-   are North Carolina's own pesticide law, which the national manuals cannot
-   cover and every NC exam asks about: the Pesticide Law of 1971 (G.S. 143,
-   Article 52) and the Pesticide Board's rules under it (02 NCAC 09L). Nothing
-   here comes from a North Carolina study manual; those are sold in print, and
+/* Question bank written from five sources, every one of them free to read.
+   Two are the national applicator manuals published by the NASDA Research
+   Foundation and hosted by EPA: the National Pesticide Applicator
+   Certification Core Manual (second edition, 2014), chapters 1-11 and
+   appendices C-D, and the National Aerial Applicator's Manual (2014),
+   chapters 1-6 and appendices 2-5. Two are North Carolina's own pesticide
+   law, which the national manuals cannot cover and every NC exam asks about:
+   the Pesticide Law of 1971 (G.S. 143, Article 52) and the Pesticide Board's
+   rules under it (02 NCAC 09L). The fifth is NC State Extension's AG-714,
+   "Pesticide Applicator Certification and Licensing", which is how the
+   certification and licensing system is described to applicators themselves:
+   exam formats, credit requirements, and reciprocity, none of which the
+   manuals cover and some of which the rules leave to practice. Nothing here
+   comes from a North Carolina study manual; those are sold in print, and
    questions from them are planned as further `manual` values.
 
    Each source numbers its own sections from 1, so `section` is a section
@@ -16,15 +21,19 @@
    `sectionLabel` ("app. C"), because an appendix's designation is not its
    position in the book. In the law a section is a Part ("pt. 4") and in the
    rules a rule Section ("sec. .0500"), numbered so they sort in printed order.
-   Ids follow the same split: s<section>-NNN for the core manual, a<section>
-   for the aerial one, l<section> for the law, r<section> for the rules.
+   AG-714 numbers nothing at all, so its headings are numbered in the order
+   they are printed in ("sec. 3"). Ids follow the same split: s<section>-NNN
+   for the core manual, a<section> for the aerial one, l<section> for the law,
+   r<section> for the rules, n<section> for AG-714.
 
    A manual question cites the page printed in its manual. A law or rule
    question is cited the way lawyers and inspectors cite it, by section number
    in `ref`, and keeps `page` because that is what opens the PDF in the right
-   place. Either way the citation resolves through that source's page map
-   (data/manual-pages.js, data/aerial-pages.js, data/law-pages.js,
-   data/rules-pages.js). docs/question-authoring.md is the recipe the bank was
+   place. AG-714 is a web page rather than a book, so it has no pages and its
+   `page` is the heading a fact is printed under. Either way the citation
+   resolves through that source's map (data/manual-pages.js,
+   data/aerial-pages.js, data/law-pages.js, data/rules-pages.js,
+   data/ncsu-anchors.js). docs/question-authoring.md is the recipe the bank was
    written with. */
 const QUESTION_BANK = [
  {
@@ -17697,5 +17706,838 @@ const QUESTION_BANK = [
   "explanation": "Chlorpyrifos is the one active ingredient coded 3z, the strictest of the three: within the described area it may not be applied within 100 yards from the edge of water for ground applications, or within one-fourth mile for aerial applications.",
   "page": "46",
   "ref": ".2203(3)"
+ },
+ {
+  "id": "n1-001",
+  "section": 1,
+  "sectionName": "Certification (Training and Testing)",
+  "sectionLabel": "sec. 1",
+  "manual": "ncsu",
+  "question": "What is the role of the two-day Pesticide Safety Schools that NC State Extension runs?",
+  "choices": [
+   "They prepare applicators for the exams, but attending one is not required for certification",
+   "They must be attended before a first-time applicator may sit either the private or the commercial exam",
+   "They stand in for the exam for applicators who attend both days and pass a quiz at the end",
+   "They are required of applicators seeking a commercial license, though not of private applicators"
+  ],
+  "answer": 0,
+  "explanation": "The North Carolina Pesticide Safety Education Program runs two-day Pesticide Safety Schools to prepare people for the private and commercial exams, which NCDA&CS administers. Attending one is optional. What certification takes is passing the exam.",
+  "page": "Certification (Training and Testing)"
+ },
+ {
+  "id": "n1-002",
+  "section": 1,
+  "sectionName": "Certification (Training and Testing)",
+  "sectionLabel": "sec. 1",
+  "manual": "ncsu",
+  "question": "An applicant fails a pesticide certification exam. How soon may it be retaken, and how many times?",
+  "choices": [
+   "After a 30-day waiting period, with no limit on the number of retakes at all",
+   "Immediately, but no more than three times in the same calendar year",
+   "After a 30-day waiting period, and no more than three times before retraining is required",
+   "Immediately, with no limit on the number of retakes, except for structural licensing exams"
+  ],
+  "answer": 3,
+  "explanation": "There is no waiting period to retake a failed pesticide exam and no cap on attempts. The exception is the structural licensing exams, which NCDA&CS must preapprove.",
+  "page": "Certification (Training and Testing)"
+ },
+ {
+  "id": "n1-003",
+  "section": 1,
+  "sectionName": "Certification (Training and Testing)",
+  "sectionLabel": "sec. 1",
+  "manual": "ncsu",
+  "question": "Which calculator may be used at an in-person North Carolina pesticide exam?",
+  "choices": [
+   "A programmable graphing calculator, if its memory is cleared first",
+   "None, because the exam site issues a calculator to each candidate",
+   "A nonprogrammable calculator; smartphones are not allowed",
+   "Any calculator, including the one built into a phone"
+  ],
+  "answer": 2,
+  "explanation": "Candidates for an in-person exam bring a No. 2 pencil, a nonprogrammable calculator, government-issued photo identification such as a driver's license, and a check or money order for the exam fee. Smartphones are prohibited, so a phone's calculator cannot stand in.",
+  "page": "Certification (Training and Testing)"
+ },
+ {
+  "id": "n1-004",
+  "section": 1,
+  "sectionName": "Certification (Training and Testing)",
+  "sectionLabel": "sec. 1",
+  "manual": "ncsu",
+  "question": "What are the North Carolina pesticide exam questions written from?",
+  "choices": [
+   "The North Carolina pesticide statute and the Pesticide Board's rules, and nothing else",
+   "Training manuals sold by the NC State Pesticide Safety Education Program",
+   "The federal certification rule in 40 CFR Part 171, published free by EPA",
+   "The national applicator manuals hosted on the EPA website"
+  ],
+  "answer": 1,
+  "explanation": "Exam questions come from the training manuals, which the NC State Pesticide Safety Education Program sells rather than publishes free. Order them at least three weeks before an exam date to leave time to read them.",
+  "page": "Certification (Training and Testing)"
+ },
+ {
+  "id": "n2-001",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "When may a certified private applicator apply a restricted use pesticide on a neighbor's land?",
+  "choices": [
+   "When it is a trade of services between two producers of agricultural commodities",
+   "Whenever the neighbor is also a certified private applicator, whatever the arrangement",
+   "Only when the neighbor pays no more than the cost of the pesticide itself",
+   "Never, because private certification reaches only land the applicator owns or rents"
+  ],
+  "answer": 0,
+  "explanation": "Private certification covers restricted use pesticides used to produce an agricultural commodity on property the applicator owns or rents. It also reaches a neighbor's land when the work is a trading of services between two producers of agricultural commodities. Applying for compensation is commercial work and takes a commercial license.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-002",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "A 16-year-old wants to apply pesticides under a certified private applicator's supervision. When is that allowed?",
+  "choices": [
+   "Only when the supervising applicator stays physically present at the treatment site throughout",
+   "Only when the pesticide is a general use product whose label sets no age requirement",
+   "Never, because every noncertified applicator working under supervision must be at least 18",
+   "Only under an immediate family member, and never for aerial restricted use or fumigants"
+  ],
+  "answer": 3,
+  "explanation": "A noncertified applicator working under a certified private applicator must normally be at least 18. Someone 16 or older may apply pesticides under the supervision of an immediate family member who is certified, but that exception does not reach aerial applications of restricted use pesticides or the use of fumigants.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-003",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "What form does the Private Applicator Exam take?",
+  "choices": [
+   "One hundred questions, closed book",
+   "One hundred questions, open book from a manual supplied at the site",
+   "Fifty multiple-choice questions, answered closed book",
+   "Fifty questions, open book from a manual supplied at the site"
+  ],
+  "answer": 2,
+  "explanation": "Initial private certification is the 50-question, closed-book, multiple-choice Private Applicator Exam, written from the North Carolina Pesticide Applicator Certification Core Manual, with 70% to pass.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-004",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "After the Private Applicator Exam is passed, what is the attestation form NCDA&CS sends?",
+  "choices": [
+   "A declaration naming the certified applicator who will supervise the first season",
+   "A legal document attesting that the applicant produces an agricultural commodity",
+   "The applicant's own record of the exam score, kept for the certification period",
+   "Temporary authority to buy restricted use pesticides until the certification card arrives"
+  ],
+  "answer": 1,
+  "explanation": "The attestation form is the application for private pesticide certification, and it is a legal document: the applicant attests to being involved in producing an agricultural commodity. NCDA&CS mails the certification card once the signed form and the fee arrive.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-005",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "How are the private applicator category exams administered?",
+  "choices": [
+   "Open book, from a manual that the Department provides at the exam site",
+   "Open book, from any manual or notes the candidate chooses to bring",
+   "Closed book, with the manual available only at a review beforehand",
+   "Closed book, in the same form as the Private Applicator Exam itself"
+  ],
+  "answer": 0,
+  "explanation": "The commodity fumigation, soil fumigation, and aerial category exams for private applicators are 50 questions and open book. NCDA&CS supplies the manual or book at the exam site, and no outside notes or materials are permitted.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-006",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "What does it cost a certified private applicator to add a category?",
+  "choices": [
+   "An exam fee every time an exam is taken and a certification fee per category",
+   "A certification fee for each category, the exam itself being offered free",
+   "Nothing, because both the exam and the added category ride on the original fee",
+   "An exam fee every time an exam is taken, but no additional certification fee"
+  ],
+  "answer": 3,
+  "explanation": "Adding a category costs an exam fee each time an exam is taken. There is no certification fee beyond the private applicator certification fee, and the categories run concurrently with that certification.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-007",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "What does a private aerial applicator NOT need that a commercial aerial applicator does?",
+  "choices": [
+   "Certification as a private applicator before the aerial category is added",
+   "A passing score on a category exam covering aerial application",
+   "An aerial contractor business license and an annual aircraft inspection",
+   "A Federal Aviation Administration license for the aircraft being flown"
+  ],
+  "answer": 2,
+  "explanation": "Private aerial applicators still meet every FAA requirement and hold private applicator certification first. What they do not need is the aerial contractor business license a commercial aerial operation takes, and their aircraft is not inspected. Their certification also runs three years, against two for commercial aerial.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-008",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "A private applicator holds all three private categories. How many recertification credit hours are required?",
+  "choices": [
+   "Six hours: three of V credit plus one of X for each category",
+   "Five hours: two of V credit plus one hour of X credit for each category",
+   "Four hours: two of V credit and two of X credit, the same as any private applicator",
+   "Seven hours: four of V credit plus one hour of X credit for each category"
+  ],
+  "answer": 1,
+  "explanation": "A private applicator with no added categories needs four hours: two of V credit and two of X. Holding all three categories — soil fumigation, commodity fumigation, and aerial — raises the total to five, being two hours of V credit and one hour of X credit for each of the three.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n2-009",
+  "section": 2,
+  "sectionName": "Private Pesticide Applicators",
+  "sectionLabel": "sec. 2",
+  "manual": "ncsu",
+  "question": "What must the holder of a single-purchase, emergency-use permit do with it?",
+  "choices": [
+   "Give it to the pesticide dealer at the time of purchase",
+   "File it with NCDA&CS within ten days of the application",
+   "Keep it with the application records for three years",
+   "Return it to the county extension pesticide coordinator afterwards"
+  ],
+  "answer": 0,
+  "explanation": "The permit authorizes buying and using one restricted use pesticide for a single application to a specific crop or site. The approved permit goes to the pesticide dealer at the time of purchase, and anyone who expects to use restricted use pesticides again has to become certified.",
+  "page": "Private Pesticide Applicators"
+ },
+ {
+  "id": "n3-001",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "Which letter designation does NCDA&CS use for the Core Exam?",
+  "choices": [
+   "C, being the first letter of the word core",
+   "P, which it shares with the aerial category",
+   "D, which is also the letter on a pesticide dealer's recertification credits",
+   "E, which stands for core material rather than a work category"
+  ],
+  "answer": 3,
+  "explanation": "Certification categories are recorded by letter — A for aquatic, L for ornamental and turf, and so on — and the Core Exam is category E. That is how it appears in a certification record.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-002",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "How many exams does initial certification as a commercial applicator take, and of what length?",
+  "choices": [
+   "One: a 100-question exam combining core material and the category",
+   "Three: the Core Exam, a category exam, and a North Carolina law exam",
+   "Two: the 100-question Core Exam and a 50-question category exam",
+   "Two: a 50-question Core Exam and a 100-question category exam"
+  ],
+  "answer": 2,
+  "explanation": "Commercial certification takes at least two exams: the 100-question Core Exam, written from the North Carolina Pesticide Applicator Certification Core Manual, and a 50-question exam for the category. Further categories are added by passing the category exam alone, without retaking Core.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-003",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "How many recertification credit hours does the Ornamental & Turf (L) category require?",
+  "choices": [
+   "Three, the same as Seed Treatment",
+   "Ten, the same as Agricultural Pest Plant",
+   "Six, the same as Aquatic Pest Control and Forestry",
+   "Four, the same as Right-of-Way"
+  ],
+  "answer": 1,
+  "explanation": "Ornamental and turf pest control — home lawns, public grounds, parks, shade trees, golf courses, and cemeteries — carries ten credit hours, the top of the scale along with agricultural pest plant and demonstration and research. Right-of-way and wood treatment take four; seed treatment and commercial soil fumigation take three.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-004",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "An applicator certified in Demonstration & Research (N) and one other category recertifies by credits. What does N require?",
+  "choices": [
+   "Ten hours, in addition to the credits the other category takes",
+   "Ten hours, out of which the other category's three credits are taken",
+   "Three hours, because N is always paired with another category",
+   "No hours of its own, because N never stands alone"
+  ],
+  "answer": 0,
+  "explanation": "An applicator certified in more than one category normally earns the full requirement of the category with the highest requirement, then three credits in each additional one. Demonstration and research is the exception: it always takes ten hours for renewal, and every additional category's credits are earned on top of that.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-005",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "A certified applicator adds a category in the final year of a five-year certification period. What credits does the new category need before that period ends?",
+  "choices": [
+   "Three, the amount any additional category takes",
+   "The full requirement for that category, prorated to the months remaining",
+   "The full requirement for that category, as if it had been held all five years",
+   "None at all until the next recertification cycle begins"
+  ],
+  "answer": 3,
+  "explanation": "Credits for a category added during a recertification period normally have to be earned before that period expires. A category added in the last year of certification is the exception: no credits are due for it until the new cycle begins. Adding a category never moves the certification date either.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-006",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "An applicator without the required credits reaches July 1 of the final year of certification. What does recertifying by examination now take?",
+  "choices": [
+   "The Core Exam only, the categories being already held",
+   "A written examination in the highest-requirement category only",
+   "The Core Exam again, plus every applicable category exam",
+   "The applicable category exams only, as it would before June 30"
+  ],
+  "answer": 2,
+  "explanation": "Retaking the category exams before the June 30 deadline in the last year of certification recertifies an applicator without the Core Exam. After July 1, an applicator who has not earned the required credits retakes the Core Exam as well as the applicable category exams.",
+  "page": "Commercial Applicator Certification and Licensing Summary"
+ },
+ {
+  "id": "n3-007",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "A commercial applicator holds a five-year certification. How often does the license itself have to be renewed?",
+  "choices": [
+   "Only when the applicator adds a category or moves to a new employer",
+   "Every year, since every pesticide license expires on December 31",
+   "Every five years, on the same cycle as the certification behind it",
+   "Every two years, at the midpoint of the certification period"
+  ],
+  "answer": 1,
+  "explanation": "Certification and licensing run on different clocks. Certification lasts five years for ground categories and two for aerial, while every pesticide license expires on December 31 and is renewed annually by a currently certified individual paying the fee. A commercial applicator must be licensed in any year they apply pesticides or supervise their use, and the license is also what allows buying a restricted use pesticide.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-008",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "May a public operator use that license for pesticide work outside their government or utility job?",
+  "choices": [
+   "No, because work outside that employment takes a commercial license or private certification",
+   "Yes, as long as the work falls in a category the public operator license already covers",
+   "Yes, provided the applicator reports the outside income to the employing agency",
+   "Only for a government agency other than the one that employs the applicator"
+  ],
+  "answer": 0,
+  "explanation": "A public operator license covers applications made as part of the job for the employing government agency or utility, and nothing else. Commercial work on the side calls for a Commercial Ground Applicator license, and treating one's own crop land calls for private applicator certification.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-009",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "Which public operators pay an annual licensing fee?",
+  "choices": [
+   "Employees of government agencies, but not public utility employees",
+   "Both, at the same annual rate as a commercial ground applicator",
+   "Neither, a public operator license carrying no fee of any kind",
+   "Public utility employees, but not employees of government agencies"
+  ],
+  "answer": 3,
+  "explanation": "Public operators study the same manuals and sit the same exams as commercial applicators. Government employees pay no licensing fee, but public utility employees pay the annual fee. Either way the license is renewed every year and is mailed only to the agency or utility address.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-010",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "An applicator treats shade trees on a client's property. Which commercial category covers that work?",
+  "choices": [
+   "Right-of-Way (H), which covers trees close to structures",
+   "Agricultural Pest Plant (O), which covers woody plants",
+   "Ornamental & Turf (L), which also covers shade trees",
+   "Forestry (G), which covers trees wherever they grow"
+  ],
+  "answer": 2,
+  "explanation": "Forestry covers forests, forest nurseries, and forest seed-producing areas. Anyone treating ornamental or shade trees tests in Ornamental & Turf instead, which also takes in home lawns, public grounds, parks, golf courses, and cemeteries. Christmas trees fall outside forestry too; they are covered by private certification.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-011",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "Which work falls outside the commercial Public Health (B) category?",
+  "choices": [
+   "Treating fleas, mites, and ticks outdoors",
+   "Treating bedbugs and other structural pests",
+   "Treating mosquitoes in standing water outdoors",
+   "Controlling roots growing into sewer lines"
+  ],
+  "answer": 1,
+  "explanation": "Public health pest control is outdoor work against pests that threaten human health: mosquitoes, fleas, mites, ticks, and flies, along with control of roots in sewers. Bedbugs and other structural pests lie outside it.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n3-012",
+  "section": 3,
+  "sectionName": "Commercial Pesticide Applicators",
+  "sectionLabel": "sec. 3",
+  "manual": "ncsu",
+  "question": "Which applicators does the Small Animal K(SA) category take in besides those treating pets?",
+  "choices": [
+   "Pet groomers applying pesticides to pets and where pets are confined",
+   "Veterinarians dispensing pesticides for owners to apply at home",
+   "Kennels applying pesticides to bedding but never to the animals",
+   "Poultry house operators, who have no separate category of their own"
+  ],
+  "answer": 0,
+  "explanation": "Agricultural pest animal splits into livestock (K), poultry (KPU), and small animal (KSA), each covering the animals and the places they are confined. Small animal takes in pet groomers who apply pesticides to pets and to where pets are kept.",
+  "page": "Commercial Pesticide Applicators"
+ },
+ {
+  "id": "n4-001",
+  "section": 4,
+  "sectionName": "License Types",
+  "sectionLabel": "sec. 4",
+  "manual": "ncsu",
+  "question": "Which exams does a pesticide dealer have to pass to be certified?",
+  "choices": [
+   "The Core Exam and the Pesticide Dealer Exam",
+   "The Core Exam, a category exam, and the Pesticide Dealer Exam",
+   "The Core Exam and a category exam covering what the outlet sells",
+   "The Pesticide Dealer Exam, and neither Core nor a category exam"
+  ],
+  "answer": 3,
+  "explanation": "Dealer certification is the Pesticide Dealer Exam and the licensing fee. Neither the Core Exam nor any specialty category is needed, and each sales outlet must have a licensed dealer of its own.",
+  "page": "License Types"
+ },
+ {
+  "id": "n4-002",
+  "section": 4,
+  "sectionName": "License Types",
+  "sectionLabel": "sec. 4",
+  "manual": "ncsu",
+  "question": "What may a licensed pesticide dealer NOT do without also holding an applicator license?",
+  "choices": [
+   "Keep restricted use pesticides in commercial storage at the outlet",
+   "Recommend a specific pesticide to a customer who asks for one",
+   "Apply a restricted use pesticide to property they own themselves",
+   "Sell a restricted use pesticide to a certified applicator"
+  ],
+  "answer": 2,
+  "explanation": "A dealer license covers selling restricted use pesticides to certified or licensed end users, and no more. Applying a restricted use pesticide to the dealer's own property, or any pesticide to someone else's property, takes an applicator license or private certification.",
+  "page": "License Types"
+ },
+ {
+  "id": "n4-003",
+  "section": 4,
+  "sectionName": "License Types",
+  "sectionLabel": "sec. 4",
+  "manual": "ncsu",
+  "question": "Which exams must a pesticide consultant pass?",
+  "choices": [
+   "The Consultant Exam and the Core Exam, a consultant working across every category",
+   "The Consultant Exam, the Core Exam, and a category exam in the area of consultation",
+   "The Consultant Exam alone, the degree standing in for the other exams",
+   "The Core Exam and a category exam, the degree standing in for the Consultant Exam"
+  ],
+  "answer": 1,
+  "explanation": "A consultant first documents a four-year degree in an agricultural or biological science with at least 30 semester hours or 45 quarter hours in the subject area consulted on. Three exams follow: the Pesticide Consultant Exam, the Core Exam, and a category exam in the area of consultation.",
+  "page": "License Types"
+ },
+ {
+  "id": "n4-004",
+  "section": 4,
+  "sectionName": "License Types",
+  "sectionLabel": "sec. 4",
+  "manual": "ncsu",
+  "question": "A pesticide consultant lets certification in the consulting category expire. What does getting it back take?",
+  "choices": [
+   "Retaking and passing the Core, category, and Consultant exams",
+   "Retaking the Consultant Exam only, the degree still standing",
+   "Retaking the category exam only, as for any other applicator",
+   "Earning the missed credits and a late fee, with no exam at all"
+  ],
+  "answer": 0,
+  "explanation": "Certification has to be maintained in the category being consulted on. Once it expires, all three exams — Core, category, and Consultant — have to be retaken and passed.",
+  "page": "License Types"
+ },
+ {
+  "id": "n4-005",
+  "section": 4,
+  "sectionName": "License Types",
+  "sectionLabel": "sec. 4",
+  "manual": "ncsu",
+  "question": "What does a pesticide consultant license NOT permit?",
+  "choices": [
+   "Recommending a specific pesticide product for a fee",
+   "Supplying technical advice on pest control for a fee",
+   "Supervising a pesticide application for a client",
+   "Applying pesticides to another person's property"
+  ],
+  "answer": 3,
+  "explanation": "A consultant license covers offering technical advice, supervision, and recommendations of specific pesticides, for a fee. It does not cover application: a consultant who wants to apply pesticides to someone else's property needs an applicator license as well.",
+  "page": "License Types"
+ },
+ {
+  "id": "n4-006",
+  "section": 4,
+  "sectionName": "License Types",
+  "sectionLabel": "sec. 4",
+  "manual": "ncsu",
+  "question": "What determines which public operator license number an applicator holds?",
+  "choices": [
+   "The county worked in and the size of the treatment program",
+   "Whether the employer or the applicator pays the licensing fee",
+   "The employing agency and whether the work is ground or aerial",
+   "The categories the applicator is certified in, and nothing else at all"
+  ],
+  "answer": 2,
+  "explanation": "Public operator is a general description covering six license numbers. Ground applications are Federal/State (031), City/County (032), or Public Utility (033); aerial applications are Federal/State (034), City/County (035), and Public Utility (036).",
+  "page": "License Types"
+ },
+ {
+  "id": "n5-001",
+  "section": 5,
+  "sectionName": "Aerial Applicator Licensing",
+  "sectionLabel": "sec. 5",
+  "manual": "ncsu",
+  "question": "In which categories may a licensed aerial applicator NOT be certified?",
+  "choices": [
+   "Agricultural Pest Animal, Forestry, and Right-of-Way",
+   "Seed Treatment, Wood Treatment, and Agricultural Pest Animal",
+   "Seed Treatment, Regulatory, and Demonstration & Research work",
+   "Wood Treatment, Aquatic Pest Control, and Public Health"
+  ],
+  "answer": 1,
+  "explanation": "An aerial applicator can be certified in any commercial category except seed treatment, wood treatment, and the agricultural pest animal categories, none of which is work done from an aircraft.",
+  "page": "Aerial Applicator Licensing"
+ },
+ {
+  "id": "n5-002",
+  "section": 5,
+  "sectionName": "Aerial Applicator Licensing",
+  "sectionLabel": "sec. 5",
+  "manual": "ncsu",
+  "question": "Who needs an Aerial Contractor license?",
+  "choices": [
+   "Every aerial pesticide application business, whose pilots work under it",
+   "Every pilot who applies pesticides, whether or not employed by a business",
+   "Only businesses operating more than one agricultural aircraft",
+   "Only businesses whose pilots hold apprentice rather than pilot licenses"
+  ],
+  "answer": 0,
+  "explanation": "Each aerial pesticide application business needs an Aerial Contractor license, and every pilot or apprentice works under a licensed contractor. A pilot may hold their own contractor license or work for someone who does. Qualifying takes an FAA 137 certificate and meeting the pilot license requirements; a UAV candidate who needs no certificate supplies an FAA 137 waiver instead.",
+  "page": "Aerial Applicator Licensing"
+ },
+ {
+  "id": "n5-003",
+  "section": 5,
+  "sectionName": "Aerial Applicator Licensing",
+  "sectionLabel": "sec. 5",
+  "manual": "ncsu",
+  "question": "What FAA credential does a UAV pilot supply when applying for an aerial pesticide license?",
+  "choices": [
+   "A traditional FAA pilot certificate for helicopters",
+   "An FAA 137 certificate issued in the pilot's own name",
+   "None, UAV work falling outside FAA jurisdiction",
+   "FAA 107 information, or its equivalent"
+  ],
+  "answer": 3,
+  "explanation": "Traditional pilots flying helicopters or planes give their FAA license information. UAV pilots give FAA 107 information or the equivalent. Either way the FAA requirements come first, before NCDA&CS will license the applicator.",
+  "page": "Aerial Applicator Licensing"
+ },
+ {
+  "id": "n5-004",
+  "section": 5,
+  "sectionName": "Aerial Applicator Licensing",
+  "sectionLabel": "sec. 5",
+  "manual": "ncsu",
+  "question": "What does NCDA&CS do every year for a licensed aerial applicator besides renewing the license?",
+  "choices": [
+   "Audit the previous season's application records",
+   "Renew the applicator's certification for another two years",
+   "Inspect the aircraft used to apply pesticides",
+   "Re-examine the pilot on aerial methods"
+  ],
+  "answer": 2,
+  "explanation": "Aerial applicator licenses are renewed annually like any other pesticide license, and NCDA&CS must inspect the aircraft each year as well. Certification itself runs to December 31 of the second year following initial certification.",
+  "page": "Aerial Applicator Licensing"
+ },
+ {
+  "id": "n5-005",
+  "section": 5,
+  "sectionName": "Aerial Applicator Licensing",
+  "sectionLabel": "sec. 5",
+  "manual": "ncsu",
+  "question": "An aerial applicator holds two categories. How many recertification credit hours are required, and how are they split?",
+  "choices": [
+   "Six: three in each category, aerial methods folded into the first three",
+   "Five: three in the first category, one in aerial methods, one in the second",
+   "Four: three in the first category and one in aerial methods, whatever else is held",
+   "Four: two in each category, aerial methods counting toward either one"
+  ],
+  "answer": 1,
+  "explanation": "An aerial applicator's baseline is four hours over two years: three for the first category plus one hour of aerial methods. Each additional category adds another hour, so two categories come to five. The credits are due by June 30 of the second year following certification.",
+  "page": "Commercial Applicator Certification and Licensing Summary"
+ },
+ {
+  "id": "n5-006",
+  "section": 5,
+  "sectionName": "Aerial Applicator Licensing",
+  "sectionLabel": "sec. 5",
+  "manual": "ncsu",
+  "question": "Whom do the public-sector aerial licenses, such as Public Utility Aerial Applicator, NOT cover?",
+  "choices": [
+   "Contractors and other individuals hired to do the applications",
+   "Employees who fly UAVs rather than planes or helicopters",
+   "Employees of federal agencies, who license through EPA instead",
+   "Employees who apply only general use pesticides from the air"
+  ],
+  "answer": 0,
+  "explanation": "Public Utility Aerial Applicator, Federal/State Public Pesticide Operator (Aerial), and County/City Public Pesticide Operator (Aerial) are for people who apply pesticides aerially as part of their public-sector employment. A contractor hired to do the work licenses as a commercial aerial applicator instead.",
+  "page": "Aerial Applicator Licensing"
+ },
+ {
+  "id": "n6-001",
+  "section": 6,
+  "sectionName": "Noncertified Applicator (nCA)",
+  "sectionLabel": "sec. 6",
+  "manual": "ncsu",
+  "question": "When must a noncertified applicator's training be completed?",
+  "choices": [
+   "Within 30 days of the first application, and renewed annually",
+   "Before the first application, once, with no renewal needed",
+   "During the first season of work, and renewed every three years",
+   "Before the first application, and renewed annually thereafter"
+  ],
+  "answer": 3,
+  "explanation": "A noncertified applicator has to be trained before making a first application, and the training is renewed every year. The record has to show that the training happened within 12 months of the application it covers. These requirements took effect in 2025.",
+  "page": "Noncertified Applicator (nCA)"
+ },
+ {
+  "id": "n6-002",
+  "section": 6,
+  "sectionName": "Noncertified Applicator (nCA)",
+  "sectionLabel": "sec. 6",
+  "manual": "ncsu",
+  "question": "When must the supervising applicator create the required noncertified applicator record?",
+  "choices": [
+   "At the end of the season in which the applications were made",
+   "Only when an inspector asks to see the training records",
+   "Before the pesticide application takes place",
+   "Within seven days after the application"
+  ],
+  "answer": 2,
+  "explanation": "The supervising applicator makes the record before the application, not afterwards. It carries the noncertified applicator's name and signature, the date the initial or annual training requirement was met, who conducted the training, and its title or description.",
+  "page": "Noncertified Applicator (nCA)"
+ },
+ {
+  "id": "n6-003",
+  "section": 6,
+  "sectionName": "Noncertified Applicator (nCA)",
+  "sectionLabel": "sec. 6",
+  "manual": "ncsu",
+  "question": "In which case does a noncertified applicator NOT need the state-approved training?",
+  "choices": [
+   "The applicator has held the same job for more than one full season",
+   "The application is part of the employee's duties on the employer's property",
+   "The application is supervised by an applicator certified in that category",
+   "The application uses a general use pesticide rather than a restricted use one"
+  ],
+  "answer": 1,
+  "explanation": "The training requirement drops away when the application does not require a license, when it is not for compensation, or when it is performed as part of an employee's duties on the employer's property. Supervision and the classification of the pesticide make no difference to it.",
+  "page": "Noncertified Applicator (nCA)"
+ },
+ {
+  "id": "n6-004",
+  "section": 6,
+  "sectionName": "Noncertified Applicator (nCA)",
+  "sectionLabel": "sec. 6",
+  "manual": "ncsu",
+  "question": "Who answers for a pesticide misuse committed by a noncertified applicator?",
+  "choices": [
+   "Both the noncertified applicator and the supervising applicator",
+   "The supervising applicator alone, as the holder of the license",
+   "The noncertified applicator alone, as the person who applied it",
+   "The employer, whether or not either one holds a license"
+  ],
+  "answer": 0,
+  "explanation": "Unless the label says otherwise, the supervisor need not be physically present, but must be reachable by phone or radio and able to respond to an emergency. Both the supervisor and the noncertified applicator are held responsible for any misuse.",
+  "page": "Noncertified Applicator (nCA)"
+ },
+ {
+  "id": "n7-001",
+  "section": 7,
+  "sectionName": "Reciprocity",
+  "sectionLabel": "sec. 7",
+  "manual": "ncsu",
+  "question": "A commercial ground applicator certified in another state wants a reciprocal North Carolina license. Which states qualify?",
+  "choices": [
+   "Virginia, Tennessee, South Carolina, and Georgia",
+   "South Carolina, Georgia, Florida, and Mississippi",
+   "Any state whose certification standards EPA has approved",
+   "Virginia, South Carolina, Georgia, and Florida only"
+  ],
+  "answer": 3,
+  "explanation": "A reciprocal commercial ground license goes to an applicator holding a valid certification card from Virginia, South Carolina, Georgia, or Florida, earned by passing that state's written examination. An annual fee applies, and the license covers non-aerial applications.",
+  "page": "Reciprocity"
+ },
+ {
+  "id": "n7-002",
+  "section": 7,
+  "sectionName": "Reciprocity",
+  "sectionLabel": "sec. 7",
+  "manual": "ncsu",
+  "question": "A nonresident holding a reciprocal North Carolina license moves to North Carolina. What happens to the reciprocity?",
+  "choices": [
+   "It continues to the end of the certification period, then lapses",
+   "It converts automatically into a North Carolina license at renewal",
+   "It ends, and the applicator has to pass the North Carolina exams",
+   "It continues as long as the home-state certification is kept current"
+  ],
+  "answer": 2,
+  "explanation": "Reciprocity is for nonresidents. Once a nonresident applicator becomes a North Carolina resident the terms of reciprocity are no longer an option, and that person takes the appropriate North Carolina exams to become certified and licensed.",
+  "page": "Reciprocity"
+ },
+ {
+  "id": "n7-003",
+  "section": 7,
+  "sectionName": "Reciprocity",
+  "sectionLabel": "sec. 7",
+  "manual": "ncsu",
+  "question": "How long does a reciprocal North Carolina private applicator certification run?",
+  "choices": [
+   "As long as the home-state certification lasts",
+   "Three years, the same as any private certification",
+   "One year, renewed with the license each December",
+   "Five years, the same as a commercial certification"
+  ],
+  "answer": 1,
+  "explanation": "A private applicator certified in another state can be issued a reciprocal North Carolina certification on presenting a valid certification card, for three years, with fees. Recertifying is done either through the home state or by earning the appropriate North Carolina credits.",
+  "page": "Reciprocity"
+ },
+ {
+  "id": "n7-004",
+  "section": 7,
+  "sectionName": "Reciprocity",
+  "sectionLabel": "sec. 7",
+  "manual": "ncsu",
+  "question": "What reciprocity do North Carolina aerial applicators have with other states?",
+  "choices": [
+   "None, beyond emergency reciprocity in a declared public health emergency",
+   "The same four-state reciprocity that commercial ground applicators have",
+   "Full reciprocity with every state that licenses aerial applicators at all",
+   "None at all, in any circumstances, including declared emergencies"
+  ],
+  "answer": 0,
+  "explanation": "North Carolina aerial applicators have no ordinary reciprocity with other states. The one exception is emergency reciprocity, which the state where the application will be made may grant after a state or local official, such as a State or County Health Director, declares a public health emergency.",
+  "page": "Reciprocity"
+ },
+ {
+  "id": "n7-005",
+  "section": 7,
+  "sectionName": "Reciprocity",
+  "sectionLabel": "sec. 7",
+  "manual": "ncsu",
+  "question": "Emergency reciprocity for a North Carolina aerial applicator is limited in two ways. Which?",
+  "choices": [
+   "Virginia, South Carolina, and Georgia only, in the Public Health (B) category only",
+   "Georgia, South Carolina, and Mississippi only, in any category the applicator already holds",
+   "Any adjoining state, in the Public Health (B) and Right-of-Way (H) categories",
+   "Georgia, South Carolina, and Mississippi only, in the Public Health (B) category only"
+  ],
+  "answer": 3,
+  "explanation": "The limited aerial applicator's license granted under emergency reciprocity is available in Georgia, South Carolina, and Mississippi only, and it is issued in the Public Health (B) category only.",
+  "page": "Reciprocity"
+ },
+ {
+  "id": "n7-006",
+  "section": 7,
+  "sectionName": "Reciprocity",
+  "sectionLabel": "sec. 7",
+  "manual": "ncsu",
+  "question": "Which license holders cannot be issued a reciprocal North Carolina license at all?",
+  "choices": [
+   "Pesticide consultants and private applicators",
+   "Public operators and commercial ground applicators",
+   "Pesticide dealers and pesticide consultants",
+   "Pesticide dealers and public operators"
+  ],
+  "answer": 2,
+  "explanation": "Reciprocal licenses are not available for pesticide dealers or pesticide consultants. Commercial ground applicators and private applicators are the groups reciprocity reaches, and aerial applicators only in a declared public health emergency.",
+  "page": "Reciprocity"
+ },
+ {
+  "id": "n8-001",
+  "section": 8,
+  "sectionName": "Recertification Course Approval",
+  "sectionLabel": "sec. 8",
+  "manual": "ncsu",
+  "question": "What makes an educational program count for pesticide recertification credit?",
+  "choices": [
+   "Sponsorship by N.C. Cooperative Extension or a commodity group",
+   "Preapproval by NCDA&CS, obtained before the program is held",
+   "Approval by the sponsor of the applicator's own category",
+   "Attendance records filed with NCDA&CS within 30 days afterwards"
+  ],
+  "answer": 1,
+  "explanation": "Every educational program offered for private or commercial recertification credit has to be preapproved by NCDA&CS, and the sponsor applies through the Pesticide Section. Approval goes to the training supervisor by email.",
+  "page": "Recertification Course Approval"
+ },
+ {
+  "id": "n8-002",
+  "section": 8,
+  "sectionName": "Recertification Course Approval",
+  "sectionLabel": "sec. 8",
+  "manual": "ncsu",
+  "question": "A recertification program spends half its scheduled time on farm business management. How is credit assigned?",
+  "choices": [
+   "Only the hours spent on pesticide-related topics earn credit",
+   "The whole scheduled program earns credit once approved",
+   "No credit at all, the program not being solely about pesticides",
+   "Credit is halved across every category the program lists"
+  ],
+  "answer": 0,
+  "explanation": "Credit is given only for pesticide-related topics, and the number of credit hours equals the number of hours of pesticide training scheduled. A program that mixes in other subjects earns credit for its pesticide portion.",
+  "page": "Recertification Course Approval"
  }
 ];

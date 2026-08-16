@@ -1372,14 +1372,23 @@
   // by being told it sits on page 12, so a question from one carries a `ref`
   // and its citation reads as that reference. The page is still what opens the
   // PDF in the right place, which is why a question keeps both.
+  //
+  // A source the config marks `web` is a web publication rather than a PDF: it
+  // has no pages at all, so `page` names the heading the fact is printed
+  // under, the citation reads as that heading, and the link is the anchor on
+  // it rather than a "#page=" fragment. Either way the source's `pages` map
+  // turns what the question cites into what the link points at.
   const manualCite = q => {
     const m = CFG.manuals[q.manual || 'default'];
     if (!m || !q.page) return '';
-    const label = `${esc(m.cite || 'Manual')} ${q.ref ? esc(q.ref) : `p. ${esc(q.page)}`}`;
-    const pdfPage = q.pdfPage || (m.pages && m.pages[q.page]);
-    return m.url && pdfPage
-      ? `<a class="cite" href="${m.url}#page=${pdfPage}" target="_blank" rel="noopener"
-           title="Open the manual at page ${esc(q.page)}">${label}</a>`
+    const where = q.ref ? esc(q.ref) : m.web ? esc(q.page) : `p. ${esc(q.page)}`;
+    const label = `${esc(m.cite || 'Manual')} ${where}`;
+    const target = q.pdfPage || (m.pages && m.pages[q.page]);
+    return m.url && target
+      ? `<a class="cite" href="${m.url}#${m.web ? '' : 'page='}${encodeURIComponent(target)}"
+           target="_blank" rel="noopener"
+           title="${m.web ? `Open the source at ${esc(q.page)}`
+             : `Open the manual at page ${esc(q.page)}`}">${label}</a>`
       : `<span class="cite">${label}</span>`;
   };
 
