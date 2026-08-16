@@ -3,6 +3,7 @@
 [![CI](https://github.com/ullbergm/nc-pesticide-test-training/actions/workflows/ci.yml/badge.svg)](https://github.com/ullbergm/nc-pesticide-test-training/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/ullbergm/nc-pesticide-test-training)](https://github.com/ullbergm/nc-pesticide-test-training/releases)
 [![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-test-training)](LICENSE)
+[![Live site](https://img.shields.io/website?url=https%3A%2F%2Fnc-pesticide.ullberg.io&label=nc-pesticide.ullberg.io)](https://nc-pesticide.ullberg.io)
 
 [![Questions](https://img.shields.io/badge/questions-30-blue)](data/questions.js)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-blue)](package.json)
@@ -29,8 +30,10 @@ rules, which the bank does not yet cover.
 
 This project is a fork of
 [nc-cdl-test-training](https://github.com/ullbergm/nc-cdl-test-training): the
-same engine studying a different manual. There is no build step, no
-dependencies, and no server. Just open `index.html` in a browser. All progress
+same engine studying a different manual. Live at
+[nc-pesticide.ullberg.io](https://nc-pesticide.ullberg.io), or run it
+yourself. There is no build step, no dependencies, and no server. Just open
+`index.html` in a browser. All progress
 is stored locally in the browser and never sent anywhere. Settings has export
 and import for backups or for moving between devices.
 
