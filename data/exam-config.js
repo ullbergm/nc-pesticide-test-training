@@ -53,11 +53,27 @@ const RULES_PRIVATE_ONLY = ['rules:11'];  // .1100 Private Pesticide Applicator 
 const RULES_AERIAL_ONLY = ['rules:10'];   // .1000 Aerial Application of Pesticides
 const RULES_EXAM_SPECIFIC = [...RULES_CORE_ONLY, ...RULES_PRIVATE_ONLY, ...RULES_AERIAL_ONLY];
 const RULES_SHARED = RULE_SECTIONS.filter(s => !RULES_EXAM_SPECIFIC.includes(s));
-// AG-714 by license: everyone sits an exam and earns credits (sec. 1, 7, 8),
-// and the rest follow the license each was written for.
+// The rule Sections a pesticide dealer is examined on. A dealer is licensed
+// under .0500 like every other licensee, sells only what .1300 allows and
+// records it the way .1300 requires, hands over arsenic trioxide under .1200,
+// keeps a commercial storage under .1900, and disposes of stock and containers
+// under .0600. The Sections written for applying pesticides rather than
+// selling them - declared pests, ground application, chemigation - are left
+// out, which is what keeps a dealer mock exam off swath widths and spray
+// records. Add .0300 registration, .0800 bulk distribution, and .1500
+// exempted pesticides here once they are authored; they are dealer material
+// too, and the bank has no questions for them yet.
+const RULES_DEALER = ['rules:5', 'rules:6', 'rules:12', 'rules:13', 'rules:19']
+  .filter(s => RULE_SECTIONS.includes(s));
+// AG-714 by license. Everyone sits an exam and earns credits (sec. 1, 7, 8);
+// the rest follow the license each was written for. A dealer is examined on
+// the license types (sec. 4) because knowing which license a buyer must hold
+// is the dealer's own duty, but not on supervising noncertified applicators
+// (sec. 6), which is applicator work.
 const ncsu = keys => keys.filter(s => NCSU_SECTIONS.includes(s));
 const NCSU_CORE = ncsu(['ncsu:1', 'ncsu:3', 'ncsu:4', 'ncsu:6', 'ncsu:7', 'ncsu:8']);
 const NCSU_PRIVATE = ncsu(['ncsu:1', 'ncsu:2', 'ncsu:6', 'ncsu:7', 'ncsu:8']);
+const NCSU_DEALER = ncsu(['ncsu:1', 'ncsu:4', 'ncsu:7', 'ncsu:8']);
 const NCSU_AERIAL = ncsu(['ncsu:5']);
 // What the two core-material exams draw on: the national core manual plus NC
 // law, minus the rules meant for the other license.
@@ -66,6 +82,11 @@ const CORE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED,
 const PRIVATE_EXAM_SECTIONS = [...CORE_SECTIONS, ...LAW_SECTIONS, ...RULES_SHARED,
   ...RULES_PRIVATE_ONLY, ...NCSU_PRIVATE];
 const AERIAL_EXAM_SECTIONS = [...AERIAL_SECTIONS, ...RULES_AERIAL_ONLY, ...NCSU_AERIAL];
+// The dealer exam is the one certification exam that is not built on Core: a
+// dealer sells restricted use pesticides rather than applying them, so the
+// national manuals do not come into it and the exam is NC law, the rules a
+// dealer works under, and the licensing system AG-714 describes.
+const DEALER_EXAM_SECTIONS = [...LAW_SECTIONS, ...RULES_DEALER, ...NCSU_DEALER];
 
 // The category exams. Core licenses nobody on its own: a commercial applicator
 // passes Core and then one of these per category they want to work in, and an
@@ -189,6 +210,12 @@ const EXAM_CONFIG = {
     { key: 'core', name: 'Commercial Core', sections: CORE_EXAM_SECTIONS, count: 100 },
     { key: 'private', name: 'Private Applicator', sections: PRIVATE_EXAM_SECTIONS, count: 50 },
     { key: 'aerial', name: 'Aerial Methods', sections: AERIAL_EXAM_SECTIONS, count: 50 },
+    // NCDA&CS publishes neither the length of the dealer exam nor its
+    // syllabus, only that the dealer exam is the one exam a dealer sits. The
+    // mock is 50 questions because that is the length of every NC pesticide
+    // exam except Core; treat the number as this app's assumption rather than
+    // as something the Department has stated.
+    { key: 'dealer', name: 'Pesticide Dealer', sections: DEALER_EXAM_SECTIONS, count: 50 },
     ...CATEGORY_EXAMS,
   ],
 
@@ -198,6 +225,7 @@ const EXAM_CONFIG = {
     { key: 'core', group: 'cert', name: 'Commercial Core', note: 'the 100-question first exam for every commercial applicator license', sections: CORE_EXAM_SECTIONS },
     { key: 'private', group: 'cert', name: 'Private Applicator', note: 'the 50-question exam for producing an agricultural commodity on your own land', sections: PRIVATE_EXAM_SECTIONS },
     { key: 'aerial', group: 'methods', name: 'Aerial Methods', note: 'the extra exam every aerial applicator takes on top of Core and a category', sections: AERIAL_EXAM_SECTIONS },
+    { key: 'dealer', group: 'cert', name: 'Pesticide Dealer', note: 'the only exam a pesticide dealer sits: NC law and rules, and no Core', sections: DEALER_EXAM_SECTIONS },
     ...CATEGORY_EXAMS.map(e => ({
       key: e.key,
       group: 'category',

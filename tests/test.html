@@ -272,9 +272,18 @@ try {
   const sq = QUESTION_BANK.find(x => x.question === q('.qtext').textContent);
   t('study draws from selected sections only', keepSecs.includes(secKey(sq)));
   nav('exam');
+  // Offered: the exams picked in Settings, plus the ones with no questions,
+  // which are listed unselectable so the gap shows. Keyed by exam and not by
+  // whether the kept sections happen to cover it, so an exam whose material is
+  // a subset of another's (Pesticide Dealer sits inside Core) is not
+  // volunteered to someone who never picked it.
   const availExams = EXAM_CONFIG.exams
-    .filter(e => e.sections.every(sec => keepSecs.includes(sec))).length;
+    .filter(e => !e.sections.length || keep.has(e.key)).length;
   t('exam list filtered to selected tests', qa('.examopt').length === availExams);
+  t('only picked exams with questions are offered', qa('.examopt').every(b => {
+    const e = EXAM_CONFIG.exams.find(x => x.key === b.dataset.key);
+    return !e.sections.length || keep.has(e.key);
+  }));
   t('hidden exams hint shows', availExams === EXAM_CONFIG.exams.length
     || /hidden/.test(q('.examsetup').textContent));
   nav('settings');

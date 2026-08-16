@@ -193,13 +193,15 @@
   function readinessRows() {
     const exam = examInfo();
     const ts = exam ? exam.end : Date.now();
-    const secs = new Set(enabledSections());
     const cards = Store.load().cards;
-    return TESTS
-      .filter(tst => tst.sections.every(sec => secs.has(sec)))
-      // An exam the bank has no questions for yet has nothing to project, and
-      // scoring it would put a flat 0% beside the exams actually being studied.
-      .filter(tst => tst.sections.length)
+    // The tests picked in Settings, and only those. Asking instead which tests
+    // the studied sections happen to cover would volunteer any test whose
+    // material is a subset of another's: studying for Core covers everything
+    // the Pesticide Dealer exam draws on, and projecting a dealer score for
+    // someone who never asked for one is noise. `enabledTests` has already
+    // dropped the tests the bank has no questions for, which have nothing to
+    // project and would score a flat 0% beside the exams actually studied.
+    return enabledTests()
       .map(tst => {
         const meta = EXAMS.find(e => e.key === tst.key);
         const pool = QUESTION_BANK.filter(q => tst.sections.includes(secKey(q)));
@@ -771,8 +773,12 @@
   function renderExamSetup() {
     const counts = {};
     QUESTION_BANK.forEach(q => { counts[secKey(q)] = (counts[secKey(q)] || 0) + 1; });
-    const active = new Set(enabledSections());
-    const available = EXAMS.filter(e => e.sections.every(sec => active.has(sec)));
+    // Offered: the exams picked in Settings, plus the ones the bank has
+    // nothing for yet, which are listed unselectable so the gap shows. Keyed
+    // by exam rather than by whether the studied sections happen to cover it,
+    // for the reason readinessRows gives.
+    const selected = new Set(enabledTests().map(tst => tst.key));
+    const available = EXAMS.filter(e => !e.sections.length || selected.has(e.key));
     const hidden = EXAMS.length - available.length;
     view.innerHTML = `
       <div class="examsetup">

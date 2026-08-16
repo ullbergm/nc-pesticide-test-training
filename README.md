@@ -13,8 +13,9 @@
 
 Practice questions with spaced repetition for the North Carolina pesticide
 applicator certification exams: the 100-question commercial Core exam, the
-50-question Private Applicator exam, and the Aerial Methods exam every aerial
-applicator adds on top, all passed at 70%. The bank has 1133 questions, written
+50-question Private Applicator exam, the Aerial Methods exam every aerial
+applicator adds on top, and the Pesticide Dealer exam, all passed at 70%. The
+bank has 1133 questions, written
 with the recipe in
 [docs/question-authoring.md](docs/question-authoring.md) and covering five
 sources end to end: all eleven chapters of the
@@ -44,7 +45,12 @@ Core chapters and NC law feed the Core and Private exams; aerial chapters and
 the NC aerial rules feed Aerial Methods, so a mock exam never mixes the two.
 The rules written for one license go only to its exam: commercial licensing
 (.0500) to Core, private applicator certification (.1100) to Private, aerial
-application (.1000) to Aerial Methods. Settings picks which exams you are
+application (.1000) to Aerial Methods. The Pesticide Dealer exam is the one
+certification exam not built on Core, because a dealer sells restricted use
+pesticides rather than applying them: it draws on NC law, the rule Sections a
+dealer works under (licenses, disposal, arsenic trioxide, availability of
+restricted use pesticides, and storage), and AG-714's account of the licensing
+system. Settings picks which exams you are
 studying for, and About lists every NC license and the exams it takes. That
 choice is remembered as the exams themselves, so when a release adds material
 to an exam you picked, it joins what you are studying without your having to
@@ -104,9 +110,9 @@ and import for backups or for moving between devices.
 - **Misses**: re-drills every question whose last answer was wrong, without touching
   the review schedule. Answering one correctly removes it from the pool.
 - **Exam**: mock exams in the real format. No feedback until the end, and 70% to
-  pass. The list mirrors the NC exam structure (commercial Core and Private
-  Applicator) and shows only the exams selected in Settings. Missed exam
-  questions feed the Misses pool.
+  pass. The list mirrors the NC exam structure (commercial Core, Private
+  Applicator, Aerial Methods, and Pesticide Dealer) and shows only the exams
+  selected in Settings. Missed exam questions feed the Misses pool.
 - **Browse**: the whole bank by manual chapter, with each card's schedule and accuracy.
 - **Stats**: exam readiness, mastery counts, day streak, 7-day due forecast,
   per-chapter accuracy, and exam history.
