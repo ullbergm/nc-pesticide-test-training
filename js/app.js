@@ -1194,6 +1194,58 @@
     return out.join('');
   }
 
+  // Where the questions came from: each manual with the chapters drawn from it
+  // and how many questions those chapters hold. Built from the bank itself, so
+  // it cannot drift from what is actually loaded.
+  function sourcesHTML() {
+    const manuals = CFG.manuals || {};
+    if (!Object.keys(manuals).length) return '';
+    const rows = Object.entries(manuals).map(([key, m]) => {
+      const mine = SECTION_IDS.filter(id => id.startsWith(`${key}:`));
+      if (!mine.length) return '';
+      const count = QUESTION_BANK.filter(q => (q.manual || 'default') === key).length;
+      const nums = mine.map(id => id.slice(id.indexOf(':') + 1));
+      const span = nums.length > 1 ? `chapters ${nums[0]}-${nums[nums.length - 1]}` : `chapter ${nums[0]}`;
+      const title = m.url
+        ? `<a href="${m.url}" target="_blank" rel="noopener">${esc(m.title)}</a>`
+        : esc(m.title);
+      return `<li>${title} — ${span}, ${count} questions</li>`;
+    }).join('');
+    return rows ? `<h3>Sources</h3><ul class="sources">${rows}</ul>` : '';
+  }
+
+  // Optional reference table of the licenses the exams lead to. Config-driven
+  // and skipped entirely when an exam config lists none.
+  function licensesHTML() {
+    const L = CFG.licenses;
+    if (!L || !L.groups) return '';
+    const groups = L.groups.map(g => `
+      <h4>${esc(g.name)}</h4>
+      <div class="table-scroll">
+        <table class="licenses">
+          <thead><tr><th>License</th><th>Who it is for</th><th>Exams</th><th>Term</th></tr></thead>
+          <tbody>${g.items.map(it => `
+            <tr>
+              <td><strong>${esc(it.code)}</strong> ${esc(it.name)}</td>
+              <td>${esc(it.who)}</td>
+              <td>${esc(it.exams)}</td>
+              <td>${esc(it.term)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`).join('');
+    const cats = (L.categories || []).map(([code, name]) =>
+      `<li><strong>${esc(code)}</strong> ${esc(name)}</li>`).join('');
+    return `
+      <h3>North Carolina licenses and certifications</h3>
+      ${L.intro ? `<p>${esc(L.intro)}</p>` : ''}
+      ${groups}
+      ${cats ? `<h4>Category exams</h4><ul class="categories">${cats}</ul>` : ''}
+      ${L.source ? `<p class="hint">Summarized from
+        <a href="${L.source}" target="_blank" rel="noopener">${esc(L.sourceName || 'the licensing authority')}</a>,
+        which is the authority on fees, terms, and requirements; check it before you apply.</p>` : ''}`;
+  }
+
   function renderAbout() {
     view.innerHTML = `
       <div class="about">
@@ -1205,7 +1257,9 @@
           raising the retention target and the daily pace as the test gets close.</p>
         <p>All progress is stored locally in your browser and never sent to a server.
           Use Export in Settings to move it to another device.</p>
+        ${sourcesHTML()}
         ${CFG.aboutCaveatHTML}
+        ${licensesHTML()}
         <h3>Links</h3>
         <ul>
           <li><a href="${CFG.repo}" target="_blank" rel="noopener">Source code on GitHub</a> (MIT license)</li>

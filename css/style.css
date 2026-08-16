@@ -469,6 +469,17 @@ body > footer a:hover { color: var(--accent); }
 .about a { color: var(--accent); }
 .about h3 small { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
 .about ul { margin: 4px 0; padding-left: 22px; }
+.about h4 { margin: 18px 0 4px; font-size: 0.95rem; }
+/* The license table has four prose columns, so it scrolls inside its own box
+   rather than pushing the page sideways on a phone. */
+.table-scroll { overflow-x: auto; }
+.licenses { min-width: 40em; margin-top: 4px; }
+.licenses td { font-variant-numeric: normal; font-size: 0.9rem; vertical-align: top; }
+.licenses td:first-child { min-width: 12em; }
+.sources { max-width: 48em; }
+.sources li { margin-bottom: 4px; }
+.categories { columns: 2; column-gap: 24px; max-width: 48em; }
+@media (max-width: 560px) { .categories { columns: 1; } }
 .changelog {
   background: var(--card);
   border: 1px solid var(--border);

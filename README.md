@@ -29,7 +29,7 @@ page.
 
 Core chapters feed the Core and Private exams; aerial chapters feed Aerial
 Methods only, so a mock exam never mixes the two. Settings picks which exams
-you are studying for.
+you are studying for, and About lists every NC license and the exams it takes.
 
 **Every question so far comes from a national manual, not a North Carolina
 one.** The national manuals are published by the NASDA Research Foundation,

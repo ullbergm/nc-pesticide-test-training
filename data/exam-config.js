@@ -85,6 +85,72 @@ const EXAM_CONFIG = {
     ['methods', 'Methods exams'],
   ],
 
+  // The licenses these exams lead to, shown as a reference table in About.
+  // NCDA&CS issues the licenses and is the authority; this is a summary, so
+  // `source` is linked next to it and every fee or term here should be
+  // rechecked against that page when it changes. Categories are listed by
+  // letter and spelled out in `categories` below. Rendering is generic: any
+  // exam config that omits `licenses` simply shows no such section.
+  licenses: {
+    source: 'https://www.ncagr.gov/divisions/structural-pest-control-and-pesticides/pesticide/licensing-and-certification/licenses',
+    sourceName: 'NCDA&CS Pesticide Licenses',
+    intro: `Every commercial license below is earned by passing the 100-question Core exam
+      plus a 50-question exam in each category you want, at 70% each. Aerial licenses add
+      the Aerial Methods exam on top of that.`,
+    groups: [
+      {
+        name: 'Ground application',
+        items: [
+          { code: '026', name: 'Commercial Ground Applicator', who: 'applying pesticides on someone else\'s property for compensation, by any means other than aircraft', exams: 'Core + category', term: '5-year certification, $75 a year' },
+          { code: '031', name: 'Federal/State Public Operator (Ground)', who: 'federal and state employees applying pesticides', exams: 'Core + category', term: '5-year certification, no fee' },
+          { code: '032', name: 'County/City Public Operator (Ground)', who: 'county and municipal employees applying pesticides', exams: 'Core + category', term: '5-year certification, no fee' },
+          { code: '033', name: 'Public Utility Ground Applicator', who: 'utility company employees treating rights-of-way', exams: 'Core + category', term: '5-year certification, $75 a year' },
+        ],
+      },
+      {
+        name: 'Aerial application',
+        items: [
+          { code: '027', name: 'Pilot - Aerial Pesticide Applicator', who: 'applying pesticides from an aircraft; needs FAA credentials, 1 year and 125 hours of aerial agricultural experience, and a link to an aerial contractor', exams: 'Core + category + Aerial Methods', term: '2-year certification, $75 a year' },
+          { code: '028', name: 'Aerial Contractor', who: 'overseeing aerial applications; submits an FAA 137 certificate and meets the pilot requirements', exams: 'Core + category + Aerial Methods', term: '2-year certification, $75 a year' },
+          { code: '029', name: 'Apprentice - Aerial Pesticide Applicator', who: 'applying pesticides from an aircraft without the year and 125 hours a pilot license needs', exams: 'Core + category + Aerial Methods', term: '2-year certification, $75 a year' },
+          { code: '034', name: 'Federal/State Public Operator (Aerial)', who: 'federal and state employees applying pesticides by air', exams: 'Core + category + Aerial Methods', term: '2-year certification, no fee' },
+          { code: '035', name: 'County/City Public Operator (Aerial)', who: 'county and municipal employees applying pesticides by air', exams: 'Core + category + Aerial Methods', term: '2-year certification, no fee' },
+          { code: '036', name: 'Public Utility Aerial Applicator', who: 'utility employees treating rights-of-way by air, with 1 year and 125 hours of aerial agricultural experience', exams: 'Core + category + Aerial Methods', term: '2-year certification, $75 a year' },
+        ],
+      },
+      {
+        name: 'Advice, sales, and private use',
+        items: [
+          { code: '030', name: 'Pesticide Consultant', who: 'selling pest control advice; does not permit applications, and needs a degree with at least 30 hours of coursework in the category', exams: 'Core + category', term: '5-year certification, $75 a year' },
+          { code: '037', name: 'Pesticide Dealer', who: 'making restricted-use pesticides available to certified users; one license per location', exams: 'Dealer exam (no Core)', term: '5-year certification, $75 a year' },
+          { code: '038', name: 'Private Pesticide Applicator', who: 'using restricted-use pesticides to produce an agricultural commodity on land you own or rent', exams: 'Private Applicator exam', term: '3-year certification, $10 every three years' },
+        ],
+      },
+    ],
+    // The category exams a license is endorsed for. Only Core, Private, and
+    // Aerial Methods are in the question bank; the rest are listed so the
+    // reader knows what else the license they want will ask of them.
+    categories: [
+      ['A', 'Aquatic Pest Control'],
+      ['B', 'Public Health'],
+      ['G', 'Forestry'],
+      ['H', 'Right-of-Way'],
+      ['I', 'Regulatory (government employees)'],
+      ['K', 'Agricultural Pest Animal - Livestock'],
+      ['K(PU)', 'Agricultural Pest Animal - Poultry'],
+      ['K(SA)', 'Agricultural Pest Animal - Small Animal'],
+      ['L', 'Ornamental & Turf'],
+      ['M', 'Seed Treatment'],
+      ['N', 'Demonstration & Research'],
+      ['O', 'Agricultural Pest Plant'],
+      ['P', 'Aerial applications only'],
+      ['S', 'Commercial Soil Fumigation'],
+      ['T', 'Wood Treatment'],
+      ['Z(SF)', 'Soil Fumigation (private applicators)'],
+      ['Z(CF)', 'Commodity Fumigation (private applicators)'],
+    ],
+  },
+
   // Prose that names the exam, injected as HTML into the matching views.
   homeSubtitle: `${QUESTION_BANK.length} questions from the national pesticide applicator core and aerial manuals`,
   disclaimerHTML: `Questions were extracted from the national
