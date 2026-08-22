@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.1](https://github.com/ullbergm/nc-pesticide-test-training/compare/v2.0.0...v2.0.1) (2026-08-22)
+
+
+### Bug Fixes
+
+* **engine:** give the engine its own dependency install ([ea1f179](https://github.com/ullbergm/nc-pesticide-test-training/commit/ea1f1792e44955620ee793f47b6a5d719e4cdaf0))
+* **engine:** move workflows off the deprecated node 20 action runtimes ([ea1f179](https://github.com/ullbergm/nc-pesticide-test-training/commit/ea1f1792e44955620ee793f47b6a5d719e4cdaf0))
+* sync trainer-engine v2.0.1 ([ea1f179](https://github.com/ullbergm/nc-pesticide-test-training/commit/ea1f1792e44955620ee793f47b6a5d719e4cdaf0))
+
 ## [2.0.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.3.0...v2.0.0) (2026-08-22)
 
 
