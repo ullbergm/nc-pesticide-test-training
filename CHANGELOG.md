@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.3.0...v2.0.0) (2026-08-22)
+
+
+### Features
+
+* adopt the shared trainer engine ([ce1f5cd](https://github.com/ullbergm/nc-pesticide-test-training/commit/ce1f5cdf5079af8f6a26148f642b5cac35c49ab2))
+
+
+### Miscellaneous Chores
+
+* align every trainer on version 2.0.0 ([f0af595](https://github.com/ullbergm/nc-pesticide-test-training/commit/f0af595963200996611dc1a04693d1a3fd1c9443))
+
 ## [1.3.0](https://github.com/ullbergm/nc-pesticide-test-training/compare/v1.2.0...v1.3.0) (2026-08-16)
 
 
