@@ -202,3 +202,7 @@ const Calculator = (() => {
 
   return { html, wire, reset, owns, press, display: () => entry };
 })();
+
+// Capability registration: the engine reads optional modules off `self`
+// (top-level consts in classic scripts are not window properties).
+if (typeof self !== 'undefined') self.Calculator = Calculator; // absent under Node (unit tests)

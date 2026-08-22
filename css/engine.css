@@ -1,80 +1,9 @@
-/* "Highway" theme: interstate guide-sign green, signage yellow, asphalt
-   neutrals. All the exam flavor lives in the token blocks below, including
-   the --track-texture lane line on the progress bar; retheme a fork by
-   editing the tokens, nothing structural.
-   Light/dark follows prefers-color-scheme unless the Settings theme override
-   sets data-theme="light"/"dark" on <html>. The dark token block therefore
-   appears twice: once for system-dark (unless overridden to light), once for
-   the explicit dark override. Keep the two copies identical. */
-:root {
-  --bg: #f6efe3;
-  --card: #ffffff;
-  --text: #292116;
-  --muted: #6f6353;
-  --accent: #9c4a12;
-  --accent-hi: #7c3a0d;
-  --accent-text: #ffffff;
-  --nav-bg: #9c4a12;
-  --nav-text: #f9ecdd;
-  --accent2: #f0b93a;
-  --accent2-text: #241a04;
-  --border: #e0d4bf;
-  --ok: #1e7a3f;
-  --ok-bg: #e6f1e5;
-  --bad: #b23a2a;
-  --bad-bg: #f7e9e4;
-  --warn: #b45309;
-  --surface-dark: #38302a;
-  --shadow: 0 1px 2px rgba(32, 24, 15, 0.07), 0 4px 16px rgba(32, 24, 15, 0.05);
-  /* The CDL trainer draws a dashed lane line across the progress track; this
-     site keeps a plain track so the two apps stay visually distinct. */
-  --track-texture: none;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #171310;
-    --card: #221b15;
-    --text: #ece6dd;
-    --muted: #ab9c88;
-    --accent: #dd9250;
-    --accent-hi: #e8a463;
-    --accent-text: #221204;
-    --nav-bg: #45220b;
-    --nav-text: #f2e2d0;
-    --accent2: #e6bb55;
-    --accent2-text: #221a05;
-    --border: #362c22;
-    --ok: #4ecb87;
-    --ok-bg: #16301f;
-    --bad: #f0836c;
-    --bad-bg: #38211b;
-    --warn: #e5a44e;
-    --surface-dark: #100d0a;
-    --shadow: none;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #171310;
-  --card: #221b15;
-  --text: #ece6dd;
-  --muted: #ab9c88;
-  --accent: #dd9250;
-  --accent-hi: #e8a463;
-  --accent-text: #221204;
-  --nav-bg: #45220b;
-  --nav-text: #f2e2d0;
-  --accent2: #e6bb55;
-  --accent2-text: #221a05;
-  --border: #362c22;
-  --ok: #4ecb87;
-  --ok-bg: #16301f;
-  --bad: #f0836c;
-  --bad-bg: #38211b;
-  --warn: #e5a44e;
-  --surface-dark: #100d0a;
-  --shadow: none;
-}
-
+/* Trainer engine styles: everything structural, themed entirely through the
+   CSS custom properties that css/app.css defines. An app carries no
+   structural CSS of its own — it sets the tokens (colors, shadow, the
+   --track-texture drawn on the progress bar) and any styles for markup its
+   own modules render. Synced from the trainer-engine repo; do not edit in an
+   app repo. */
 * { box-sizing: border-box; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 nav :focus-visible { outline-color: var(--accent2); }
@@ -87,7 +16,7 @@ body {
 }
 main { max-width: 720px; margin: 0 auto; padding: 20px 16px 64px; }
 
-/* nav: highway guide sign */
+/* nav: themed strip under the accent tokens */
 nav {
   display: flex;
   gap: 2px;
@@ -143,8 +72,11 @@ h2 { margin: 12px 0 8px; font-weight: 800; letter-spacing: -0.01em; }
 .sub { color: var(--muted); margin-top: 4px; }
 
 /* buttons: base first, variants after, so variants actually win */
+/* button.btn is the hook for app-module markup (an extra view's buttons pick
+   up the shared styling by carrying the class rather than by this list
+   growing a selector per app) */
 .actions button, .grades button, .done button, .examresult button, #feedback > button,
-.licform button, .licfoot button {
+button.btn {
   font: inherit;
   font-weight: 600;
   padding: 10px 18px;
@@ -163,10 +95,9 @@ button.primary {
 }
 button.primary:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
 button.danger { border-color: var(--bad); color: var(--bad); background: transparent; box-shadow: none; }
-.actions button:disabled,
-.licform button:disabled, .licfoot button:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.actions button:disabled, button.btn:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
 
-/* exam banner: yellow signage strip */
+/* exam banner: accent2 strip */
 .exambanner {
   margin: 12px 0 0;
   padding: 8px 14px;
@@ -231,7 +162,7 @@ button.danger { border-color: var(--bad); color: var(--bad); background: transpa
 .badge.review { background: var(--ok-bg); color: var(--ok); }
 .badge.relearn { background: var(--bad-bg); color: var(--bad); }
 
-/* progress: the optional track texture over the dark track (none in this theme) */
+/* progress: the app's optional --track-texture over the dark track */
 .progress {
   height: 10px;
   border-radius: 6px;
@@ -267,68 +198,6 @@ button.danger { border-color: var(--bad); color: var(--bad); background: transpa
 .choice.wrong { border-color: var(--bad); background: var(--bad-bg); box-shadow: inset 3px 0 0 var(--bad); }
 .choice:disabled { cursor: default; }
 
-/* On-screen calculator, offered on the calculation drills. Sized to be
-   thumb-usable on a phone and to sit beside the choices without competing
-   with them: the keypad is plainer than a choice button, since it is a tool on
-   the desk rather than part of the question. */
-.calcwrap { margin: 14px 0; }
-.calctoggle {
-  font: inherit;
-  font-size: 0.9rem;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--muted);
-  cursor: pointer;
-}
-.calctoggle:hover { border-color: var(--accent); color: var(--accent); }
-.calc {
-  margin-top: 10px;
-  max-width: 320px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  box-shadow: var(--shadow);
-}
-.calc .hint { margin: 8px 0 0; font-size: 0.75rem; }
-.calcdisplay {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-}
-.calcmem { color: var(--accent); font-size: 0.75rem; font-weight: 700; }
-#calcout {
-  flex: 1;
-  min-width: 0;
-  text-align: right;
-  font-size: 1.5rem;
-  font-variant-numeric: tabular-nums;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-.calckeys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
-.calckey {
-  font: inherit;
-  font-size: 1.05rem;
-  padding: 12px 0;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  cursor: pointer;
-}
-.calckey:hover { border-color: var(--accent); color: var(--accent); }
-.calckey.k-op, .calckey.k-equals { background: var(--card); font-weight: 700; }
-.calckey.k-equals { grid-column: span 2; background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
-.calckey.k-equals:hover { background: var(--accent-hi); color: var(--accent-text); }
-.calckey.k-mem, .calckey.k-clear, .calckey.k-back { font-size: 0.85rem; color: var(--muted); }
-
 /* keyboard hints: signage chips; only on fine-pointer devices */
 kbd {
   display: none;
@@ -359,11 +228,6 @@ kbd.after { margin: 0 0 0 9px; }
 .explain { margin: 14px 0; padding: 12px 14px; border-radius: 10px; border: 1px solid transparent; }
 .explain.okbg { background: var(--ok-bg); border-color: color-mix(in srgb, var(--ok) 25%, transparent); }
 .explain.wrongbg { background: var(--bad-bg); border-color: color-mix(in srgb, var(--bad) 25%, transparent); }
-/* The mistake behind the choice actually picked, ahead of the explanation
-   that teaches the rule. Coloured like the wrong answer it names, so the eye
-   lands on the diagnosis first. */
-.slip { color: var(--bad); font-style: normal; font-weight: 600; }
-.missitem .slip { font-weight: 500; }
 .cite { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
 a.cite:hover { color: var(--accent); }
 a.report { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
@@ -440,20 +304,6 @@ a.report:hover { color: var(--accent); }
 .browse .qrow small { color: var(--muted); }
 .qdetail { padding: 6px 0 4px 12px; color: var(--muted); }
 .qdetail strong { color: var(--ok); }
-
-/* An exam's sections, with the totals on the summary line so they read
-   without expanding. The group is the frame; the sections nest flat inside
-   it so the two levels do not stack borders and shadows. */
-.group > summary { font-size: 1.02rem; }
-.group > summary small { color: var(--muted); font-weight: 400; margin-left: 6px; }
-.browse .group { padding: 10px 14px; }
-.browse .group > .chapter { background: transparent; border: none; border-top: 1px solid var(--border);
-  border-radius: 0; box-shadow: none; margin: 0; padding: 8px 0 8px 10px; }
-.browse .group > .chapter:first-of-type { margin-top: 6px; }
-.stats .group { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-  padding: 8px 12px; margin: 6px 0; box-shadow: var(--shadow); }
-.stats .group > summary { cursor: pointer; font-weight: 600; }
-.stats .group table { box-shadow: none; margin-bottom: 4px; }
 
 /* stats */
 table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 8px 0 16px; box-shadow: var(--shadow); }
@@ -538,23 +388,6 @@ body > footer a:hover { color: var(--accent); }
 .about a { color: var(--accent); }
 .about h3 small { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
 .about ul { margin: 4px 0; padding-left: 22px; }
-.about h4 { margin: 18px 0 4px; font-size: 0.95rem; }
-/* The license table has four prose columns, so it scrolls inside its own box
-   rather than pushing the page sideways on a phone. */
-.table-scroll { overflow-x: auto; }
-.licenses { min-width: 40em; margin-top: 4px; }
-.licenses td { font-variant-numeric: normal; font-size: 0.9rem; vertical-align: top; }
-.licenses td:first-child { min-width: 12em; }
-/* An exam with nothing written for it is listed but visibly not on offer. */
-.seccheck.empty { opacity: 0.55; }
-.examopt.empty { opacity: 0.6; }
-.coverage td { font-variant-numeric: tabular-nums; }
-.coverage tr.empty td { color: var(--muted); }
-.about h3 small { font-weight: 400; }
-.sources { max-width: 48em; }
-.sources li { margin-bottom: 4px; }
-.categories { columns: 2; column-gap: 24px; max-width: 48em; }
-@media (max-width: 560px) { .categories { columns: 1; } }
 .changelog {
   background: var(--card);
   border: 1px solid var(--border);
@@ -592,92 +425,43 @@ body > footer a:hover { color: var(--accent); }
 .seccheck { display: flex; align-items: baseline; gap: 8px; }
 .seccheck small { color: var(--muted); }
 
-/* license lookup */
-.licform {
-  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px;
-  margin: 16px 0 4px;
-}
-.licform label {
-  display: flex; flex-direction: column; gap: 4px;
-  font-size: 0.85rem; color: var(--muted);
-}
-.licform input, .licform select {
-  font: inherit; color: var(--text); background: var(--card);
-  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
-  min-width: 220px;
-}
-.licform input { min-width: 160px; }
-.licstatus { margin: 8px 0; font-size: 0.9rem; color: var(--muted); min-height: 1.2em; }
-.licstatus.error { color: var(--bad); font-weight: 600; }
+/* The mistake behind the choice actually picked (a question's optional
+   whyWrong entry), ahead of the explanation that teaches the rule. Coloured
+   like the wrong answer it names, so the eye lands on the diagnosis first. */
+.slip { color: var(--bad); font-style: normal; font-weight: 600; }
+.missitem .slip { font-weight: 500; }
 
-.liccard {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-top: 4px solid var(--accent);
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-top: 12px;
-  box-shadow: var(--shadow);
-  max-width: 46em;
-}
-.lichead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.licname { font-size: 1.15rem; font-weight: 800; color: var(--text); }
-.licsub { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
-.licbadge {
-  flex: none;
-  padding: 4px 10px; border-radius: 999px;
-  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-  border: 1px solid transparent; white-space: nowrap;
-}
-.licbadge.ok { background: var(--ok-bg); color: var(--ok); }
-.licbadge.warn { background: var(--accent2); color: var(--accent2-text); }
-.licbadge.danger { background: var(--bad-bg); color: var(--bad); }
+/* Browse/Stats grouping: an exam's sections, with the totals on the summary
+   line so they read without expanding. The group is the frame; the sections
+   nest flat inside it so the two levels do not stack borders and shadows. */
+.group > summary { font-size: 1.02rem; }
+.group > summary small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.browse .group { padding: 10px 14px; }
+.browse .group > .chapter { background: transparent; border: none; border-top: 1px solid var(--border);
+  border-radius: 0; box-shadow: none; margin: 0; padding: 8px 0 8px 10px; }
+.browse .group > .chapter:first-of-type { margin-top: 6px; }
+.stats .group { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 12px; margin: 6px 0; box-shadow: var(--shadow); }
+.stats .group > summary { cursor: pointer; font-weight: 600; }
+.stats .group table { box-shadow: none; margin-bottom: 4px; }
 
-.licgrid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px 16px; margin: 16px 0 4px;
-}
-.licgrid dt { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
-.licgrid dd { margin: 2px 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
-.licgrid dd small { display: block; font-weight: 400; color: var(--muted); font-variant-numeric: normal; }
+/* Wide tables scroll inside their own box rather than pushing the page
+   sideways on a phone. */
+.table-scroll { overflow-x: auto; }
 
-.liccredits { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
-.liccredits h3 { font-size: 0.95rem; margin: 0 0 8px; }
+/* About extras: sources, per-exam coverage, and the config-driven license
+   reference table. All render only when the exam config asks for them. */
+.about h4 { margin: 18px 0 4px; font-size: 0.95rem; }
+.licenses { min-width: 40em; margin-top: 4px; }
+.licenses td { font-variant-numeric: normal; font-size: 0.9rem; vertical-align: top; }
+.licenses td:first-child { min-width: 12em; }
+.coverage td { font-variant-numeric: tabular-nums; }
+.coverage tr.empty td { color: var(--muted); }
+.sources { max-width: 48em; }
+.sources li { margin-bottom: 4px; }
+.categories { columns: 2; column-gap: 24px; max-width: 48em; }
+@media (max-width: 560px) { .categories { columns: 1; } }
 
-/* One meter per recertification category: what the record says was earned,
-   over what AG-714 asks of that category given the others held. A category
-   with no requirement in the table (Core) gets the row without the bar. */
-.creditlist { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 10px; }
-.credit { display: grid; gap: 4px; }
-.crhead {
-  display: flex; flex-wrap: wrap; justify-content: space-between;
-  align-items: baseline; gap: 2px 12px;
-}
-.crname { font-size: 0.9rem; }
-.crname b { font-weight: 800; }
-.crnum { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.crof { font-weight: 400; color: var(--muted); }
-.crbar { height: 7px; border-radius: 999px; background: var(--surface-dark); overflow: hidden; }
-.crbar span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
-/* "met" rather than "done": .done is the session-complete screen's class,
-   which centers its text and pads it out by 48px. */
-.credit.met .crbar span { background: var(--ok); }
-.credit.met .crnum { color: var(--ok); }
-.crrule { color: var(--muted); font-size: 0.78rem; }
-.crsum { margin: 0; font-size: 0.9rem; color: var(--warn); font-weight: 600; }
-.crsum.met { color: var(--ok); }
-
-.liccourses { margin-top: 10px; }
-.liccourses summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; }
-.liccourses ul { list-style: none; padding: 8px 0 0; margin: 0; }
-.liccourses li {
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px;
-  padding: 6px 0; border-bottom: 1px solid var(--border);
-}
-.liccourses li:last-child { border-bottom: none; }
-.liccourses .cname { font-size: 0.9rem; }
-.liccourses .cmeta { color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
-
-.licfoot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 14px; }
-.licfoot .hint { margin-left: auto; }
-.liccard .disclaimer { margin-top: 16px; }
+/* An exam with nothing written for it is listed but visibly not on offer. */
+.seccheck.empty { opacity: 0.55; }
+.examopt.empty { opacity: 0.6; }

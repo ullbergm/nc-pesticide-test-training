@@ -256,7 +256,16 @@ const EXAM_CONFIG = {
   // rechecked against that page when it changes. Categories are listed by
   // letter and spelled out in `categories` below. Rendering is generic: any
   // exam config that omits `licenses` simply shows no such section.
+  // Prose above the About page's per-exam coverage table (the engine renders
+  // the table whenever some exam has nothing written for it).
+  coverageIntroHTML: `North Carolina licenses on the Core exam plus a category exam for each
+    kind of work, and aerial applicators add Aerial Methods. The category
+    exams are written from North Carolina's own category manuals, which are
+    sold in print, so they are listed here with what the bank has for them
+    rather than left out.`,
+
   licenses: {
+    title: 'North Carolina licenses and certifications',
     source: 'https://www.ncagr.gov/divisions/structural-pest-control-and-pesticides/pesticide/licensing-and-certification/licenses',
     sourceName: 'NCDA&CS Pesticide Licenses',
     intro: `Every commercial license below is earned by passing the 100-question Core exam

@@ -191,10 +191,11 @@ if (!claimed.length) {
 claimed.filter(n => n !== Problems.count).forEach(n =>
   fail(`README says ${n} calculation drills but there are ${Problems.count} templates`));
 
-// index.html and the test shell both have to load the two files, and sw.js
-// has to precache them, or the drills are missing from the app, from the
+// index.html and the test shell both have to load the two files, and the
+// service worker has to precache them (its CORE list spreads in
+// data/app-assets.js), or the drills are missing from the app, from the
 // browser suite, or from every offline visit.
-['index.html', 'tests/test.html', 'sw.js'].forEach(file => {
+['index.html', 'tests/test.html', 'data/app-assets.js'].forEach(file => {
   const src = read(file);
   ['data/problems.js', 'js/problems.js'].forEach(dep => {
     if (!src.includes(dep)) fail(`${file} does not load ${dep}`);

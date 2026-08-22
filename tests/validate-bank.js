@@ -1,24 +1,21 @@
 #!/usr/bin/env node
 /* Validates data/questions.js (schema, unique ids, answer bounds, page format)
- * and checks that the test shell's nav matches index.html. */
+ * and checks that the test shell's nav matches index.html.
+ * Synced from the trainer-engine repo; do not edit in an app repo. */
 const fs = require('fs');
 const path = require('path');
 
-const src = fs.readFileSync(path.join(__dirname, '..', 'data', 'questions.js'), 'utf8');
-eval(src.replace('const QUESTION_BANK', 'globalThis.QUESTION_BANK'));
-const pagesSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'manual-pages.js'), 'utf8');
-eval(pagesSrc.replace('const MANUAL_PAGES', 'globalThis.MANUAL_PAGES'));
-const aerialSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'aerial-pages.js'), 'utf8');
-eval(aerialSrc.replace('const AERIAL_PAGES', 'globalThis.AERIAL_PAGES'));
-const lawSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'law-pages.js'), 'utf8');
-eval(lawSrc.replace('const LAW_PAGES', 'globalThis.LAW_PAGES'));
-const rulesSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'rules-pages.js'), 'utf8');
-eval(rulesSrc.replace('const RULES_PAGES', 'globalThis.RULES_PAGES'));
-const ncsuSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'ncsu-anchors.js'), 'utf8');
-eval(ncsuSrc.replace('const NCSU_ANCHORS', 'globalThis.NCSU_ANCHORS'));
-const cfgSrc = fs.readFileSync(path.join(__dirname, '..', 'data', 'exam-config.js'), 'utf8');
-eval(cfgSrc.replace('const EXAM_CONFIG', 'globalThis.EXAM_CONFIG')
-  .replace(/const (sectionsOf|CORE_SECTIONS|AERIAL_SECTIONS)\b/g, 'globalThis.$1'));
+// Load the app's whole data/ directory the way the page does: the bank first,
+// the page maps and any other data files next, the exam config (which reads
+// all of them) last. Browser scripts declare top-level consts, which eval
+// scopes away, so hoist every file-level const onto globalThis.
+const dataDir = path.join(__dirname, '..', 'data');
+const globalize = s => s.replace(/^const (\w+)/gm, 'globalThis.$1');
+const loadOrder = f => (f === 'questions.js' ? 0 : f === 'exam-config.js' ? 2 : 1);
+fs.readdirSync(dataDir)
+  .filter(f => f.endsWith('.js'))
+  .sort((a, b) => loadOrder(a) - loadOrder(b) || a.localeCompare(b))
+  .forEach(f => eval(globalize(fs.readFileSync(path.join(dataDir, f), 'utf8'))));
 
 // A PDF ends a few pages past the last labelled one (back matter), so allow
 // a little slack above the highest mapped page when bounding pdfPage. A `web`
@@ -51,18 +48,31 @@ const questionTexts = new Map();
 const positions = [0, 0, 0, 0];
 const norm = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
 
+// Explanations are optional for an exam whose questions come verbatim from a
+// published pool with nothing further to say; the config opts out. A verbatim
+// pool also relaxes the duplicate rules below: pools repeat a stem with
+// different choices (and repeat questions across elements), so only a full
+// section+stem+choices match is an error there, and the config may except
+// specific ids whose published choices repeat in the source itself.
+const requiredFields = ['id', 'section', 'sectionName', 'question', 'choices', 'answer'];
+if (EXAM_CONFIG.requireExplanations !== false) requiredFields.push('explanation');
+const dupExceptions = new Set(EXAM_CONFIG.allowDuplicateChoices || []);
+
 for (const q of QUESTION_BANK) {
   const label = q.id || '(missing id)';
-  for (const field of ['id', 'section', 'sectionName', 'question', 'choices', 'answer', 'explanation']) {
+  for (const field of requiredFields) {
     if (q[field] === undefined || q[field] === '') errors.push(`${label}: missing ${field}`);
   }
   if (ids.has(q.id)) errors.push(`${label}: duplicate id`);
   ids.add(q.id);
-  const qn = norm(q.question);
-  if (questionTexts.has(qn)) errors.push(`${label}: duplicate question text (also ${questionTexts.get(qn)})`);
+  const qn = EXAM_CONFIG.verbatimPool
+    ? norm(q.section + ' :: ' + q.question + ' :: ' + (Array.isArray(q.choices) ? q.choices.join(' | ') : ''))
+    : norm(q.question);
+  if (questionTexts.has(qn)) errors.push(`${label}: duplicate question (also ${questionTexts.get(qn)})`);
   questionTexts.set(qn, q.id);
   if (!Array.isArray(q.choices) || q.choices.length !== 4) errors.push(`${label}: needs exactly 4 choices`);
-  else if (new Set(q.choices.map(norm)).size !== 4) errors.push(`${label}: duplicate choices`);
+  else if (new Set(q.choices.map(norm)).size !== 4
+      && !dupExceptions.has(q.id)) errors.push(`${label}: duplicate choices`);
   if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer > 3) errors.push(`${label}: answer out of range`);
   // Optional: the mistake behind each wrong choice, parallel to `choices` and
   // null at the correct one, which the feedback screen shows for the choice
@@ -125,10 +135,15 @@ for (const q of QUESTION_BANK) {
 // its questions merged into the other manual's chapter of the same number;
 // and a newly authored chapter is never added to an exam, so nothing can draw
 // it. Both are silent in the app, so they fail the build here.
+// A flat-sectioned bank (CFG.flatSections: sections are topics shared across
+// manuals, and `manual` says only what a question cites) keys everything
+// under `default`, exactly as the app does.
+const flat = !!EXAM_CONFIG.flatSections;
+const normSec = s => (typeof s === 'number' ? `default:${s}` : String(s));
 const chapterNames = new Map();
 const chapterRefs = new Map();
 for (const q of QUESTION_BANK) {
-  const key = `${q.manual || 'default'}:${q.section}`;
+  const key = `${(flat ? 'default' : q.manual) || 'default'}:${q.section}`;
   if (!chapterNames.has(key)) chapterNames.set(key, new Set());
   chapterNames.get(key).add(q.sectionName);
   // Optional; back matter sets it ("app. C") because its designation is not
@@ -148,7 +163,7 @@ for (const [key, refs] of chapterRefs) {
       + 'set it on every question in the section or on none');
   }
 }
-const examined = new Set((EXAM_CONFIG.exams || []).flatMap(e => e.sections || []));
+const examined = new Set((EXAM_CONFIG.exams || []).flatMap(e => (e.sections || []).map(normSec)));
 for (const key of chapterNames.keys()) {
   if (!examined.has(key)) {
     errors.push(`chapter ${key} has questions but no exam draws on it; `
@@ -159,7 +174,8 @@ for (const key of examined) {
   const manual = String(key).slice(0, String(key).indexOf(':'));
   if (!String(key).includes(':')) {
     errors.push(`exam section "${key}" is not a "<manual>:<chapter>" key`);
-  } else if (!EXAM_CONFIG.manuals[manual]) {
+  } else if (!flat && !EXAM_CONFIG.manuals[manual]) {
+    // With flat sections `default` is synthetic and need not be a manual.
     errors.push(`exam section "${key}" names manual "${manual}", which the config does not list`);
   }
 }
@@ -186,6 +202,10 @@ const sw = fs.readFileSync(path.join(root, 'sw.js'), 'utf8');
 const coreSrc = (sw.match(/const CORE = \[([\s\S]*?)\];/) || ['', ''])[1];
 const core = [...coreSrc.matchAll(/'([^']+)'/g)].map(m => m[1]);
 if (core.length < 5) errors.push('sw.js: could not parse the CORE precache list');
+// sw.js spreads data/app-assets.js into CORE; those entries precache the same
+// all-or-nothing way, so they are held to the same must-exist rule.
+if (Array.isArray(globalThis.APP_ASSETS)) core.push(...globalThis.APP_ASSETS);
+else errors.push('data/app-assets.js must define the APP_ASSETS array sw.js precaches');
 const release = fs.readFileSync(path.join(root, '.github', 'workflows', 'release.yml'), 'utf8');
 const staged = ((release.match(/cp -r (.+) dist\//) || ['', ''])[1]).split(/\s+/);
 for (const entry of core) {

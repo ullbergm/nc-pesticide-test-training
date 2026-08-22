@@ -249,3 +249,7 @@ const Problems = (() => {
 
   return { templates: TEMPLATES, count: TEMPLATES.length, build, reroll, isDrill, newSeed };
 })();
+
+// Capability registration: the engine reads optional modules off `self`
+// (top-level consts in classic scripts are not window properties).
+if (typeof self !== 'undefined') self.Problems = Problems; // absent under Node (unit tests)

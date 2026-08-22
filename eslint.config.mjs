@@ -10,13 +10,14 @@ export default [
     // storage.js reads its localStorage key out of EXAM_CONFIG.
     files: ['js/fsrs.js', 'js/storage.js', 'data/questions.js', 'data/manual-pages.js',
       'data/aerial-pages.js', 'data/law-pages.js', 'data/rules-pages.js',
-      'data/ncsu-anchors.js', 'data/problems.js', 'data/recert-credits.js'],
+      'data/ncsu-anchors.js', 'data/problems.js', 'data/recert-credits.js',
+      'data/app-assets.js'],
     languageOptions: {
       sourceType: 'script',
       globals: { ...globals.browser, EXAM_CONFIG: 'readonly' },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES|NCSU_ANCHORS|PROBLEM_TEMPLATES|RECERT)$' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^(FSRS|Store|QUESTION_BANK|MANUAL_PAGES|AERIAL_PAGES|LAW_PAGES|RULES_PAGES|NCSU_ANCHORS|PROBLEM_TEMPLATES|RECERT|APP_ASSETS)$' }],
     },
   },
   {
@@ -119,10 +120,20 @@ export default [
     },
   },
   {
+    // The license view renders on top of js/license.js and the AG-714 table,
+    // and registers its route on self.APP_VIEWS for the engine.
+    files: ['js/license-view.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, License: 'readonly', RECERT: 'readonly' },
+    },
+  },
+  {
+    // APP_ASSETS comes from data/app-assets.js via importScripts.
     files: ['sw.js'],
     languageOptions: {
       sourceType: 'script',
-      globals: { ...globals.serviceworker },
+      globals: { ...globals.serviceworker, APP_ASSETS: 'readonly' },
     },
   },
   {
@@ -142,6 +153,46 @@ export default [
         FSRS: 'readonly', Readiness: 'readonly',
         PROBLEM_TEMPLATES: 'readonly', Problems: 'readonly',
         RECERT: 'readonly', License: 'readonly',
+      },
+    },
+  },
+  {
+    // The pre-boot session plant runs inside tests/test.html before app.js
+    // and defines AOTA for the suite.
+    files: ['tests/plant-session.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser, QUESTION_BANK: 'readonly', EXAM_CONFIG: 'readonly' },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^AOTA$' }],
+    },
+  },
+  {
+    // The engine browser suite runs inside tests/test.html against the real app.
+    files: ['tests/engine-suite.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: {
+        ...globals.browser,
+        QUESTION_BANK: 'readonly', EXAM_CONFIG: 'readonly',
+        FSRS: 'readonly', Readiness: 'readonly', Store: 'readonly',
+        AOTA: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^TestSuite$' }],
+    },
+  },
+  {
+    // This app's browser tests run after the engine suite, through its harness.
+    files: ['tests/app-suite.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: {
+        ...globals.browser,
+        QUESTION_BANK: 'readonly', EXAM_CONFIG: 'readonly',
+        Store: 'readonly', TestSuite: 'readonly',
       },
     },
   },

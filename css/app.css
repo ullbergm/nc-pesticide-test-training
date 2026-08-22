@@ -1,0 +1,229 @@
+/* "Highway" theme: interstate guide-sign green, signage yellow, asphalt
+   neutrals. All the exam flavor lives in the token blocks below, including
+   the --track-texture lane line on the progress bar; retheme a fork by
+   editing the tokens, nothing structural.
+   Light/dark follows prefers-color-scheme unless the Settings theme override
+   sets data-theme="light"/"dark" on <html>. The dark token block therefore
+   appears twice: once for system-dark (unless overridden to light), once for
+   the explicit dark override. Keep the two copies identical. */
+:root {
+  --bg: #f6efe3;
+  --card: #ffffff;
+  --text: #292116;
+  --muted: #6f6353;
+  --accent: #9c4a12;
+  --accent-hi: #7c3a0d;
+  --accent-text: #ffffff;
+  --nav-bg: #9c4a12;
+  --nav-text: #f9ecdd;
+  --accent2: #f0b93a;
+  --accent2-text: #241a04;
+  --border: #e0d4bf;
+  --ok: #1e7a3f;
+  --ok-bg: #e6f1e5;
+  --bad: #b23a2a;
+  --bad-bg: #f7e9e4;
+  --warn: #b45309;
+  --surface-dark: #38302a;
+  --shadow: 0 1px 2px rgba(32, 24, 15, 0.07), 0 4px 16px rgba(32, 24, 15, 0.05);
+  /* The CDL trainer draws a dashed lane line across the progress track; this
+     site keeps a plain track so the two apps stay visually distinct. */
+  --track-texture: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171310;
+    --card: #221b15;
+    --text: #ece6dd;
+    --muted: #ab9c88;
+    --accent: #dd9250;
+    --accent-hi: #e8a463;
+    --accent-text: #221204;
+    --nav-bg: #45220b;
+    --nav-text: #f2e2d0;
+    --accent2: #e6bb55;
+    --accent2-text: #221a05;
+    --border: #362c22;
+    --ok: #4ecb87;
+    --ok-bg: #16301f;
+    --bad: #f0836c;
+    --bad-bg: #38211b;
+    --warn: #e5a44e;
+    --surface-dark: #100d0a;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171310;
+  --card: #221b15;
+  --text: #ece6dd;
+  --muted: #ab9c88;
+  --accent: #dd9250;
+  --accent-hi: #e8a463;
+  --accent-text: #221204;
+  --nav-bg: #45220b;
+  --nav-text: #f2e2d0;
+  --accent2: #e6bb55;
+  --accent2-text: #221a05;
+  --border: #362c22;
+  --ok: #4ecb87;
+  --ok-bg: #16301f;
+  --bad: #f0836c;
+  --bad-bg: #38211b;
+  --warn: #e5a44e;
+  --surface-dark: #100d0a;
+  --shadow: none;
+}
+
+
+/* On-screen calculator, offered on the calculation drills. Sized to be
+   thumb-usable on a phone and to sit beside the choices without competing
+   with them: the keypad is plainer than a choice button, since it is a tool on
+   the desk rather than part of the question. */
+.calcwrap { margin: 14px 0; }
+.calctoggle {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+}
+.calctoggle:hover { border-color: var(--accent); color: var(--accent); }
+.calc {
+  margin-top: 10px;
+  max-width: 320px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.calc .hint { margin: 8px 0 0; font-size: 0.75rem; }
+.calcdisplay {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.calcmem { color: var(--accent); font-size: 0.75rem; font-weight: 700; }
+#calcout {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.calckeys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
+.calckey {
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 12px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.calckey:hover { border-color: var(--accent); color: var(--accent); }
+.calckey.k-op, .calckey.k-equals { background: var(--card); font-weight: 700; }
+.calckey.k-equals { grid-column: span 2; background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.calckey.k-equals:hover { background: var(--accent-hi); color: var(--accent-text); }
+.calckey.k-mem, .calckey.k-clear, .calckey.k-back { font-size: 0.85rem; color: var(--muted); }
+
+/* license lookup */
+.licform {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px;
+  margin: 16px 0 4px;
+}
+.licform label {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 0.85rem; color: var(--muted);
+}
+.licform input, .licform select {
+  font: inherit; color: var(--text); background: var(--card);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+  min-width: 220px;
+}
+.licform input { min-width: 160px; }
+.licstatus { margin: 8px 0; font-size: 0.9rem; color: var(--muted); min-height: 1.2em; }
+.licstatus.error { color: var(--bad); font-weight: 600; }
+
+.liccard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-top: 12px;
+  box-shadow: var(--shadow);
+  max-width: 46em;
+}
+.lichead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.licname { font-size: 1.15rem; font-weight: 800; color: var(--text); }
+.licsub { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+.licbadge {
+  flex: none;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  border: 1px solid transparent; white-space: nowrap;
+}
+.licbadge.ok { background: var(--ok-bg); color: var(--ok); }
+.licbadge.warn { background: var(--accent2); color: var(--accent2-text); }
+.licbadge.danger { background: var(--bad-bg); color: var(--bad); }
+
+.licgrid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px 16px; margin: 16px 0 4px;
+}
+.licgrid dt { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.licgrid dd { margin: 2px 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.licgrid dd small { display: block; font-weight: 400; color: var(--muted); font-variant-numeric: normal; }
+
+.liccredits { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+.liccredits h3 { font-size: 0.95rem; margin: 0 0 8px; }
+
+/* One meter per recertification category: what the record says was earned,
+   over what AG-714 asks of that category given the others held. A category
+   with no requirement in the table (Core) gets the row without the bar. */
+.creditlist { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 10px; }
+.credit { display: grid; gap: 4px; }
+.crhead {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: baseline; gap: 2px 12px;
+}
+.crname { font-size: 0.9rem; }
+.crname b { font-weight: 800; }
+.crnum { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.crof { font-weight: 400; color: var(--muted); }
+.crbar { height: 7px; border-radius: 999px; background: var(--surface-dark); overflow: hidden; }
+.crbar span { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+/* "met" rather than "done": .done is the session-complete screen's class,
+   which centers its text and pads it out by 48px. */
+.credit.met .crbar span { background: var(--ok); }
+.credit.met .crnum { color: var(--ok); }
+.crrule { color: var(--muted); font-size: 0.78rem; }
+.crsum { margin: 0; font-size: 0.9rem; color: var(--warn); font-weight: 600; }
+.crsum.met { color: var(--ok); }
+
+.liccourses { margin-top: 10px; }
+.liccourses summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+.liccourses ul { list-style: none; padding: 8px 0 0; margin: 0; }
+.liccourses li {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px;
+  padding: 6px 0; border-bottom: 1px solid var(--border);
+}
+.liccourses li:last-child { border-bottom: none; }
+.liccourses .cname { font-size: 0.9rem; }
+.liccourses .cmeta { color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
+
+.licfoot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 14px; }
+.licfoot .hint { margin-left: auto; }
+.liccard .disclaimer { margin-top: 16px; }
