@@ -136,7 +136,7 @@ const EXAM_CONFIG = {
   storageKey: 'nc-pesticide-trainer-v1',      // localStorage; changing it orphans saved progress
   sessionKey: 'nc-pesticide-trainer-session', // sessionStorage mirror of the active session
   exportPrefix: 'pesticide-progress',         // backup filename: <prefix>-YYYY-MM-DD.json
-  repo: 'https://github.com/ullbergm/nc-pesticide-test-training',
+  repo: 'https://github.com/ullbergm/nc-pesticide-trainer',
   passMark: 0.7, // NC requires 70% on the core and category exams
 
   // Manuals the questions cite. A question picks one with its `manual` field

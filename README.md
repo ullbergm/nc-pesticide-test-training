@@ -1,8 +1,8 @@
 # NC Pesticide Trainer
 
-[![CI](https://github.com/ullbergm/nc-pesticide-test-training/actions/workflows/ci.yml/badge.svg)](https://github.com/ullbergm/nc-pesticide-test-training/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/ullbergm/nc-pesticide-test-training)](https://github.com/ullbergm/nc-pesticide-test-training/releases)
-[![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-test-training)](LICENSE)
+[![CI](https://github.com/ullbergm/nc-pesticide-trainer/actions/workflows/ci.yml/badge.svg)](https://github.com/ullbergm/nc-pesticide-trainer/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/ullbergm/nc-pesticide-trainer)](https://github.com/ullbergm/nc-pesticide-trainer/releases)
+[![License: MIT](https://img.shields.io/github/license/ullbergm/nc-pesticide-trainer)](LICENSE)
 [![Live site](https://img.shields.io/website?url=https%3A%2F%2Fnc-pesticide.ullberg.io&label=nc-pesticide.ullberg.io)](https://nc-pesticide.ullberg.io)
 
 [![Questions](https://img.shields.io/badge/questions-1104-blue)](data/questions.js)
@@ -100,7 +100,7 @@ prefix and page map, and questions pick theirs with a `manual` field, so
 adding one does not disturb what is already there.
 
 This project is a fork of
-[nc-cdl-test-training](https://github.com/ullbergm/nc-cdl-test-training): the
+[nc-cdl-trainer](https://github.com/ullbergm/nc-cdl-trainer): the
 same engine studying a different manual. Live at
 [nc-pesticide.ullberg.io](https://nc-pesticide.ullberg.io), or run it
 yourself. There is no build step, no dependencies, and no server. Just open
@@ -299,7 +299,7 @@ The engine under `js/` knows nothing about pesticides, and the test suites
 derive their assertions from the config and the bank, so a trainer for a
 different manual-based exam is a matter of replacing data and identity files;
 this repository is itself that recipe applied to
-[nc-cdl-test-training](https://github.com/ullbergm/nc-cdl-test-training).
+[nc-cdl-trainer](https://github.com/ullbergm/nc-cdl-trainer).
 Create a new repository from this one and touch:
 
 - `data/questions.js`: the new question bank, tagged by section and manual page;
