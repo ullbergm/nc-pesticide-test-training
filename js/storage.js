@@ -1,4 +1,5 @@
-/* Persistence: card scheduling state + answer stats in localStorage. */
+/* Persistence: card scheduling state + answer stats in localStorage.
+   Synced from the trainer-engine repo; do not edit in an app repo. */
 const Store = (() => {
   const KEY = EXAM_CONFIG.storageKey;
   const LOG_MAX = 10000; // ~20k reviews would outlast any exam prep; cap the log well before quota
@@ -45,7 +46,12 @@ const Store = (() => {
   // drop out at once, silently resetting the selection to everything. So a
   // list that matches nothing falls back to the exams it overlaps, which is
   // what it was a snapshot of.
-  const TESTS = (EXAM_CONFIG.tests || []).filter(t => (t.sections || []).length);
+  // Config section lists may be bare numbers (sections in the default book);
+  // qualify them so the containment checks below compare one shape of key.
+  const normSec = s => (typeof s === 'number' ? `default:${s}` : String(s));
+  const TESTS = (EXAM_CONFIG.tests || [])
+    .map(t => ({ ...t, sections: (t.sections || []).map(normSec) }))
+    .filter(t => t.sections.length);
   function chosenTests(st) {
     const keys = Array.isArray(st.tests)
       ? st.tests.filter(k => TESTS.some(t => t.key === k))
